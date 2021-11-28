@@ -1,0 +1,6 @@
+---
+- name: Install Jekyll
+  hosts: jekyll-servers
+  tasks:
+     - name: Jekyll
+       command: "sudo apt install jekyll -y"
