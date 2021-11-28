@@ -4,3 +4,5 @@
   tasks:
      - name: Apt Update
        command: "sudo apt update"
+     - name: Apt Upgrade
+       command: "sudo apt upgrade -y"

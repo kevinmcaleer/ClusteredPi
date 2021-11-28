@@ -21,3 +21,9 @@ Type:
 `pip install pip --upgrade`
 `pip install -r requirements.txt`
 
+---
+
+# To run a playbook
+`ansible-playbook apt-update.yml -u=pi` - the -U parameter changes the login username to `pi` rather than the currently logged in user on the master PC.
+
+* `apt-update.yml` - updates the Raspberry Pi's package management system 
