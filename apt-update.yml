@@ -1,0 +1,6 @@
+---
+- name: Apt Update
+  hosts: all
+  tasks:
+     - name: Apt Update
+       command: "sudo apt update"
