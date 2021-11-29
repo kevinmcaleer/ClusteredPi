@@ -1,0 +1,28 @@
+- name: Install Docker & Related Packages
+  become: true
+  apt:
+      name: "{{ packages }}"
+  vars:
+      packages:
+          - docker.io
+          - containerd
+          - virtualenv
+          - docker-compose
+          - python3-pip
+          - python3-setuptools
+          - python3-docker
+
+- name: Add user to docker group
+  become: true
+  user:
+      name: '{{ docker_user }}'
+      groups: docker
+      append: yes
+
+- name: Enable & Start Docker service
+  become: true
+  service:
+      name: docker
+      enabled: true
+      state: started
+  
