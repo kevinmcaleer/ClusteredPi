@@ -1,0 +1,19 @@
+---
+- name: "Nextcloud playbook"
+  hosts: localhost
+  connection: local
+  become: yes
+  tasks:
+  - docker_container:
+    restart: yes
+    restart_policy: always
+    name: nextcloud
+    image: ownyourbits/nextcloudpi
+    pull: yes
+    volumes:
+    - 'ncdata:/data'
+    ports:
+    - '80:80'
+    - '443:443'
+    - '4443:4443'
+

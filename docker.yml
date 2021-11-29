@@ -1,0 +1,12 @@
+---
+- name: "Docker playbook"
+  hosts: localhost
+  connection: local
+  become: yes
+  vars:
+    docker_install_compose: false
+    docker_users:
+      - pi
+  roles:
+  - geerlingguy.docker_arm
+
