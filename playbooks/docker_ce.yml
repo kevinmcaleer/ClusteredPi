@@ -1,0 +1,34 @@
+- hosts: all
+  become: yes
+
+  vars:
+    pkgstoinstall: [ libffi-dev, libssl-dev, python3, python3-pip ]
+
+  tasks:
+    - name: Install a list of packages
+      apt:
+        name: "{{ pkgstoinstall }}"
+        update_cache: yes
+
+    - name: Remove Python-configparser package
+      apt:
+        name: python-configparser
+        state: absent
+
+    - name: get docker convenience script
+      shell: curl -fsSL https://get.docker.com -o get-docker.sh
+      args:
+        creates: /home/pi/get-docker.sh
+
+    - name: install docker
+      shell: sh /home/pi/get-docker.sh
+      args:
+        creates: /usr/bin/docker
+
+    - name: make pi user execute docker commands
+      shell: usermod -aG docker pi
+
+    - name: install docker-compose
+      shell: pip3 -v install docker-compose
+      args:
+        creates: /usr/local/bin/docker-compose
