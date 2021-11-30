@@ -28,6 +28,9 @@
     - name: make pi user execute docker commands
       shell: usermod -aG docker pi
 
+    - name: fix permissions
+      shell: chmod 666 /var/run/docker.sock
+
     - name: install docker-compose
       shell: pip3 -v install docker-compose
       args:
