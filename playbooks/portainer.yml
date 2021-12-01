@@ -1,3 +1,4 @@
+---
 - hosts: workers
   become: yes
   tasks:
