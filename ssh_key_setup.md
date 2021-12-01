@@ -6,8 +6,11 @@ This will then generate a new RSA Key pair; a public file and a private file. `s
 
 # Add the new private key 
 We will now add the new private key to our local PC/Mac/Linux machine, 
-Type: `ssh-add myhost`. This will add the private key to our machine.
-
+Type: `ssh-add myhost`. This will add the private key to our machine. If you get an error with this, run the following command:
+```
+eval `ssh-agent -s`
+ssh-add
+```
 # ssh-copy-id
 To copy and install the newly generated public key to the Raspberry Pi's we can use the `ssh-copy-id` command:
 

@@ -1,10 +1,11 @@
 all:
   hosts:
+    master:
+    node:
+master:
+  hosts:
     192.168.1.117:
-    192.168.1.112:
-  children:
-    controller:
-workers:
+node:
   hosts:
     192.168.1.112:
     192.168.1.217:
