@@ -3,7 +3,7 @@
   become: yes
 
   vars:
-    token: K100af88de5c90e65d9dda5a829d7df5d6a3addcecd01c4993e394e811bedd4b15c::server:695495f9d00e49d5bc73175c160fe850
+    token: "K100af88de5c90e65d9dda5a829d7df5d6a3addcecd01c4993e394e811bedd4b15c::server:695495f9d00e49d5bc73175c160fe850"
   tasks:
     - name: Install K3S Worker Node
         shell: curl -sfL https://get.k3s.io | KS3_URL=https://192.168.1.117:6443 KS_TOKEN="{{ token }}" sh -
