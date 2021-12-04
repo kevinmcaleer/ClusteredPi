@@ -4,3 +4,6 @@
   tasks:
     - name: Uninstall docker
       shell: apt-get purge docker-ce docker-ce-cli containerd.io -y 
+    
+    - name: Reboot
+      shell: sudo init 6
