@@ -1,0 +1,16 @@
+---
+- name: Prune unused volumes and images
+  hosts: node
+  tasks:
+     - name: Do not count this as a failure
+       ansible.builtin.command: /bin/false
+       ignore_errors: yes
+
+     - name: Prune Volumes
+       command: "docker volume prune -y"
+       ignore_errors: yes
+
+     - name: Prune Images
+       command: "docker image prune -y"
+       ignore_errors: yes
+
