@@ -28,6 +28,12 @@
     - name: make pi user execute docker commands
       shell: usermod -aG docker pi
 
+    - name: unmask docker
+      shell: sudo systemctl unmask docker
+
+    - name: start docker
+      shell: sudo systemctl start docker
+
     - name: fix permissions
       shell: chmod 666 /var/run/docker.sock
 
@@ -36,8 +42,4 @@
       args:
         creates: /usr/local/bin/docker-compose
 
-    - name: unmask docker
-      shell: sudo systemctl unmask docker
-
-    - name: start docker
-      shell: sudo systemctl start docker
+   
