@@ -3,4 +3,4 @@
   hosts: node
   tasks:
      - name: Installing Portainer
-       command: "docker run -itd --name Portainer -p 8000:8000 -p 9443:9443 cr.portainer.io/portainer/portainer-ce:2.9.3"
+       command: "docker run -itd --name Portainer -p 8000:8000 -p 9443:9443 -v /var/run/docker.sock:/var/run/docker.sock cr.portainer.io/portainer/portainer-ce:2.9.3 "
