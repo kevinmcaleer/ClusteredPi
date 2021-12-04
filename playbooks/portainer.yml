@@ -1,6 +1,6 @@
 ---
-- name: Install Portainer
+- name: Install Portainer on Nodes
   hosts: node
   tasks:
-     - name: Portainer
-       command: "docker run -itd cr.portainer.io/portainer/portainer-ce:2.9.3 --name 'Portainer' -p 8000:8000 -p 9443:9443"
+     - name: Installing Portainer
+       command: "docker run -itd cr.portainer.io/portainer/portainer-ce:2.9.3 --name Portainer -p 8000:8000 -p 9443:9443"
