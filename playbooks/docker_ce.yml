@@ -31,9 +31,6 @@
     - name: unmask docker
       shell: sudo systemctl unmask docker
 
-    - name: start docker
-      shell: sudo systemctl start docker
-
     - name: fix permissions
       shell: chmod 666 /var/run/docker.sock
 
@@ -41,5 +38,7 @@
       shell: pip3 -v install docker-compose
       args:
         creates: /usr/local/bin/docker-compose
+    - name: start docker
+      shell: sudo systemctl start docker
 
    
