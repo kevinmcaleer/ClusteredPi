@@ -7,10 +7,10 @@
        ignore_errors: yes
 
      - name: Prune Volumes
-       command: "docker volume prune -y"
+       command: "docker volume prune -f"
        ignore_errors: yes
 
      - name: Prune Images
-       command: "docker image prune -y"
+       command: "docker image prune -f"
        ignore_errors: yes
 
