@@ -35,3 +35,9 @@
       shell: pip3 -v install docker-compose
       args:
         creates: /usr/local/bin/docker-compose
+
+    - name: unmask docker
+      shell: sudo systemctl unmask docker
+
+    - name: start docker
+      shell: sudo systemctl start docker
