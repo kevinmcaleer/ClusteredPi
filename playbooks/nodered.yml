@@ -1,0 +1,19 @@
+---
+- name: Install NodeRed
+  hosts: nodered 
+  tasks:
+     - name: Do not count this as a failure
+       ansible.builtin.command: /bin/false
+       ignore_errors: yes
+
+     - name: Remove previous version - Stop Container
+       command: "docker stop nodered"
+       ignore_errors: yes
+
+     - name: Remove previous version - Remove Container
+       command: "docker rm nodered"
+       ignore_errors: yes
+
+     - name: Installing Node-Red
+       command: "docker run -itd --name nodered -p 1880:1880  -v node_red_data:/data nodered/node-red"
+       ignore_errors: yes
