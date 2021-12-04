@@ -40,5 +40,8 @@
         creates: /usr/local/bin/docker-compose
     - name: start docker
       shell: sudo systemctl start docker
+    
+    - name: Reboot
+      shell: sudo init 6
 
    
