@@ -1,0 +1,6 @@
+- hosts: node
+  become: yes
+
+  tasks:
+    - name: Uninstall docker
+      shell: apt-get purge docker-ce docker-ce-cli containerd.io. -y 
