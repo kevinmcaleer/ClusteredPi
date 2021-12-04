@@ -2,5 +2,9 @@
 - name: Install Portainer on Nodes
   hosts: node
   tasks:
+     - name: Remove previous version - Stop Container
+       command: "docker stop Portainer"
+     - name: Remove previous version - Remove Container
+       command: "docker rm Portainer"
      - name: Installing Portainer
        command: "docker run -itd --name Portainer -p 8000:8000 -p 9443:9443 -v /var/run/docker.sock:/var/run/docker.sock cr.portainer.io/portainer/portainer-ce:2.9.3 "
