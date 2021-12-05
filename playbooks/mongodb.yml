@@ -3,7 +3,8 @@
   hosts: mongodb
   tasks:
      - name: Install Mongo
-       command: "docker run --name mongogb -d mongo"
+    #  docker pull bitnami/mongodb
+       command: "docker run --name mongodb -d bitnami/mongodb"
        ignore_errors: yes
 
        
