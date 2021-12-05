@@ -1,0 +1,9 @@
+---
+- name: Install MongoDB on Nodes
+  hosts: mongodb
+  tasks:
+     - name: Install Mongo
+       command: "docker run --name mongogb -d mongo"
+       ignore_errors: yes
+
+       
