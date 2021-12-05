@@ -1,0 +1,12 @@
+---
+- name: Install Grafana on Nodes
+  hosts: grafana
+  tasks:
+     - name: Do not count this as a failure
+       ansible.builtin.command: /bin/false
+       ignore_errors: yes
+     - name: Install Grafana
+       command: "docker run -d --name=grafana -p 3000:3000 grafana/grafana"
+       ignore_errors: yes
+
+       
