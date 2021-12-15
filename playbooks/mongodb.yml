@@ -1,10 +1,11 @@
 ---
-- name: Install MongoDB on Nodes
-  hosts: mongodb
+- name: Install NodeRed
+  hosts: mongo 
   tasks:
-     - name: Install Mongo
-    #  docker pull bitnami/mongodb
-       command: "docker run --name mongodb -d bitnami/mongodb"
+     - name: Do not count this as a failure
+       ansible.builtin.command: /bin/false
        ignore_errors: yes
 
-       
+     - name: Installing Mongo
+       command: "docker run -itd --name mongo -p 27017:27017 -p 28017:28017 mangoraft/mongodb-arm"
+       ignore_errors: yes 
