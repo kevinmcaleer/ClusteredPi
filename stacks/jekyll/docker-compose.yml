@@ -6,5 +6,5 @@ services:
         JEKYLL_GID: 1001
     build: .
     ports: 
-      - "80:80"
+      - "8080:8080"
     # image: myapp
