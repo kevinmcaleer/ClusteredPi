@@ -5,5 +5,5 @@ services:
         JEKYLL_UID: 1001
         JEKYLL_GID: 1001
     build: .
-    # ports: "2222"
+    ports: "80"
     # image: myapp
