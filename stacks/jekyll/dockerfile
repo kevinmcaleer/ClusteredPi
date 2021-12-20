@@ -13,5 +13,6 @@ RUN jekyll build
 FROM nginx
 COPY --from=getfiles /src/ClusteredPi/stacks/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY --from=jekyll /src/_site /www/data
+RUN echo $UID
 
 # RUN cp /src /www/data
