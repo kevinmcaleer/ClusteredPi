@@ -1,7 +1,7 @@
 FROM alpine:latest AS getfiles
 # install git
 RUN apk add git
-RUN mkdir -m 700 /src
+RUN mkdir /src
 WORKDIR /src
 RUN git clone https://www.github.com/kevinmcaleer/ClusteredPi
 
