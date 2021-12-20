@@ -1,3 +1,8 @@
+---
+layout: default
+title: Welcome
+---
+
 # Welcome to Clustered-Pi
 
 [What is Clustered-Pi]()
