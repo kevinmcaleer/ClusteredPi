@@ -1,0 +1,7 @@
+<nav class="nav-bar bg-light">
+    <div class="container-fluid">
+        {% for item in site.data.nav %}
+            <a class="nav-item" href="{{ item.link }}">{{ item.name }}</a>
+        {% endfor %}
+    </div>
+</nav>
