@@ -1,0 +1,15 @@
+---
+- name: Install sqlite3
+  hosts: sqlite3 
+  become: yes
+  tasks:
+     - name: Do not count this as a failure
+       ansible.builtin.command: /bin/false
+       ignore_errors: yes
+
+     - name: Installing sqlite
+       command: "apt install sqlite3 -y"
+       ignore_errors: yes 
+
+     - name: Install sqlite3 Broswer
+       command: "apt install sqlitebrowser -y"
