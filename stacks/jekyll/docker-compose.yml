@@ -1,0 +1,6 @@
+version: "3.9"
+services:
+  myapp:
+    build: .
+    # ports: "2222"
+    # image: myapp
