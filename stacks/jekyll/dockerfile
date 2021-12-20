@@ -5,8 +5,13 @@ RUN mkdir -m 700 /src
 WORKDIR /src
 RUN git clone https://www.github.com/kevinmcaleer/ClusteredPi
 
+FROM blafy/jekyll as jekyll
+COPY --from=getfiles /src/ClusteredPi/web /src
+WORKDIR /src
+RUN jekyll build 
+
 FROM nginx
 COPY --from=getfiles /src/ClusteredPi/stacks/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY --from=getfiles /src /www/data
+COPY --from=jekyll /src/_site /www/data
 
 # RUN cp /src /www/data
