@@ -8,8 +8,8 @@ RUN git clone https://www.github.com/kevinmcaleer/ClusteredPi
 FROM blafy/jekyll as jekyll
 COPY --from=getfiles /src/ClusteredPi/web /src
 WORKDIR /src
-RUN mkdir /src/_site
-RUN echo $UID
+# RUN mkdir /src/_site
+# RUN echo $UID
 RUN jekyll build 
 
 FROM nginx

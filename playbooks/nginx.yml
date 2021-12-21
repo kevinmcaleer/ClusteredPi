@@ -1,0 +1,20 @@
+---
+- name: Install nginx on Web Nodes
+  hosts: web
+  tasks:
+     - name: Remove old compose
+       command: "docker-compose -f /home/pi/ClusteredPi/stacks/jekyll/docker-compose.yml rm"
+
+     - name: clone git 
+       git:
+        repo: 'https://github.com/kevinmcaleer/ClusteredPi'
+        dest: /home/pi/ClusteredPi
+        
+     - name: docker-compose build
+       command: "docker-compose -f /home/pi/ClusteredPi/stacks/jekyll/docker-compose.yml build"
+      #  ignore_errors: yes
+
+     - name: docker-compose up
+       command: "docker-compose -f /home/pi/ClusteredPi/stacks/jekyll/docker-compose.yml up -d"
+      #  ignore_errors: yes       
+     
