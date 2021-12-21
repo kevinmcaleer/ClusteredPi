@@ -5,7 +5,7 @@ description: Learn about Clustered-Pi
 ---
 
 ## A Learning Mechanism
-Clustered-Pi is a hobby project by [Kevin McAleer](https://www.youtube.com/kevinmcaleer28), and was created as a vehicle to learn about [Ansible](https://www.ansible.org), [Docker](https://www.docker.com) as well as Kubernetes.
+Clustered-Pi is a hobby project by [Kevin McAleer](https://www.youtube.com/kevinmcaleer28), and was created as a vehicle to learn about [Ansible](https://www.ansible.com), [Docker](https://www.docker.com) as well as Kubernetes.
 
 ---
 
