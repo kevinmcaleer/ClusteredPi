@@ -7,13 +7,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ "/assets/css/main.css" }}" type="text/css">
+    <title>{{ page.title }}</title>
 </head>
 <body>
     {% include navigation.html %}
-    <div class="container">
-        {{ content }}
-    </div>
+        <div class="main-content mt-4">
+            {{ content }}
+        </div>
 </body>
 <!-- JavaScript Bundle with Popper -->
 

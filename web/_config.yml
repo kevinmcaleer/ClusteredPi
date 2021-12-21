@@ -1,0 +1,9 @@
+title: Clustered-Pi
+email: kevinmcaleer@gmail.com
+description: This is the official website of Clustered-Pi
+baseurl: ""
+url: "http://www.clustered-pi.com"
+
+markdown: kramdown
+permalink: /blog/:year/:month/:day/:title:output_ext
+

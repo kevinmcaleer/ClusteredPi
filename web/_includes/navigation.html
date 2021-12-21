@@ -1,8 +1,69 @@
-<nav class="nav-bar bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand"><img height="40px" alt="ClusteredPi logo - its a custard pie with a slice missing" src="/assets/img/clusteredpi01.png" class="d-inline-block align-top"></a>
-        {% for item in site.data.nav %}
-            <a class="nav-item" href="{{ item.link }}">{{ item.name }}</a>
-        {% endfor %}
-    </div>
-</nav>
+<header>
+    <nav class="navbar navbar-expand-lg bg-white">
+        <div class="container-fluid">
+        <a class="navbar-brand" href="http://www.smarsfan.com"><img height="40px" alt="the smarsfan logo - made up of the letters of smarfan in white, green and orange letters" src="/assets/img/clusteredpi01.png" class="d-inline-block align-top"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon bg-orange"></span>
+        </button>
+         <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+          {% for item in site.data.nav %}
+          <div class="dropdown">
+          {% if item.sublinks %}
+            <button class="btn btn-orange text-white dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{ item.name }}
+            </button>
+            <div class=" dropdown-menu" aria-labelledby="dropdownMenuButton">
+              {% for sublink in item.sublinks %}
+                {% if sublink.name == 'separator' %}
+                <div class="dropdown-divider"></div>
+                {% else %}
+                <ul class="fa-ul my-0">
+                {% if sublink.icon != nil %}
+                  <li>
+                    {% if sublink.fab %}
+                    <i class="fa-li fab fa-{{ sublink.icon }}"></i>
+                    {% else %}
+                    <i class="fa-li fa fa-{{ sublink.icon }}"></i>
+                    {% endif %}
+                    
+                      </i><a class="dropdown-item" href="{{ site.url }}{{ site.baseurl }}{{ sublink.link }}">{{ sublink.name }}</a></li>
+                  {% else %}
+                  <li><a class="dropdown-item" href="{{ site.url }}{{ site.baseurl }}{{ sublink.link }}"> {{ sublink.name }}</a></li>
+                {% endif %}
+                </ul>
+                {% endif %}
+              {% endfor %}
+            </div>
+      
+            {% else %}
+              <button class="btn btn-orange"></button>
+              {% assign short = page.url | replace:'/',' ' | truncatewords: 1 | remove:'...' %}
+              {% assign url = item.link | replace:'/',' ' | truncatewords: 1 | remove:'...' %}
+              
+              <a href="{{ item.link }}" class="dropdownitem {% if short == url %}active{% endif %}">
+                {% if item.icon != nil %}
+                <i class="fa fa-{{ item.icon }}"></i>
+                {% endif %}
+                {{ item.name }}
+                </a>
+              </button>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <div class="container-fluid">
+            <ul class="nav fa-ul justify-content-end">
+                <li class="p-0 m-0 align-middle">
+                    <a href="https://www.youtube.com/c/kevinmcaleer28" class="p-0 m-0">
+                        <small class="fa-li m-0 p-0 align-middle text-end">
+                            <i class="fa fa-youtube align-middle mx-2"></i>
+                        </small>On YouTube</a>
+                </li>
+            </ul>
+        </div>
+        </div>
+        
+      </div>
+      </nav>
+      </header>

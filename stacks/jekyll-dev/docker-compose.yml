@@ -1,0 +1,10 @@
+version: '1'
+services:
+  jekyll-serve:
+    image: jekyll/jekyll:4.0
+    volumes:
+      - '../../web:/srv/jekyll'
+    ports:
+      - 4000:4000
+      - 35729:35729
+    command: 'jekyll serve --watch --livereload'
