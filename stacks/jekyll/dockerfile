@@ -18,7 +18,7 @@ COPY --from=jekyll /src/_site /www/data
 RUN chown -R nginx:nginx /www/data
 RUN chmod -R 755 /www/data/*
 # RUN chmod -R 644 /www/data/*
-USER nginx
+# USER nginx
 
 
 # RUN cp /src /www/data
