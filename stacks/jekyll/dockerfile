@@ -1,4 +1,4 @@
-FROM alpine:latest AS getfiles
+FROM alpine AS getfiles
 # install git
 RUN apk add git
 RUN mkdir /src
