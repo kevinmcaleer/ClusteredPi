@@ -3,6 +3,6 @@ services:
   myapp_load_balancer:
     build: .
     ports: 
-      - "8080:8080"
+      - "80:80"
     # image: myapp
     restart: always
