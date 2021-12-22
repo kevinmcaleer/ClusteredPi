@@ -11,6 +11,6 @@ title: Clustered-Pi
 ## Learn
 What is [Clustered-Pi](about)? The short version is - its a cluster of four **Raspberry 4** computers, running Raspberry Pi OS. It hosts this website using Docker, along with other components.
 
-How to [build](build) your own Clustered-Pi.
+Read the [blog](/blog) for articles about Clustered-Pi, and how to [build](build) your own.
 
 [Youtube Series](https://youtube.com/playlist?list=PLU9tksFlQRiovpszMpg4K90GyXDt_xncn)
