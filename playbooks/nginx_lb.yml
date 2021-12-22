@@ -1,22 +1,24 @@
 ---
 - name: Install nginx on lb
-  hosts: node01
+  hosts: node04
   tasks:
     - name: clone git 
       git:
-      repo: 'https://github.com/kevinmcaleer/ClusteredPi'
-      dest: /home/pi/ClusteredPi
-      update: yes
+        repo: 'https://github.com/kevinmcaleer/ClusteredPi'
+        dest: /home/pi/ClusteredPi
+        update: yes
 
     - name: Stop nginx container
       docker_container:
         name: nginx
         state: stopped
+      ignore_errors: yes  
 
     - name: remove nginx container
       docker_container:
         name: nginx
         state: absent
+      ignore_errors: yes  
 
     #  - name: Remove old compose
     #    command: "docker-compose -f /home/pi/ClusteredPi/stacks/nginx/docker-compose.yml rm"
