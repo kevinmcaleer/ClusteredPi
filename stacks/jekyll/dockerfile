@@ -6,9 +6,11 @@ WORKDIR /src
 RUN git clone https://www.github.com/kevinmcaleer/ClusteredPi
 
 FROM blafy/jekyll as jekyll
+RUN addgroup -Sg 1000 jekyll
+RUN adduser -Su 1000 -G jekyll jekyll
 COPY --from=getfiles /src/ClusteredPi/web /src
 WORKDIR /src
-# RUN mkdir /src/_site
+RUN mkdir /src/_site
 # RUN echo $UID
 RUN jekyll build 
 
