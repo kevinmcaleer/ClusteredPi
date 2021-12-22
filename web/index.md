@@ -14,3 +14,5 @@ What is [Clustered-Pi](about)? The short version is - its a cluster of four **Ra
 Read the [blog](/blog) for articles about Clustered-Pi, and how to [build](build) your own.
 
 [Youtube Series](https://youtube.com/playlist?list=PLU9tksFlQRiovpszMpg4K90GyXDt_xncn)
+
+> Raspberry Pi's are currently in short supply!

@@ -13,7 +13,7 @@
 
      - ansible.builtin.debug:
          var: output
-
+         
      - name: remove myapp container
        community.docker.docker_compose:
         project_src: '/home/pi/ClusteredPi/stacks/jekyll'
@@ -23,6 +23,14 @@
        
      - ansible.builtin.debug:
          var: output
+
+     - name: Prune everything
+       community.docker.docker_prune:
+         containers: yes
+         images: yes
+         networks: yes
+         volumes: yes
+         builder_cache: yes
 
     #  - name: Create and start services
     #    community.docker.docker_compose:
