@@ -27,7 +27,7 @@
        community.docker.docker_compose:
          project_src: /home/pi/ClusteredPi/stacks/jekyll
          nocache: yes
-         recreate: always
+        #  recreate: always
        register: output
 
      - ansible.builtin.debug:
