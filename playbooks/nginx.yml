@@ -6,6 +6,8 @@
        git:
          repo: 'https://github.com/kevinmcaleer/ClusteredPi'
          dest: /home/pi/ClusteredPi
+         clone: yes
+         update: yes
        register: output
 
      - name: remove myapp container
