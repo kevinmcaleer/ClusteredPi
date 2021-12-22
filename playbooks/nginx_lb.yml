@@ -28,6 +28,7 @@
         networks: yes
         volumes: yes
         builder_cache: yes
+      register: output
 
     - ansible.builtin.debug:
         var: output
