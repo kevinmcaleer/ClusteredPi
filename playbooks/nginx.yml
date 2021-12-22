@@ -10,6 +10,9 @@
          update: yes
        register: output
 
+     - ansible.builtin.debug:
+         var: output
+
      - name: remove myapp container
        community.docker.docker_compose:
         project_src: '/home/pi/ClusteredPi/stacks/jekyll'
@@ -18,6 +21,9 @@
         recreate: always
         remove_images: all
        register: output
+       
+     - ansible.builtin.debug:
+         var: output
 
      - name: Create and start services
        community.docker.docker_compose:
