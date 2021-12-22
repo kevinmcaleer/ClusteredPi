@@ -17,8 +17,6 @@
        community.docker.docker_compose:
         project_src: '/home/pi/ClusteredPi/stacks/jekyll'
         state: absent
-        nocache: yes
-        recreate: always
         remove_images: all
        register: output
        
@@ -28,6 +26,8 @@
      - name: Create and start services
        community.docker.docker_compose:
          project_src: /home/pi/ClusteredPi/stacks/jekyll
+         nocache: yes
+         recreate: always
        register: output
 
      - ansible.builtin.debug:
