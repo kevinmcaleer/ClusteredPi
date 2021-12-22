@@ -18,17 +18,19 @@
       docker_container:
         name: nginx_myapp_load_balancer_1
         state: absent
+        remove_images: all
       ignore_errors: yes  
 
-    #  - name: Remove old compose
-    #    command: "docker-compose -f /home/pi/ClusteredPi/stacks/nginx/docker-compose.yml rm"
-    #    ignore_errors: yes
+    - name: Prune everything
+       community.docker.docker_prune:
+         containers: yes
+         images: yes
+         networks: yes
+         volumes: yes
+         builder_cache: yes
 
-    # - name: Run `docker-compose up` again
-    #   community.docker.docker_compose:
-    #     project_src: /home/pi/ClusteredPi/stacks/nginx
-    #     build: yes
-    #   register: output
+    - ansible.builtin.debug:
+       var: output
 
     - name: docker-compose build
       command: "docker-compose -f /home/pi/ClusteredPi/stacks/nginx/docker-compose.yml build"
