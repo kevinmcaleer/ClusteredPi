@@ -1,21 +1,28 @@
 ---
-- name: Install nginx on Web Nodes
+- name: Install `myapp` on Web Nodes
   hosts: web
   tasks:
-    
      - name: clone git 
        git:
-        repo: 'https://github.com/kevinmcaleer/ClusteredPi'
-        dest: /home/pi/ClusteredPi
+         repo: 'https://github.com/kevinmcaleer/ClusteredPi'
+         dest: /home/pi/ClusteredPi
+       register: output
 
-     - name: Remove old compose
-       command: "docker-compose -f /home/pi/ClusteredPi/stacks/jekyll/docker-compose.yml rm"
+     - name: remove myapp container
+       community.docker.docker_compose:
+        project_src: '/home/pi/ClusteredPi/stacks/jekyll'
+        state: absent
+        nocache: yes
+        recreate: always
+        remove_images: all
+       register: output
 
-     - name: docker-compose build
-       command: "docker-compose -f /home/pi/ClusteredPi/stacks/jekyll/docker-compose.yml build"
-      #  ignore_errors: yes
-
-     - name: docker-compose up
-       command: "docker-compose -f /home/pi/ClusteredPi/stacks/jekyll/docker-compose.yml up -d"
-      #  ignore_errors: yes       
+     - name: Bring myApp up
+       community.docker.docker_compose:
+         project_src: /home/pi/ClusteredPi/stacks/jekyll
+         build: yes
+         nocache: yes
+         recreate: always
+       register: output
+  
      
