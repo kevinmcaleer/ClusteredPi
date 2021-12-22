@@ -6,6 +6,7 @@
       git:
       repo: 'https://github.com/kevinmcaleer/ClusteredPi'
       dest: /home/pi/ClusteredPi
+      update: yes
 
     - name: Stop nginx container
       docker_container:
@@ -23,7 +24,7 @@
 
     - name: Run `docker-compose up` again
       community.docker.docker_compose:
-        project_src: /home/pi/ClusteredPi/stacks/nginx/docker-compose.yml
+        project_src: /home/pi/ClusteredPi/stacks/nginx
         build: yes
       register: output
 
