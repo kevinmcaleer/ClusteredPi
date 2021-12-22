@@ -17,12 +17,21 @@
         remove_images: all
        register: output
 
+     - name: Create and start services
+       community.docker.docker-compose:
+         project_src: /home/pi/ClusteredPi/stacks/jekyll
+       register: output
+
+     - ansible.builtin.debug:
+         var: output
+
      - name: Bring myApp up
        community.docker.docker_compose:
          project_src: /home/pi/ClusteredPi/stacks/jekyll
-         build: yes
+         build: no
          nocache: yes
          recreate: always
        register: output
   
-     
+     - ansible.builtin.debug:
+         var: output
