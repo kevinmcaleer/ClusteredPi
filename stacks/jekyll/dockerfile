@@ -7,6 +7,8 @@ WORKDIR /src
 RUN git clone https://www.github.com/kevinmcaleer/ClusteredPi
 
 FROM blafy/jekyll as jekyll
+RUN apk --no-cache add git
+RUN apk --no-cache add sudo
 RUN addgroup -S jekyll 
 RUN adduser -S jekyll -G jekyll
 RUN chown -R jekyll:jekyll /src
