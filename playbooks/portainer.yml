@@ -2,9 +2,6 @@
 - name: Install Portainer on Nodes
   hosts: all
   tasks:
-     - name: Do not count this as a failure
-       ansible.builtin.command: /bin/false
-       ignore_errors: yes
      - name: Remove previous version - Stop Container
        command: "docker stop Portainer"
        ignore_errors: yes
