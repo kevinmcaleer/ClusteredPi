@@ -24,12 +24,12 @@
      - ansible.builtin.debug:
          var: output
 
-     - name: Create and start services
-       community.docker.docker_compose:
-         project_src: /home/pi/ClusteredPi/stacks/jekyll
-         nocache: yes
-        #  recreate: always
-       register: output
+    #  - name: Create and start services
+    #    community.docker.docker_compose:
+    #      project_src: /home/pi/ClusteredPi/stacks/jekyll
+    #      nocache: yes
+    #      recreate: always
+    #    register: output
 
      - ansible.builtin.debug:
          var: output
@@ -40,6 +40,7 @@
          build: no
          nocache: yes
          recreate: always
+         state: present
        register: output
   
      - ansible.builtin.debug:
