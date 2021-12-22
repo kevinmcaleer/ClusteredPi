@@ -10,13 +10,13 @@
 
     - name: Stop nginx container
       docker_container:
-        name: nginx
+        name: nginx_myapp_load_balancer_1
         state: stopped
       ignore_errors: yes  
 
     - name: remove nginx container
       docker_container:
-        name: nginx
+        name: nginx_myapp_load_balancer_1
         state: absent
       ignore_errors: yes  
 
@@ -24,17 +24,17 @@
     #    command: "docker-compose -f /home/pi/ClusteredPi/stacks/nginx/docker-compose.yml rm"
     #    ignore_errors: yes
 
-    - name: Run `docker-compose up` again
-      community.docker.docker_compose:
-        project_src: /home/pi/ClusteredPi/stacks/nginx
-        build: yes
-      register: output
+    # - name: Run `docker-compose up` again
+    #   community.docker.docker_compose:
+    #     project_src: /home/pi/ClusteredPi/stacks/nginx
+    #     build: yes
+    #   register: output
 
-    #  - name: docker-compose build
-    #    command: "docker-compose -f /home/pi/ClusteredPi/stacks/nginx/docker-compose.yml build"
-    #    ignore_errors: yes
+    - name: docker-compose build
+      command: "docker-compose -f /home/pi/ClusteredPi/stacks/nginx/docker-compose.yml build"
+      ignore_errors: yes
 
-    #  - name: docker-compose up
-    #    command: "docker-compose -f /home/pi/ClusteredPi/stacks/nginx/docker-compose.yml up -d"
-    #    ignore_errors: yes       
+    - name: docker-compose up
+      command: "docker-compose -f /home/pi/ClusteredPi/stacks/nginx/docker-compose.yml up -d"
+      ignore_errors: yes       
      
