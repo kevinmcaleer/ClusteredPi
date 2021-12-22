@@ -22,15 +22,15 @@
       ignore_errors: yes  
 
     - name: Prune everything
-       community.docker.docker_prune:
-         containers: yes
-         images: yes
-         networks: yes
-         volumes: yes
-         builder_cache: yes
+      community.docker.docker_prune:
+        containers: yes
+        images: yes
+        networks: yes
+        volumes: yes
+        builder_cache: yes
 
     - ansible.builtin.debug:
-       var: output
+        var: output
 
     - name: docker-compose build
       command: "docker-compose -f /home/pi/ClusteredPi/stacks/nginx/docker-compose.yml build"
