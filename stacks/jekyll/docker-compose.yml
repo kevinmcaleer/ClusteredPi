@@ -4,6 +4,7 @@ services:
     environment:
       JEKYLL_UID: 1000
       JEKYLL_GID: 1000
+      JEKYLL_ENV: production
     build: .
     ports: 
       - "2222:2222"
