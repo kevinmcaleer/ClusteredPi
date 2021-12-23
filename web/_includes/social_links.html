@@ -1,15 +1,15 @@
-
-<div class="fluid-container social center">
-<table>
-    <tr class="text-center">
-{% for item in site.data.social %}
-<td>
-<a href="{{item.link}}" class="text-decoration-none text-white">
-    <i class="{{item.icon}}"></i><br>
-    {{item.name}}
-</a>
-</td>
-{% endfor %}
-</tr>
-</table>
+<div class="social">
+    <table>
+        <tr class="text-center">
+            {% for item in site.data.social %}
+                <td>
+                    <a href="{{ item.link }}" class="text-decoration-none text-white">
+                        <i class="{{ item.icon }}"></i>
+                        <br>
+                        {{ item.name }}
+                    </a>
+                </td>
+            {% endfor %}
+        </tr>
+    </table>
 </div>

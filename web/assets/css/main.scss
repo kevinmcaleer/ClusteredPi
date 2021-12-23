@@ -196,21 +196,34 @@ h2 {
     margin: auto;
     width: 50%;
   }
-  .social {
+  
+
+.social {
+    
     display: flexbox;
     // align-content: center;
     // border: 3px;
     // border-style: solid;
     // border-color: #ffffff
-    ;
-    margin: auto;
-    width: 50%;
+    
+    @media screen {
+      width: 50%;
+      margin: auto;
+    }
+    @media only screen and (max-width: 900px)
+      {
+        width: 100%;
+        left: 0px;
+        margin: -8px;
+        padding: 0px;
+    }
+    
     table {
       margin-left:auto; 
       margin-right:auto; 
       tr {
         // margin: 10px;
-        padding: 20px;
+        // padding: 20px;
         text-align:center; 
        
         td {
