@@ -1,13 +1,11 @@
 ---
-layout: default
+layout: blog
 ---
 
 <img src={{ page.cover }} class="cover">
 
-<h1>{{ page.title }}</h1>
+<h1 class="mt-4">{{ page.title }}</h1>
 
-{{page.date | date: "%-d %B %Y" }} by {{ page.author}}
-
-<br/><br/>
-
+<p class="orange">{{page.date | date: "%-d %B %Y" }} by {{ page.author}}</p>
+<hr/>
 {{ content }}

@@ -1,0 +1,75 @@
+// Markdown Table of Contents
+
+#markdown-toc {
+    background-color: $clr-grey;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+    margin-left: 0px;
+    padding-bottom: 15px;
+    list-style-type: none;
+    li {
+      a {
+        color: $clr-stone-500;
+        }
+      ul {
+        list-style-type: none;
+        padding-left: 15px;
+        padding-right: 15px;
+  
+        li {
+  
+            a {
+              color: $clr-stone-300;
+            }
+           // margin-left: 15px;
+         }
+        }
+      }
+  }
+  #markdown-toc:before {
+    font-style: 14pt;
+    content: "Table of Contents";
+  }
+  
+  // xs
+  @media only screen and (max-width: 575px) {
+    #markdown-toc {
+      width: 100%;
+    }
+  }
+  
+  // small
+  @media only screen and (min-width: 576px) {
+    #markdown-toc {
+      width: 75%;
+    }
+  }
+  
+  // medium
+  @media only screen and (min-width: 768px) {
+    #markdown-toc {
+      width: 75%;
+    }
+  }
+  
+  // large
+  @media only screen and (min-width: 992px) {
+    #markdown-toc {
+      width: 50%;
+    }
+  }
+  
+  // extra large
+  @media only screen and (min-width: 1200px) {
+    #markdown-toc {
+      width: 50%;
+    }
+  }
+  
+  // oversize
+  @media only screen and (min-width: 1400px) {
+    #markdown-toc {
+      width: 50%;
+    }
+  }

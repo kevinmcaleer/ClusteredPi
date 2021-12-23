@@ -17,3 +17,10 @@ The nodes run a number of software containers, including:
 - [Node-Red](https://www.nodered.org)
 - [Grafana](https://www.grafana.com)
 - [Portainer](https://www.portainer.com)
+
+---
+
+## About Kevin McAleer
+Kevin McAleer is a Robot maker who builds things and makes videos about them on [Youtube](https://www.youtube.com/kevinmcaleer28).
+
+Follow Kevin on social media, and checkout the channel - [here](https://www.smarsfan.com/about/link_in_bio)

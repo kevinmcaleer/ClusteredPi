@@ -12,11 +12,12 @@
 // @import 'markdown_toc';
 // @import 'code';
 @import 'typography';
+@import 'markdown_toc';
 
 body
 { 
-    font-size: 13pt;
-    font-weight: 300;
+    // font-size: 13pt;
+    // font-weight: 300;
     color: $clr-text-color;
     margin: 0;
     padding: 0;
@@ -99,14 +100,16 @@ h1, h2, h3, h4 {
     font-family: 'Lato';
  }
  
- h1 {
+h1 {
+   font-family: 'Lato';
    font-weight: 900;
    font-size: 40pt;
- }
- h2 {
+}
+
+h2 {
    font-family: 'Lato';
    font-weight: 100;
- }
+}
  
  .main-content {
      grid-area: main;

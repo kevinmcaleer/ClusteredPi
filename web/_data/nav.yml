@@ -2,7 +2,5 @@
   link: /
 - name: About
   link: /about/
-- name: Build 
-  link: /build/
-- name: Blog
+- name: Build Blog
   link: /blog/
