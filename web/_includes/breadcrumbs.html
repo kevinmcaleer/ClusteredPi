@@ -1,0 +1,23 @@
+<div class="breadcrumb-area border-0 py-3 banana-100">
+    <div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb pr-2 m-0">
+            {% assign crumbs = page.url | remove:'/index.html' | split: '/' %}
+            <li class="breadcrumb-item">
+                <a href="/">Home</a>
+            </li>
+            {% for crumb in crumbs offset: 1 %}
+                {% if forloop.last %}
+                    <li class="breadcrumb-item active">
+                        {{ page.title | replace:'-',' ' | remove:'.html' | remove:'.md' | capitalize }}</li>
+                {% else %}
+                    <li class="breadcrumb-item">
+                        <a href="{% assign crumb_limit = forloop.index | plus: 1 %}{% for crumb in crumbs limit: crumb_limit %}{{ crumb | append: '/' | replace:'without-plugin/','without-plugins/' }}{% endfor %}">{{ crumb | replace:'-',' ' | remove:'.html' | capitalize }}</a></li>
+                    
+                {% endif %}
+            {% endfor %}
+        </ol>
+    </nav>
+</div>
+</div>
+

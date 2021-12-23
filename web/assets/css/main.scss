@@ -26,7 +26,7 @@ body
       1fr 5fr 5fr 1fr;
     grid-template-areas: 
         "header header header header"
-        "breadcrumb breadcrumb breadcrumb breadcrumb "
+        "breadcrumb breadcrumb breadcrumb breadcrumb"
         "full full full full"
         "side-nav main main ..."
         "footer footer footer footer";
@@ -36,7 +36,7 @@ header {
     color: black;
     grid-area: header;
     // background: $clr-blue;
-    border-bottom: 5px solid $clr-blue;
+    border-bottom: 5px solid $clr-banana-100;
     // grid-column: 1 / 9;
     border-radius: 5;
   
@@ -71,7 +71,7 @@ header {
      
     }
     .active { 
-      color: $clr-orange;
+      color: $clr-banana-200;
       // border-bottom: white solid 5px;
     }
     a:hover {
@@ -118,18 +118,19 @@ h2 {
  .breadcrumb-area {
     grid-area: breadcrumb;
    
-    margin-top: 5px;
+    // margin-top: 5px;
     padding: 1px;
     margin-left: 0px;
    //  padding-left: 0px;
     border-top: solid;
     border-width: 1px;
-    border-color: #f1f1f1;
+    // border-color: #f1f1f1;
    
     font-size: small;
   
     .breadcrumb {
-      background: white;
+      // background: white;
+      font-size: 12pt;
       li {
         color:inherit;
         // margin: 0px;
@@ -144,11 +145,19 @@ h2 {
       .breadcrumb-item {
        
         a {
-           // padding-left: 10px;
-        padding-right: 10px;
-          color: #a5a5a5;
+          //  padding-left: 5px;
+        // padding-right: 5px;
+          color: #ffffff;
+          
         }
-        
+       
+      }
+      ::before {
+        color: #ffffff;
+      }
+      .active {
+        color: #ffffff;
+        font-weight: 700;
       }
     }
   }
@@ -166,4 +175,51 @@ h2 {
         height: 200px;
         width: 100%;
         object-fit: cover; // here
+  }
+
+.footer {
+    grid-area: footer;
+    grid-column: span 12;
+    background-color: $clr-banana-100;
+    color: #ffffff;
+    h3 {
+      color: #ffffff;
+    }
+  }
+  .social {
+    i {
+      font-size: 40pt;
+    }
+  }
+
+  .center {
+    margin: auto;
+    width: 50%;
+  }
+  .social {
+    display: flexbox;
+    // align-content: center;
+    // border: 3px;
+    // border-style: solid;
+    // border-color: #ffffff
+    ;
+    margin: auto;
+    width: 50%;
+    table {
+      margin-left:auto; 
+      margin-right:auto; 
+      tr {
+        // margin: 10px;
+        padding: 20px;
+        text-align:center; 
+       
+        td {
+          align-items: center;
+          padding: 20px;
+          margin: auto;
+          width: 20%;
+        }
+    }
+   
+   }
   }

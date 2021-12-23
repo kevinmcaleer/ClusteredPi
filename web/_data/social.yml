@@ -1,0 +1,15 @@
+- name: Twitter
+  link: https://www.twitter.com/kevsmac
+  icon: fa fa-twitter
+- name: Facebook
+  link: https://www.facebook.com/smallrobots
+  icon: fa fa-facebook
+- name: Instagram
+  link: https://www.instagram.com/kevinmcaleer
+  icon: fa fa-instagram
+- name: Email
+  link: https://action.smarsfan.com/join-the-list
+  icon: fa fa-envelope
+- name: Web
+  link: https://www.smarsfan.com
+  icon: fa fa-link

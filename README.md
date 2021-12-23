@@ -31,3 +31,6 @@ Type:
 
 # Playbooks
 Grafana - default username is admin, password admin.
+
+---
+To run the playbooks, makes sure you `source venv\bin\activate` in the `ClusteredPi` folder

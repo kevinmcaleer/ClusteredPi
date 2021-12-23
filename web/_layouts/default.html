@@ -8,13 +8,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/css/main.css" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/4a920d3387.css">
+    <script src="https://use.fontawesome.com/4a920d3387.js"></script>
     <title>{{ page.title }}</title>
 </head>
 <body>
     {% include navigation.html %}
-        <div class="main-content mt-4">
-            {{ content }}
-        </div>
+    {% if page.breadcrumbs != false %}
+    <div class="banana-100"></div>
+    {% include breadcrumbs.html %}
+    <div class="banana-100"></div>
+    {% endif %}
+
+    <div class="main-content mt-4">
+        {{ content }}
+    </div>
+    <div class="footer">
+        {% include footer.html %}
+    </div>
 </body>
 <!-- JavaScript Bundle with Popper -->
 

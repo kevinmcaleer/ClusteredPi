@@ -5,5 +5,5 @@ baseurl: ""
 url: "http://www.clustered-pi.com"
 
 markdown: kramdown
-permalink: /blog/:year/:month/:day/:title:output_ext
+permalink: /blog/:title:output_ext
 

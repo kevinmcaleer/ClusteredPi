@@ -1,6 +1,7 @@
 
 <div class="row mt-4">
-  {% for post in site.posts limit:4 %}
+  {% assign sorted = site.posts | sort: 'date' | reverse  %}
+  {% for post in sorted limit:4 %}
   <div class="col-lg-3 col-xs-12">
   <div class="card mb-4" >
     <img class="card-img-top" src="{{post.cover}}" alt="Card image cap">

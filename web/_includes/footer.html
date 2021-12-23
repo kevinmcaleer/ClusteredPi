@@ -1,0 +1,30 @@
+<footer class="container my-4">
+    
+    {% include social_links.html %}
+    <h3>Site map</h3>
+    <hr class="white">
+    <div class="row">
+        <div class="col-4">
+            <h5>Blog</h5>
+            {% include blog_sitemap.html %}
+            <hr class="white">
+        </div>
+        <div class="col-4">
+            <h5>About </h5>
+            <p>Clustered-Pi is an opensource project, the full source code is available from
+                 <a href="https://www.github.com/kevinmcaleer/ClusteredPi" class="white-text">GitHub.</a>
+        </div>
+        <div class="col-4">
+            <h5>Links</h5>
+            
+            {% for item in site.data.links %}
+            <article class="small p-0 m-0">
+            <a href="{{item.link}}" class="small text-white text-decoration-none m-0 p-0"><p class="white-text m-0 p-0">{{ item.name}}</p></a>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <hr class="white">
+    <div class="text-center text-small">Copyright 2021 Advice Factory Ltd | All rights reserved</div>
+</footer>
