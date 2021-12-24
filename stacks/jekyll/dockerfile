@@ -1,22 +1,14 @@
 FROM alpine:latest AS getfiles
 # install git
 RUN apk --no-cache add git
-# RUN apk --no-cache add sudo
 RUN mkdir /src
 WORKDIR /src
 RUN git clone https://www.github.com/kevinmcaleer/ClusteredPi
 
 FROM blafy/jekyll as jekyll
-# RUN apk --no-cache add git
-# RUN apk --no-cache add sudo
-# RUN addgroup -S jekyll 
-# RUN adduser -S jekyll -G jekyll
-# RUN chown -R jekyll:jekyll /src
 COPY --from=getfiles /src/ClusteredPi/web /src
 WORKDIR /src
 RUN mkdir -p /src/_site
-# RUN chown -R jekyll:jekyll /src
-# RUN echo $UID
 RUN jekyll build 
 
 FROM nginx
@@ -24,8 +16,3 @@ COPY --from=getfiles /src/ClusteredPi/stacks/jekyll/nginx.conf /etc/nginx/nginx.
 COPY --from=jekyll /src/_site /www/data
 RUN chown -R nginx:nginx /www/data
 RUN chmod -R 755 /www/data/*
-# RUN chmod -R 644 /www/data/*
-# USER nginx
-
-
-# RUN cp /src /www/data

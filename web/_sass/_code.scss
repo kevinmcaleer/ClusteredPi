@@ -1,0 +1,16 @@
+.language-plaintext.highlighter-rouge {
+    .code {
+    font-family: menlo;
+    color: $clr-purple;
+    }
+    .highlight{
+        background-color: rgb(62, 62, 62);
+        color: rgb(255, 255, 255) !important;
+        margin: 0px;
+        padding: 10px;
+        display: block;
+        width: 100%;
+    }
+    padding-bottom: 30px;
+}
+
