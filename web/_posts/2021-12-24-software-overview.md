@@ -99,6 +99,8 @@ Docker containers can be run very simply using a command such as:
 docker run -itd getting-started
 ```
 
+Check out the article on [Docker](/blog/what-is-docker)
+
 ### Docker-Compose
 More complex container configurations can be built using **Docker-Compose** with the help of a docker-compose.yml file. In fact, you can build multi-stage containers - this is how this website is built:
 

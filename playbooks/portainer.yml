@@ -1,6 +1,6 @@
 ---
 - name: Install Portainer on Nodes
-  hosts: all
+  hosts: node
   tasks:
      - name: Remove previous version - Stop Container
        command: "docker stop Portainer"
