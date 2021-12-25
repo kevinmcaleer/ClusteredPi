@@ -33,7 +33,7 @@ Containers are made up of several parts:
 | `Network`   | Networks can be used to connect images together - its a bit like having a virtual network switch                          |
 {:class="table"}
 
-We will look at each of these components below. To jump to a section click on [Images](#images)
+We will look at each of these components below. To jump to a section click on [Containers](#containers) [Images](#images), [Volumes](#volumes) [Networks](#networks)
 
 ### Why not just install software?
 Docker turns software into blocks of software, called [images](#images),  that can be switched on and off very easily, it also ensure that dependent libraries and configuration are all inside the container. This makes it really easy to install software, start it up, run it and when the time comes, stop it and remove it.
