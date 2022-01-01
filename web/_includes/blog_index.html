@@ -2,7 +2,7 @@
 <div class="row mt-4">
   {% assign sorted = site.posts | sort: 'date' | reverse  %}
   {% for post in sorted limit:4 %}
-  <div class="col-lg-3 col-xs-12">
+  <div class="col-lg-3 col-xs-12 card-group">
   <div class="card mb-4" >
     <img class="card-img-top" src="{{post.cover}}" alt="Card image cap">
     <div class="card-body">
@@ -10,8 +10,8 @@
       <p class="text-muted small mb-0">{{post.date | date:"%d %B %Y" }}</p>
       <p class="text-muted small">{{post.author }}</p>
       <p class="card-text">{{post.excerpt}}.</p>
-      <a href="{{ post.url }}" class="btn btn-primary">Read...</a>
     </div>
+      <div class="card-footer"><a href="{{ post.url }}" class="btn btn-primary">Read...</a></div>
   </div>
 </div>
 {% endfor %}
