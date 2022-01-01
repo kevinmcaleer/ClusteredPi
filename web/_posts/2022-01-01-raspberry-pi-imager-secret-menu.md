@@ -7,10 +7,10 @@ excerpt: Learn about the secret menu in the Raspberry Pi Imager
 cover: /assets/img/blog/raspberrypi-imager.png
 ---
 
-The [Raspberry Pi Imager](https://www.raspberrypi.org/software) is a great piece of software for preparing your SD cards for use with Raspberry Pis. However, if you're setting up a number of Raspberry Pis you will find that you still need to connect a monitor, keyboard and mouse to them to complete the setup, to:
-- update the wifi ssid and password
-- change the hostname and default password
-- change localisation settings
+The [Raspberry Pi Imager](https://www.raspberrypi.org/software) is a great piece of software for preparing your **SD cards** for use with Raspberry Pis. However, if you're setting up a number of Raspberry Pis you will find that you still need to connect a monitor, keyboard and mouse to them to complete the setup, to:
+- update the **wifi ssid** and **password**
+- change the **hostname** and **default password**
+- change **localisation** settings
 
 There is another, better alternative to doing those 3 steps - use the Raspberry Pi Imager secret menu. 
 
@@ -57,4 +57,4 @@ Finally, the persistent settings - these are for the imager app:
 ---
 
 ### Summary
-For me, changing the hostname and configuring the wifi settings are the most useful parts of this app, my only wish is that they would add a button to the main UI instead of making it a hidden menu that you would only know about if you read the [blog article back](https://www.raspberrypi.com/news/raspberry-pi-imager-update-to-v1-6/) in March 2021.
+For me, changing the **hostname** and configuring the **wifi settings** are the most useful parts of this app, my only wish is that they would add a **button** to the main UI instead of making it a hidden menu that you would only know about if you read the [blog article back](https://www.raspberrypi.com/news/raspberry-pi-imager-update-to-v1-6/) in March 2021.

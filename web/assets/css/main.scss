@@ -252,3 +252,18 @@ blockquote {
   color:#ffffff;
   font-size: 120%;
 }
+
+.blogpage {
+  font-family: lora;
+  p, li {
+    font-size: 14pt;
+    color: black;
+    strong {
+      font-weight: 900;
+    }
+  }
+  h1, h2, h3, h4 {
+    font-family: lora;
+  }
+  
+}
