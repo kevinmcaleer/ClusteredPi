@@ -14,7 +14,7 @@ cover: /assets/img/blog/terminal-hacks.jpg
 There are a couple of cool things you can do to customize or hack your Raspberry Pi Terminal.
 
 There is an accompanying video to go along with this article:
-[![/assets/img/blog/terminal-hacks.jpg](/assets/img/blog/terminal-hacks.jpg){:class="container mt-4 img-fluid"}](https://youtu.be/)
+[![](https://i.ytimg.com/vi/-nMNtW2SAsM/maxresdefault.jpg){:class="container mt-4 img-fluid"}](https://youtu.be/-nMNtW2SAsM)
 
 ---
 
