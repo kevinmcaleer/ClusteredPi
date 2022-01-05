@@ -22,6 +22,7 @@ body
     color: $clr-text-color;
     margin: 0;
     padding: 0;
+    padding-top: 70px;
     display: grid;
     grid-template-columns:
       1fr 5fr 5fr 1fr;
@@ -37,7 +38,7 @@ header {
     color: black;
     grid-area: header;
     // background: $clr-blue;
-    border-bottom: 5px solid $clr-banana-100;
+    // border-bottom: 5px solid $clr-banana-100;
     // grid-column: 1 / 9;
     border-radius: 5;
   
@@ -56,6 +57,7 @@ header {
   
       margin: 0px;
       padding: 0px;
+      border-bottom: 5px solid $clr-banana-100;
       
     }
     ul {
@@ -114,6 +116,7 @@ h2 {
  
  .main-content {
      grid-area: main;
+
  }
 
  .breadcrumb-area {
@@ -259,11 +262,10 @@ blockquote {
     font-size: 14pt;
     // color: black;
     strong {
-      font-weight: 900;
+      font-weight: 700;
     }
   }
   h1, h2, h3, h4 {
     font-family: lora;
   }
-  
 }
