@@ -1,0 +1,12 @@
+FROM alpine:latest AS getfiles
+# install git
+RUN apk add git
+RUN mkdir -m 700 /src
+WORKDIR /src
+RUN git clone https://www.github.com/kevinmcaleer/kevsrobots.com
+
+FROM python:3 as python
+COPY --from=getfiles /src/kevsrobots.com /kevsrobots
+WORKDIR /kevsrobots
+RUN pip install -r requirements.txt
+CMD [ "python", "./pretty_url.py" ]

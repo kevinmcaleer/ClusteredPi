@@ -1,0 +1,7 @@
+version: "3.9"
+services:
+  pretty_url:
+    build: .
+    ports: 
+      - "2222:2222"
+    restart: always
