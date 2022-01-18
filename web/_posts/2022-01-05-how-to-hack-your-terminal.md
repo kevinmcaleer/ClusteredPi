@@ -119,7 +119,7 @@ Log out and log back in to see the new message.
 ---
 
 ## motd - Message of the Day
-There is a file called Message of the Day which is displayed just after loing (before our new Neofetch command is run). The intention for this file is to enable system administrators to provide timely information to end users, when logging in to a multiuser Unix system. Examples of this would be planned maintenance windows where the system will be unavailable, or contact information to report faults and raise requests via a help desk etc.
+There is a file called Message of the Day which is displayed just after logging (before our new Neofetch command is run). The intention for this file is to enable system administrators to provide timely information to end users, when logging in to a multiuser Unix system. Examples of this would be planned maintenance windows where the system will be unavailable, or contact information to report faults and raise requests via a help desk etc.
 
 The motd file can be found at `/etc/motd`.
 
