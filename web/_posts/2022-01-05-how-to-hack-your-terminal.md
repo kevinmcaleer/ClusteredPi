@@ -72,7 +72,7 @@ To install Neofetch, type:
 sudo apt install neofetch
 ```
 
-To run Neo fetch directly after login, add 
+To run Neofetch directly after login, add 
 `neofetch`
 
 as the last line to the `.profile` file in your home directory - `$HOME`.
