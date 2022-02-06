@@ -17,4 +17,4 @@ services:
     volumes:
       - ./certbot/conf:/etc/letsencrypt:rw
       - ./certbot/www:/var/www/certbot:rw
-    command: certonly --webroot -w /var/www/certbot --force-renewal --email kevinmcaleer@gmail.com -d clustered-pi.com --agree-tos
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email kevinmcaleer@gmail.com -d clustered-pi.com --agree-tos --test-cert
