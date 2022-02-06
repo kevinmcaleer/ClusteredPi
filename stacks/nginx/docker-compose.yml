@@ -9,12 +9,12 @@ services:
     # image: myapp
     restart: always
     volumes:
-      - /home/pi/ClusteredPi/certbot/conf:/etc/certbot:ro
-      - /home/pi/ClusteredPi/certbot/data:/var/www/certbot:ro
+      - /home/pi/ClusteredPi/certbot/conf:/etc/letsencrypt:ro
+      - /home/pi/ClusteredPi/certbot/data:/var/www/letsencrypt:ro
   certbot:
     image: certbot/certbot:arm32v6-latest
     container_name: certbot
     volumes:
-      - /home/pi/ClusteredPi/certbot/conf:/etc/certbot:rw
-      - /home/pi/ClusteredPi/certbot/data:/var/www/certbot:rw
+      - /home/pi/ClusteredPi/certbot/conf:/etc/letsencrypt:rw
+      - /home/pi/ClusteredPi/certbot/data:/var/www/letsencrypt:rw
     command: certonly --webroot -w /var/www/certbot --force-renewal --email kevinmcaleer@gmail.com -d clustered-pi.com --agree-tos --staging
