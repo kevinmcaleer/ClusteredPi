@@ -13,6 +13,8 @@ services:
       - ./data/certbot/www:/var/www/certbot:ro
   certbot:
     image: certbot/certbot
+    container_name: certbot
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt:rw
       - ./data/certbot/www:/var/www/certbot:rw
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email {email} -d {domain} --agree-tos
