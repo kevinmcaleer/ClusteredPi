@@ -11,5 +11,5 @@ services:
     # image: myapp
     restart: always
     volumes:
-      - ./certbot/conf:/etc/letsencrypt:ro
-      - ./certbot/data:/var/www/certbot:ro
+      - /home/pi/ClusteredPi/certbot/conf:/etc/letsencrypt:ro
+      - /home/pi/ClusteredPi/certbot/data:/var/www/certbot:ro
