@@ -18,7 +18,7 @@
       docker_container:
         name: nginx_myapp_load_balancer_1
         state: absent
-        remove_images: all
+        # remove_images: all
       ignore_errors: yes  
 
     - name: Prune everything
