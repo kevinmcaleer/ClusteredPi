@@ -10,11 +10,11 @@ services:
     restart: always
     volumes:
       - ./certbot/conf:/etc/letsencrypt:ro
-      - ./certbot/www:/var/www/certbot:ro
+      - ./certbot/data:/var/www/certbot:ro
   certbot:
     image: certbot/certbot:arm32v6-latest
     container_name: certbot
     volumes:
       - ./certbot/conf:/etc/letsencrypt:rw
-      - ./certbot/www:/var/www/certbot:rw
-    command: certonly --webroot -w /var/www/certbot --force-renewal --email kevinmcaleer@gmail.com -d clustered-pi.com --agree-tos --test-cert
+      - ./certbot/data:/var/www/certbot:rw
+    command: certonly --webroot-path=/var/www/certbot --force-renewal --email kevinmcaleer@gmail.com -d clustered-pi.com --agree-tos --test-cert
