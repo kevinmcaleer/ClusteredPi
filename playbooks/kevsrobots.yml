@@ -1,0 +1,48 @@
+---
+- name: Install `kevsrobots` on Web Nodes
+  hosts: web
+  # hosts: node04
+  tasks:
+     - name: clone git 
+       git:
+         repo: 'https://github.com/kevinmcaleer/ClusteredPi'
+         dest: /home/pi/ClusteredPi
+         clone: yes
+         update: yes
+       register: output
+
+     - ansible.builtin.debug:
+         var: output
+         
+     - name: remove kevsrobots container
+       community.docker.docker_compose:
+        project_src: '/home/pi/ClusteredPi/stacks/kevsrobots'
+        state: absent
+        remove_images: all
+       register: output
+       
+     - ansible.builtin.debug:
+         var: output
+
+     - name: Prune everything
+       community.docker.docker_prune:
+         containers: yes
+         images: yes
+         networks: yes
+         volumes: yes
+         builder_cache: yes
+
+     - ansible.builtin.debug:
+         var: output
+
+     - name: Bring kevsrobots up
+       community.docker.docker_compose:
+         project_src: /home/pi/ClusteredPi/stacks/kevsrobots
+         build: no
+         nocache: yes
+         recreate: always
+         state: present
+       register: output
+  
+     - ansible.builtin.debug:
+         var: output
