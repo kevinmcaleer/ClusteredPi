@@ -1,0 +1,18 @@
+FROM alpine:latest AS getfiles
+# install git
+RUN apk --no-cache add git
+RUN mkdir /src
+WORKDIR /src
+RUN git clone https://www.github.com/kevinmcaleer/kevsrobots.com
+
+FROM blafy/jekyll as jekyll
+COPY --from=getfiles /src/kevsrobots.com/web /src
+WORKDIR /src
+RUN mkdir -p /src/_site
+RUN jekyll build 
+
+FROM nginx
+COPY --from=getfiles /src/kevsrobots.com/stacks/kevsrobots/nginx.conf /etc/nginx/nginx.conf
+COPY --from=jekyll /src/_site /www/data
+RUN chown -R nginx:nginx /www/data
+RUN chmod -R 755 /www/data/*

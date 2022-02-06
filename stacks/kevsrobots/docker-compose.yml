@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  myapp:
+    environment:
+      JEKYLL_UID: 1000
+      JEKYLL_GID: 1000
+      JEKYLL_ENV: production
+    build: .
+    ports: 
+      - "3333:3333"
+    # image: myapp
+    restart: always
