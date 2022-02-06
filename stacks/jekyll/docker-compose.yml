@@ -10,3 +10,6 @@ services:
       - "2222:2222"
     # image: myapp
     restart: always
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt:ro
+      - ./certbot/data:/var/www/certbot:ro
