@@ -12,7 +12,7 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt:ro
       - ./data/certbot/www:/var/www/certbot:ro
   certbot:
-    image: certbot/certbot
+    image: certbot/certbot:arm32v6-latest
     container_name: certbot
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt:rw
