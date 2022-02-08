@@ -1,6 +1,6 @@
 ---
 layout: blogpage
-title: Clusterd-Pi Zero edition
+title: Clustered-Pi Zero edition
 author: Kevin McAleer
 categories: [02. Hardware]
 excerpt: 3D Print your own Clustered-Pi data center
