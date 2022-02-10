@@ -1,6 +1,7 @@
 ---
 layout: blogpage
 title: Hardware Overview
+subtitle: All about the bits and bobs
 excerpt: Learn how to build your own Clustered-Pi
 cover: /assets/img/chassis.jpg
 author: Kevin McAleer

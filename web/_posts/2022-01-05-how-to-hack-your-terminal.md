@@ -1,6 +1,7 @@
 ---
 layout: blogpage
 title: How to Hack the Raspberry Pi Terminal
+subtitle: Well customize it anyway
 author: Kevin McAleer
 categories: [04 Software]
 excerpt: Learn how to customize the Raspberry Pi Terminal

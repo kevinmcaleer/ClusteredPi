@@ -40,9 +40,9 @@
               {% assign short = page.url | replace:'/',' ' | truncatewords: 1 | remove:'...' %}
               {% assign url = item.link | replace:'/',' ' | truncatewords: 1 | remove:'...' %}
               
-              <a href="{{ item.link }}" class="dropdownitem {% if short == url %}active{% endif %}">
+              <a href="{{ item.link }}" class="{% if short == url %}active{% endif %}">
                 {% if item.icon != nil %}
-                <i class="fa fa-{{ item.icon }}"></i>
+                <i class="{{ item.icon }}"></i>
                 {% endif %}
                 {{ item.name }}
                 </a>

@@ -1,6 +1,7 @@
 ---
 layout: blogpage
 title: What is Docker?
+subtitle: Its a box of delights
 author: Kevin McAleer
 categories: [04 Software]
 excerpt: Learn about Docker, what it can do, and how to use 

@@ -2,7 +2,7 @@
     <div class="category-group">   
         {% for item in site.posts %}
             <article class="small p-0 m-0">
-                <a href="{{ item.url }}" class="text-decoration-none text-muted small"><p class="white-text m-0 p-0">{{ item.title }}</p></a>
+                <a href="{{ item.url }}" class="text-decoration-none text-muted small {% if item.url == page.url%}{{active}}{% endif %}"><p class="white-text m-0 p-0">{{ item.title }}</p></a>
             </article>
         {% endfor %}
     </div>

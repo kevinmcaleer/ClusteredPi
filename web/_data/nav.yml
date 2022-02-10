@@ -1,6 +1,9 @@
 - name: Home
   link: /
+  icon: fa-solid fa-house
 - name: About
   link: /about/
 - name: Build Blog
   link: /blog/
+- name: Discord
+  link: https://action.smarsfan.com/join-discord

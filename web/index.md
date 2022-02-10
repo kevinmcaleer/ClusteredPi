@@ -4,27 +4,13 @@ title: Clustered-Pi
 breadcrumbs: false
 ---
 
-<h1 align="center">Welcome to Clustered-Pi</h1>
-<h2 align="center">The Raspberry Pi Cluster</h2>
+# Welcome to Clustered-Pi
+{:class="text-center"}
 
-<div class="row container my-4" align="center">
-<div class="col">
-<img src="assets/img/clusteredpi08.jpg" class="img-fluid" style="max-width:100;">
+# The Raspberry Pi Cluster
+{:class="text-center"}
 
-</div>
-<div class="col">
-<img src="/assets/img/clustered-pi-zero.jpg" class="img-fluid" style="max-width:100;">
-</div>
-<div class="row">
-<div class="col my-2">
-<p>Raspberry Pi 4 Cluster</p>
-</div>
-<div class="col my-2">
-<p>Raspberry Pi Zero Cluster</p>
-</div>
-</div>
-</div>
-
+{% include front_cards.html %}
 
 ## What is Clustered-Pi?
 What is [Clustered-Pi](/about/)? The short version is - its a cluster of four **Raspberry 4** computers, running Raspberry Pi OS. It hosts this website using Docker, along with other components.
@@ -33,16 +19,8 @@ Read the [blog](/blog/) for articles about Clustered-Pi, and how to [build](/blo
 
 ---
 
-## Youtube Series
-
-Watch the Youtube series here. 
-
-[![Youtube Series](/assets/img/clustered-pi-youtube.jpg){:class="img-fluid rounded shadow my-4" style="width:600px"}](https://youtube.com/playlist?list=PLU9tksFlQRiovpszMpg4K90GyXDt_xncn) 
-
----
-
 ## Self-hosted Website
 Clustered-Pi is a self hosted website, meaning the pages you are viewing now are served up from the Clustered-Pi in my Robot Lab. 
 
-**Raspberry Pi's** are currently in short supply! - checkout <www.rpilocator.com> for up-to-date information on Raspberry Pi stock levels from most suppliers.
+**Raspberry Pi's** are currently in short supply! - checkout <https://www.rpilocator.com> for up-to-date information on Raspberry Pi stock levels from most suppliers.
 {:class="alert alert-warning"}

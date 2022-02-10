@@ -1,6 +1,7 @@
 ---
 layout: blogpage
 title: Clustered-Pi Zero edition
+subtitle: Print your own Cray-1 Supercomputer
 author: Kevin McAleer
 categories: [02. Hardware]
 excerpt: 3D Print your own Clustered-Pi data center

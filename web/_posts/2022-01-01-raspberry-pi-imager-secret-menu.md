@@ -1,6 +1,7 @@
 ---
 layout: blogpage
 title: Raspberry Pi Imager Secret Menu
+subtitle: Ssshhh - don't tell anyone
 author: Kevin McAleer
 categories: [04 Software]
 excerpt: Learn about the secret menu in the Raspberry Pi Imager 

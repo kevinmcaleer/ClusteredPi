@@ -2,6 +2,7 @@
 layout: blogpage
 title: Port Forwarding
 excerpt: Learn how to make your local server visible on the world wide web
+subtitle: Host a website from your own home or office
 cover: /assets/img/port_forwarding.jpg
 author: Kevin McAleer
 categories: [03. Networking]

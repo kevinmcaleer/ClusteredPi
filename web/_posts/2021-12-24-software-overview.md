@@ -1,6 +1,7 @@
 ---
 layout: blogpage
 title: Software Overview
+subtitle: Learn all about the software that runs on Clustered-pi
 author: Kevin McAleer
 category: 04 Software
 cover: /assets/img/software-overview.jpg

@@ -1,6 +1,7 @@
 ---
 layout: blogpage
 title: Welcome to Clustered-Pi
+subtitle: The home of the Raspberry Pi Zero Cluster
 excerpt: This is a fun project that you can build yourself
 cover: /assets/img/clusteredpi01.png
 author: Kevin McAleer

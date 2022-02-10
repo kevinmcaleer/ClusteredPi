@@ -5,8 +5,8 @@
     {% for category in sorted_categories %}
         <div class="category-group"> 
             <h5 class="mt-3 mb-0">{{ category[0] }}</h5>
-            
-            {% for item in category[1] %}
+            {% assign items = category[1] | sort:date%}
+            {% for item in items %}
                 <article class="small py-0 my-0">
                     <a href="{{ item.url }}" class="text-decoration-none text-muted small">{{ item.title }}</a>
                 </article>
