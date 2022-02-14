@@ -34,12 +34,12 @@
          builder_cache: yes
 
      - name: get local hostname 
-         var: output
-         action: command /usr/bin/hostname
-         register: host
+       var: output
+       action: command /usr/bin/hostname
+       register: host
      - name: put hostname into a file
-         var: output
-         action: command echo {host} > /home/pi/ClusteredPi/web/_data/_config.yml
+       var: output
+       action: command echo {host} > /home/pi/ClusteredPi/web/_data/_config.yml
 
      - ansible.builtin.debug:
          var: output
