@@ -1,0 +1,7 @@
+---
+- name: Get Uptime
+  hosts: nodes
+  become: yes
+  tasks:
+     - name: Get Current Uptime
+       command: "uptime"
