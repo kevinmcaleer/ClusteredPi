@@ -40,12 +40,12 @@
      - ansible.builtin.debug:
          var: host       
 
-     # put hostname into a file
-     ansible.builtin.lineinfile:
-       path: /home/pi/ClusteredPi/web/_data/config.yml
-       insertbefore: BOF
-       state: present
-       line: {{ host }}
+     - name:  put hostname into a file
+       ansible.builtin.lineinfile:
+         path: /home/pi/ClusteredPi/web/_data/config.yml
+         insertbefore: BOF
+         state: present
+         line: {{ host }}
 
     #  - name: put hostname into a file
       #  action: command echo {{host}} > /home/pi/ClusteredPi/web/_data/config.yml
