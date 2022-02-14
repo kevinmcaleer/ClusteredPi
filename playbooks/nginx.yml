@@ -32,12 +32,13 @@
          volumes: yes
          builder_cache: yes
 
-    #  - name: Create and start services
-    #    community.docker.docker_compose:
-    #      project_src: /home/pi/ClusteredPi/stacks/jekyll
-    #      nocache: yes
-    #      recreate: always
-    #    register: output
+     - name: get local hostname 
+         var: output
+         action: command /usr/bin/hostname
+         register: host
+     - name: put hostname into a file
+         var: output
+         action: command echo {hostname} > /home/pi/ClusteredPi/web/_data/_config.yml
 
      - ansible.builtin.debug:
          var: output
