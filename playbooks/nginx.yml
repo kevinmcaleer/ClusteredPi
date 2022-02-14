@@ -40,9 +40,16 @@
      - ansible.builtin.debug:
          var: host       
 
-     - name: put hostname into a file
-       action: command echo {host} > /home/pi/ClusteredPi/web/_data/config.yml
-       action: command echo "hostname: {host}" >> /home/pi/ClusteredPi/web/_data/config.yml
+     # put hostname into a file
+     ansible.builtin.lineinfile:
+       path: /home/pi/ClusteredPi/web/_data/config.yml
+       insertbefore: BOF
+       state: present
+       line: {{ host }}
+
+    #  - name: put hostname into a file
+      #  action: command echo {{host}} > /home/pi/ClusteredPi/web/_data/config.yml
+      #  action: copy content={{host}} dest=/home/pi/ClusteredPi/web/_data/config.yml
 
      - ansible.builtin.debug:
          var: output
