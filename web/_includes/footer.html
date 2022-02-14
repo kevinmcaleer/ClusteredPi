@@ -25,8 +25,8 @@
         </div>
         <div class="col-3">
             <h5>Status</h5>
-            {% assign status = site.data.config %}
-            <p class="small text-white text-decoration-none m-0 p-0">Running on Node: {{ status }}</p>
+            {% assign status = site.config %}
+            <p class="small text-white text-decoration-none m-0 p-0">Running on Node: {{ status.hostname }}</p>
             <hr class="white">
         </div>
     </div>
