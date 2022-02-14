@@ -42,6 +42,7 @@
 
      - name: put hostname into a file
        action: command echo {host} > /home/pi/ClusteredPi/web/_data/config.yml
+       action: command echo "hostname: {host}" >> /home/pi/ClusteredPi/web/_data/config.yml
 
      - ansible.builtin.debug:
          var: output
