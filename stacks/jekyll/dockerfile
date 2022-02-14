@@ -5,10 +5,12 @@ RUN mkdir /src
 WORKDIR /src
 RUN git clone https://www.github.com/kevinmcaleer/ClusteredPi
 
-FROM blafy/jekyll as jekyll
+# FROM blafy/jekyll as jekyll
+FROM jekyll/jekyll as jekyll
 COPY --from=getfiles /src/ClusteredPi/web /src
 WORKDIR /src
 RUN mkdir -p /src/_site
+RUN echo "hostname: $(HOSTNAME)" > /src/web/_data/_config.yml 
 RUN jekyll build 
 
 FROM nginx
