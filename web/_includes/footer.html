@@ -4,17 +4,17 @@
     <h3>Site map</h3>
     <hr class="white">
     <div class="row">
-        <div class="col-4">
+        <div class="col-3">
             <h5>Blog</h5>
             {% include blog_sitemap.html %}
             <hr class="white">
         </div>
-        <div class="col-4">
+        <div class="col-3">
             <h5>About </h5>
             <p>Clustered-Pi is an opensource project, the full source code is available from
                  <a href="https://www.github.com/kevinmcaleer/ClusteredPi" class="white-text">GitHub.</a>
         </div>
-        <div class="col-4">
+        <div class="col-3">
             <h5>Links</h5>
             
             {% for item in site.data.links %}
@@ -22,6 +22,12 @@
             <a href="{{item.link}}" class="small text-white text-decoration-none m-0 p-0"><p class="white-text m-0 p-0">{{ item.name}}</p></a>
             </article>
             {% endfor %}
+        </div>
+        <div class="col-3">
+            <h5>Status</h5>
+            {% assign status = site.data.config %}
+            <p class="small text-white text-decoration-none m-0 p-0">Running on Node: {{ status }}</p>
+            <hr class="white">
         </div>
     </div>
     
