@@ -42,11 +42,19 @@
 
      - name:  put hostname into a file
        ansible.builtin.lineinfile:
+         create: yes
          path: /home/pi/ClusteredPi/web/_data/config.yml
          insertbefore: BOF
          state: present
          line: "hostname: {{ host }}"
 
+     - name:  put hostname into _config.yml file
+       ansible.builtin.lineinfile:
+         create: yes
+         path: /home/pi/ClusteredPi/web/_config.yml
+         insertbefore: BOF
+         state: present
+         line: "hostname: {{ host }}"
     #  - name: put hostname into a file
       #  action: command echo {{host}} > /home/pi/ClusteredPi/web/_data/config.yml
       #  action: copy content={{host}} dest=/home/pi/ClusteredPi/web/_data/config.yml
