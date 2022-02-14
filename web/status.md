@@ -5,7 +5,7 @@ title: Status
 
 # Status
 
-{% assign hostname = site.config.hostname %}
+{% assign hostname = site.hostname %}
 {{ hostname }}
 {% for item in hostname %}
 {{ item }}
