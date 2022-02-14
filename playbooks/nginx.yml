@@ -54,7 +54,7 @@
          path: /home/pi/ClusteredPi/web/_config.yml
          insertbefore: BOF
          state: present
-         line: "hostname: {{ host }}"
+         line: "hostname: {{ host.stdout }}"
     #  - name: put hostname into a file
       #  action: command echo {{host}} > /home/pi/ClusteredPi/web/_data/config.yml
       #  action: copy content={{host}} dest=/home/pi/ClusteredPi/web/_data/config.yml
