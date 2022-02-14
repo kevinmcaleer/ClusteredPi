@@ -1,6 +1,6 @@
 ---
 - name: Get Uptime
-  hosts: nodes
+  hosts: web
   become: yes
   tasks:
      - name: Get Current Uptime
