@@ -35,10 +35,10 @@
 
      - name: get local hostname 
        action: command /usr/bin/hostname
-       register: host.stdout
+       register: host
 
      - ansible.builtin.debug:
-         var: host       
+         var: host.stdout       
 
      - name:  put hostname into a file
        ansible.builtin.lineinfile:
@@ -46,7 +46,7 @@
          path: /home/pi/ClusteredPi/web/_data/config.yml
          insertbefore: BOF
          state: present
-         line: "hostname: {{ host }}"
+         line: "hostname: {{ host.stdout }}"
 
      - name:  put hostname into _config.yml file
        ansible.builtin.lineinfile:
