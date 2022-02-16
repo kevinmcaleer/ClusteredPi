@@ -5,10 +5,8 @@ title: Status
 
 # Status
 
-{% assign hostname = site.data.config %}
-Hostname: {{ hostname }}
+This page is hosted on node {{ site.hostname }}
 
-hostname 2: {{ site.hostname }}
 ---
 
 {% for item in hostname %}
