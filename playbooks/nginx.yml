@@ -1,7 +1,7 @@
 ---
 - name: Install `myapp` on Web Nodes
-  # hosts: web
-  hosts: node03
+  hosts: web
+  # hosts: node03
   # hosts: master
   tasks:
      - name: clone git 
