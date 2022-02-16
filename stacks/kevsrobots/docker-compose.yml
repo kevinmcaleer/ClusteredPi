@@ -1,12 +1,10 @@
 version: "3.9"
 services:
-  myapp:
-    environment:
-      JEKYLL_UID: 1000
-      JEKYLL_GID: 1000
-      JEKYLL_ENV: production
-    build: .
-    ports: 
-      - "3333:3333"
-    # image: myapp
-    restart: always
+  jekyll-serve:
+    image: jekyll/jekyll:4.0
+    volumes:
+      - '../../web:/srv/jekyll'
+    ports:
+      - 4000:4000
+      - 35729:35729
+    command: "jekyll serve --watch --livereload"
