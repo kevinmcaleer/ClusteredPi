@@ -62,6 +62,11 @@
      - ansible.builtin.debug:
          var: output
 
+     - name: Current Playbook working path
+       shell: pwd
+       register: playbook_path_output
+     - debug: var=playbook_path_output.stdout
+
      - name: Bring myApp up
        community.docker.docker_compose:
          project_src: /home/pi/ClusteredPi/stacks/jekyll
