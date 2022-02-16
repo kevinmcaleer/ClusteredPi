@@ -1,7 +1,7 @@
 ---
 - name: Install `kevsrobots` on Web Nodes
-  hosts: web
-  # hosts: node04
+  # hosts: web
+  hosts: master
   tasks:
      - name: clone git 
        git:
