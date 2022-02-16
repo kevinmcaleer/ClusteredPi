@@ -3,7 +3,7 @@ FROM alpine:latest AS getfiles
 RUN apk --no-cache add git
 RUN mkdir /src
 WORKDIR /src
-RUN git clone https://www.github.com/kevinmcaleer/kevsrobots.com
+RUN git clone https://www.github.com/kevinmcaleer/kevsrobots.com --recurse-submodules --remote-submodules
 
 FROM blafy/jekyll as jekyll
 COPY --from=getfiles /src/kevsrobots.com/web /src
