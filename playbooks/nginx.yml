@@ -54,7 +54,16 @@
          path: /home/pi/ClusteredPi/stacks/jekyll/web_config.yml
          insertbefore: BOF
          state: present
-         line: "hostname: {{ host.stdout }}"
+         line: '{{ item }}'
+       with_items:
+         - "hostname: {{ host.stdout }}"
+         - "title: Clustered-Pi"
+         - "email: kevinmcaleer@gmail.com"
+         - "description: This is the official website of Clustered-Pi"
+         - 'url: "http://www.clustered-pi.com"'
+         - 'baseurl: ""'
+         - "markdown: kramdown"
+         - "permalink: /blog/:title:output_ext"
     #  - name: put hostname into a file
       #  action: command echo {{host}} > /home/pi/ClusteredPi/web/_data/config.yml
       #  action: copy content={{host}} dest=/home/pi/ClusteredPi/web/_data/config.yml
