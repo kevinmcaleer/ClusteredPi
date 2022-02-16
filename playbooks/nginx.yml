@@ -43,7 +43,7 @@
      - name:  put hostname into a file
        ansible.builtin.lineinfile:
          create: yes
-         path: /home/pi/ClusteredPi/web/_data/config.yml
+         path: /home/pi/ClusteredPi/stacks/jekyll/data_config.yml
          insertbefore: BOF
          state: present
          line: "hostname: {{ host.stdout }}"
@@ -51,7 +51,7 @@
      - name:  put hostname into _config.yml file
        ansible.builtin.lineinfile:
          create: yes
-         path: /home/pi/ClusteredPi/web/_config.yml
+         path: /home/pi/ClusteredPi/stacks/jekyll/web_config.yml
          insertbefore: BOF
          state: present
          line: "hostname: {{ host.stdout }}"
