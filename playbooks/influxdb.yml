@@ -1,0 +1,9 @@
+---
+- name: Install Influxdb on influx Nodes
+  hosts: influx
+  tasks:
+     - name: Install influx
+       command: "docker run -p 8086:8086 -v influxdb:/var/lib/influxdb influxdb:1.8" 
+       ignore_errors: yes
+
+      
