@@ -1,0 +1,12 @@
+---
+- name: Bring pretty_url up
+       community.docker.docker_compose:
+         project_src: /home/pi/ClusteredPi/stacks/weather
+         build: yes
+         nocache: yes
+         recreate: always
+         state: present
+       register: output
+  
+     - ansible.builtin.debug:
+         var: output
