@@ -6,7 +6,7 @@
        ansible.builtin.command: /bin/false
        ignore_errors: yes
      - name: Install Grafana
-       command: "docker run -d --name=grafana -p 3000:3000 grafana/grafana" -v grafana-storage:/var/lib/grafana
+       command: "docker run -d --name=grafana -p 3000:3000 grafana/grafana -v grafana-storage:/var/lib/grafana"
        ignore_errors: yes
 
        
