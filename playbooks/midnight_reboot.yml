@@ -1,0 +1,10 @@
+---
+- name: Install `Midnight Reboot command` on all Nodes
+  hosts: all
+  tasks:
+     - name: Reboot at 23:59
+       ansible.builtin.cron:
+         name: "reboot"
+         minute: "59"
+         hour: "23"
+         job: "/sbin/shutdown -r now"
