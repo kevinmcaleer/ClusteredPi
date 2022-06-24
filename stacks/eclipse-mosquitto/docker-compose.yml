@@ -20,6 +20,6 @@ networks:
     driver: macvlan
     ipam:
      config:
-       - subnet: 192.168.1.0
+       - subnet: 192.168.1.0/24
          gateway: 192.168.1.254
     
