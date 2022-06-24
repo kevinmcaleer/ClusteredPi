@@ -6,7 +6,7 @@ services:
     restart: always
     volumes:
       - /home/pi/ClusteredPi/config/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
-      - /home/pi/ClusteredPi/config/mosquitto.passwd:/mosquitto/config/mosquitto.passwd
+      # - /home/pi/ClusteredPi/config/mosquitto.passwd:/mosquitto/config/mosquitto.passwd
       - /home/pi/ClusteredPi/config/log/mosquitto.log:/mosquitto/log/mosquitto.log
       - /home/pi/ClusteredPi/config/data:/mosquitto/data
     ports:
