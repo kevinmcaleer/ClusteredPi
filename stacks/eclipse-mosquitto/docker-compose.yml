@@ -13,7 +13,7 @@ services:
       - "1883:1883"
     networks:
       mymacvlanActive:
-        ipv4_address: 192.168.1.152
+        ipv4_address: 192.168.1.153
        
 networks:
   mymacvlanActive:
