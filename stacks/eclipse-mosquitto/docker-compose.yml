@@ -11,3 +11,14 @@ services:
       - /home/pi/ClusteredPi/config/data:/mosquitto/data
     ports:
       - "1883:1883"
+    networks:
+      vpcbr:
+        ipv4_address: 192.168.1.153
+
+networks:
+  vpcbr:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 192.168.1.0/16
+         gateway: 192.168.1.254
