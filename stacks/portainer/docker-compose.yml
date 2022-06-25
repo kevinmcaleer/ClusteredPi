@@ -2,7 +2,7 @@ version: '3'
 services:
   Portainer:
     container_name: Portainer
-    image: "cr.portainer.io/portainer/portainer-ce:stable"
+    image: "cr.portainer.io/portainer/portainer-ce"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
