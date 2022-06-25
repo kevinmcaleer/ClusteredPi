@@ -8,4 +8,13 @@ services:
       - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
     privileged: true
-    network_mode: host
+    # network_mode: host
+
+    networks:
+      mymacvlanActive:
+        ipv4_address: 192.168.1.153
+       
+networks:
+  mymacvlanActive:
+    external: true
+    
