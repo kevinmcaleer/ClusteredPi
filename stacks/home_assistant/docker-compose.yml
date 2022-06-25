@@ -8,7 +8,6 @@ services:
       - /etc/localtime:/etc/localtime:ro
     restart: unless-stopped
     privileged: true
-    # network_mode: host
 
     networks:
       mymacvlanActive:

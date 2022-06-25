@@ -11,5 +11,5 @@
        ignore_errors: yes
 
      - name: Installing Portainer
-       command: "docker run -itd --name Portainer -p 8000:8000 -p 9443:9443 -v /var/run/docker.sock:/var/run/docker.sock cr.portainer.io/portainer/portainer-ce:2.11.0 "
+       command: "docker run -itd --name Portainer -p 8000:8000 -p 9443:9443 -v /var/run/docker.sock:/var/run/docker.sock cr.portainer.io/portainer/portainer-ce:2.13.1"
        ignore_errors: yes
