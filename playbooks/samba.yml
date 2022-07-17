@@ -1,6 +1,6 @@
 ---
 - name: Setup Samba file share
-  hosts: influxdb
+  hosts: influx
   remote_user: root
   tasks:
     - name: Install packages
