@@ -1,0 +1,35 @@
+---
+- name: Setup Samba file share
+  hosts: influxdb
+  remote_user: root
+  tasks:
+    - name: Install packages
+      apt:
+        update_cache: yes
+        autoremove: yes
+        state: present
+        pkg:
+          - samba
+          - samba-common-bin
+          - smbclient
+    - name: samba config
+      blockinfile:
+        path: /etc/samba/smb.conf
+        block: |
+          [root]
+          path = /
+          read only = no
+          public = no
+          writable = yes
+          force user = root
+          [kev]
+          path = /home/kev
+          read only = no
+          public = no
+          writable = yes
+          create mask=0644
+          directory mark=0755
+          force user = root
+      notify:
+        - restart samba
+      tags: [ samba ]
