@@ -3,7 +3,7 @@
   hosts: influx
   tasks:
      - name: Install influx
-       command: "docker run -p 8086:8086 -v influxdb:/var/lib/influxdb influxdb:1.8" 
+       command: "docker run -p 8086:8086 8083:8083 -v influxdb:/var/lib/influxdb influxdb:1.8" 
        ignore_errors: yes
 
       
