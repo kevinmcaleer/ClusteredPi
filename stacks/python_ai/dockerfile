@@ -3,11 +3,14 @@ FROM alpine:latest AS getfiles
 RUN apk --no-cache add git
 RUN mkdir /src
 WORKDIR /src
-RUN git clone https://www.github.com/kevinmcaleer/pythonai
+RUN git clone https://www.github.com/kevinmcaleer/pythonai 
+WORKDIR /src/pythonai
 
 # Install Python
 RUN apk --no-cache add python3
-RUN apk --no-cache add python3-pip
+RUN apk --no-cache add python3-dev
+RUN python3 -m ensurepip --upgrade
+RUN pip3 install --upgrade pip
 
 # Create virtual environment
 RUN python3 -m venv venv
