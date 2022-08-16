@@ -1,0 +1,19 @@
+FROM alpine:latest AS getfiles
+# install git
+RUN apk --no-cache add git
+RUN mkdir /src
+WORKDIR /src
+RUN git clone https://www.github.com/kevinmcaleer/pythonai
+
+# Install Python
+RUN apk --no-cache add python3
+
+# Create virtual environment
+RUN python3 -m venv venv
+RUN source venv/bin/activate
+
+# Install Python dependencies
+RUN pip install -r requirements.txt
+
+# Run the application
+RUN python3 alf.py

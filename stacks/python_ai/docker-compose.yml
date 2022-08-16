@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  pythonai:
+    build: .
+    ports: 
+      - "8080:8080"
+      - "2222:2222"
+    restart: always
