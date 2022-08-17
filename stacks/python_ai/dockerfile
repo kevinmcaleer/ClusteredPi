@@ -3,6 +3,7 @@ FROM alpine:latest AS getfiles
 RUN apk --no-cache add git
 RUN mkdir /src
 WORKDIR /src
+RUN apk add --no-cache curl
 RUN git clone https://www.github.com/kevinmcaleer/pythonai 
 WORKDIR /src/pythonai
 
