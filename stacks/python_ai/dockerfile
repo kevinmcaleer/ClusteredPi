@@ -8,7 +8,7 @@ WORKDIR /src/pythonai
 
 # Install Python
 RUN apk --no-cache add python3
-RUN apk --no-cache add python3-dev
+RUN apk --no-cache add python3-dev build-essential libssl-dev libffi-dev python-dev
 RUN python3 -m ensurepip --upgrade
 RUN pip3 install --upgrade pip
 
