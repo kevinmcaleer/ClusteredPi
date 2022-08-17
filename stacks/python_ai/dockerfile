@@ -12,6 +12,9 @@ RUN apk --no-cache add python3-dev
 RUN python3 -m ensurepip --upgrade
 RUN pip3 install --upgrade pip
 
+# Install Vosk
+RUN pip3 install vosk
+
 # Create virtual environment
 RUN python3 -m venv venv
 RUN source venv/bin/activate
