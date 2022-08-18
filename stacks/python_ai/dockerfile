@@ -34,11 +34,11 @@ RUN python3 -m venv venv
 RUN . /src/pythonai/venv/bin/activate
 RUN apk --no-cache add portaudio portaudio-dev
 
-# Install Vosk
-RUN pip3 install vosk
-
 # Install Python dependencies
 RUN pip3 install -r requirements.txt
+
+# Install Vosk
+RUN pip3 install vosk
 
 # Run the application
 RUN python3 alf.py
