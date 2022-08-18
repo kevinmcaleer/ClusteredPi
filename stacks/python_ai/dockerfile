@@ -3,7 +3,7 @@ FROM alpine:latest AS getfiles
 RUN apk --no-cache add git
 RUN mkdir /src
 WORKDIR /src
-RUN apk add --no-cache curl
+# RUN apk add --no-cache curl
 RUN git clone https://www.github.com/kevinmcaleer/pythonai 
 WORKDIR /src/pythonai
 
@@ -13,7 +13,10 @@ WORKDIR /src/pythonai
 # RUN curl https://alphacephei.com/vosk/models/vosk-model-en-us-0.22.zip -o model.zip && unzip model.zip && rm model.zip
 
 # Small Model
-RUN curl https://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip -o model.zip && unzip model.zip && rm model.zip
+ADD https://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip /src/pythonai/model.zip
+
+RUN unzip model.zip
+RUN rm model.zip
 RUN ls 
 RUN pwd
 # Install Python
