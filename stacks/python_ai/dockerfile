@@ -14,7 +14,8 @@ WORKDIR /src/pythonai
 
 # Small Model
 RUN curl https://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip -o model.zip && unzip model.zip && rm model.zip
-
+RUN ls 
+RUN pwd
 # Install Python
 RUN apk --no-cache add python3
 RUN apk --no-cache add python3-dev
