@@ -2,7 +2,8 @@ FROM alpine:latest AS getfiles
 # install git
 RUN apk --no-cache add git
 RUN mkdir /src
-RUN mkdir /src/model
+RUN mkdir /src/pythonai
+RUN mkdir /src/pythonai/model
 WORKDIR /src
 # RUN apk add --no-cache curl
 RUN git clone https://www.github.com/kevinmcaleer/pythonai 
@@ -33,7 +34,7 @@ RUN pip3 install vosk
 
 # Create virtual environment
 RUN python3 -m venv venv
-RUN source venv/bin/activate
+RUN . /src/pythonai/venv/bin/activate
 RUN apk --no-cache add portaudio portaudio-dev
 
 # Install Python dependencies
