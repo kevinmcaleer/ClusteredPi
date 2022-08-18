@@ -17,6 +17,7 @@ ADD https://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip /src/pyt
 
 RUN unzip model.zip
 RUN rm model.zip
+RUN mv /src/pythonai/vosk-model-small-en-us-0.15 /src/pythonai/model
 RUN ls 
 RUN pwd
 # Install Python
