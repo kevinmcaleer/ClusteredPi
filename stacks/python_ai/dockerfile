@@ -8,7 +8,12 @@ RUN git clone https://www.github.com/kevinmcaleer/pythonai
 WORKDIR /src/pythonai
 
 # Download Vosk model
-RUN curl https://alphacephei.com/vosk/models/vosk-model-en-us-0.22.zip -o model.zip && unzip model.zip && rm model.zip
+
+# Large Model
+# RUN curl https://alphacephei.com/vosk/models/vosk-model-en-us-0.22.zip -o model.zip && unzip model.zip && rm model.zip
+
+# Small Model
+RUN curl https://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip -o model.zip && unzip model.zip && rm model.zip
 
 # Install Python
 RUN apk --no-cache add python3
