@@ -29,13 +29,13 @@ RUN apk --no-cache add libffi-dev gcc libc-dev
 RUN python3 -m ensurepip --upgrade
 RUN pip3 install --upgrade pip
 
-# Install Vosk
-RUN pip3 install vosk
-
 # Create virtual environment
 RUN python3 -m venv venv
 RUN . /src/pythonai/venv/bin/activate
 RUN apk --no-cache add portaudio portaudio-dev
+
+# Install Vosk
+RUN pip3 install vosk
 
 # Install Python dependencies
 RUN pip3 install -r requirements.txt
