@@ -19,7 +19,7 @@ ADD https://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip /src/pyt
 RUN unzip model.zip
 RUN rm model.zip
 RUN mkdir /src/pythonai/model
-RUN mv /src/pythonai/vosk-model-small-en-us-0.15 /src/pythonai/model
+RUN mv /src/pythonai/vosk-model-small-en-us-0.15/vosk-model-small-en-us-0.15 /src/pythonai/model
 
 # DEBUG
 RUN ls 
