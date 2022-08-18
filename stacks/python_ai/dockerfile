@@ -31,7 +31,7 @@ RUN pip3 install --upgrade pip
 
 # Create virtual environment
 RUN python3 -m venv venv
-RUN . /src/pythonai/venv/bin/activate
+RUN /src/pythonai/venv/bin/activate
 RUN apk --no-cache add portaudio portaudio-dev
 
 # Install Python dependencies
