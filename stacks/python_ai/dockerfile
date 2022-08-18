@@ -2,8 +2,7 @@ FROM alpine:latest AS getfiles
 # install git
 RUN apk --no-cache add git
 RUN mkdir /src
-RUN mkdir /src/pythonai
-RUN mkdir /src/pythonai/model
+
 WORKDIR /src
 # RUN apk add --no-cache curl
 RUN git clone https://www.github.com/kevinmcaleer/pythonai 
@@ -19,6 +18,7 @@ ADD https://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip /src/pyt
 
 RUN unzip model.zip
 RUN rm model.zip
+RUN mkdir /src/pythonai/model
 RUN mv /src/pythonai/vosk-model-small-en-us-0.15 /src/pythonai/model
 RUN ls 
 RUN pwd
