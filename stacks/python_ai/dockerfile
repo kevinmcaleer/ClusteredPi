@@ -37,15 +37,15 @@ RUN pwd
 # Install Python
 # RUN apk --no-cache add python3
 # RUN apk --no-cache add python3-dev
-RUN apt install python3
-RUN apt install python3-dev
+RUN apt-get install -y python3
+RUN apt-get install -y python3-dev
 
 
 # Install other dependencies
 # RUN apk --no-cache add libffi-dev gcc libc-dev
 # RUN apk --no-cache add portaudio portaudio-dev
-RUN apt install libffi-dev gcc libc-dev
-RUN apt install portaudio portaudio-dev
+RUN apt-get install -y libffi-dev gcc libc-dev
+RUN apt-get install -y portaudio portaudio-dev
 
 
 # Create virtual environment
