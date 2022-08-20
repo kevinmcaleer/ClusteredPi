@@ -1,8 +1,13 @@
-FROM alpine:latest AS getfiles
+# FROM alpine:latest AS getfiles
+FROM ubuntu:latest as getfiles
 # install git
-RUN apk --no-cache add git
-RUN apk add gcompat
-RUN apk upgrade musl
+RUN apt install git
+# RUN apt install gcompat
+# RUN apk upgrade musl
+
+# RUN apk --no-cache add git
+# RUN apk add gcompat
+# RUN apk upgrade musl
 RUN mkdir /src
 
 WORKDIR /src
@@ -28,12 +33,18 @@ RUN ls
 RUN pwd
 
 # Install Python
-RUN apk --no-cache add python3
-RUN apk --no-cache add python3-dev
+# RUN apk --no-cache add python3
+# RUN apk --no-cache add python3-dev
+RUN apt install python3
+RUN apt install python3-dev
+
 
 # Install other dependencies
-RUN apk --no-cache add libffi-dev gcc libc-dev
-RUN apk --no-cache add portaudio portaudio-dev
+# RUN apk --no-cache add libffi-dev gcc libc-dev
+# RUN apk --no-cache add portaudio portaudio-dev
+RUN apt install libffi-dev gcc libc-dev
+RUN apt install portaudio portaudio-dev
+
 
 # Create virtual environment
 RUN python3 -m venv venv
