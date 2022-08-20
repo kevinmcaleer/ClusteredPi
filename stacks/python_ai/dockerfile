@@ -2,6 +2,7 @@ FROM alpine:latest AS getfiles
 # install git
 RUN apk --no-cache add git
 RUN apk add gcompat
+RUN apk upgrade musl
 RUN mkdir /src
 
 WORKDIR /src
