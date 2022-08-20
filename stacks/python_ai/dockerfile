@@ -44,13 +44,17 @@ RUN apt-get install -y python3-dev
 # Install other dependencies
 # RUN apk --no-cache add libffi-dev gcc libc-dev
 # RUN apk --no-cache add portaudio portaudio-dev
-RUN apt-get install -y libffi-dev gcc libc-dev
-RUN apt-get install -y portaudio portaudio-dev
 
+RUN apt-get install -y libffi-dev gcc libc-dev
+# RUN apt-get install -y portaudio portaudio-dev
+RUN apt-get install -y portaudio19-dev 
+RUN apt-get install -y libespeak1
+RUN apt-get install -y alsa-base alsa-utils
 
 # Create virtual environment
+RUN apt-get install -y python3-venv
 RUN python3 -m venv venv
-RUN source /src/pythonai/venv/bin/activate
+# RUN source venv/bin/activate
 ENV PATH="/src/pythonai/venv/bin:$PATH"
 
 

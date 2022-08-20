@@ -6,3 +6,5 @@ services:
       - "8080:8080"
       - "2222:2222"
     restart: always
+    devices:
+    - /dev/snd:/dev/snd
