@@ -1,7 +1,8 @@
 # FROM alpine:latest AS getfiles
 FROM ubuntu:latest as getfiles
 # install git
-RUN apt install git
+RUN apt-get update && apt-get install -y git
+# RUN apt install git
 # RUN apt install gcompat
 # RUN apk upgrade musl
 
