@@ -17,6 +17,7 @@ RUN mkdir /yt
 WORKDIR /yt
 RUN echo "cloning youtube python code"
 RUN git clone https://www.github.com/kevinmcaleer/youtube
+WORKDIR /yt/youtube
 RUN echo "installing requirements.txt"
 RUN pip3 install -r requirements.txt
 RUN echo "running youtube.py"
@@ -26,7 +27,7 @@ FROM blafy/jekyll as jekyll
 COPY --from=getfiles /src/kevsrobots.com/web /src
 WORKDIR /src
 RUN mkdir -p /src/_site
-COPY --from=youtube /yt/youtube.yaml /www/data/_data/youtube.yaml
+COPY --from=youtube /yt/youtube/youtube.yaml /www/data/_data/youtube.yaml
 RUN jekyll build 
 
 FROM nginx
