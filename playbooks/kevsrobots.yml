@@ -9,6 +9,7 @@
          dest: /home/pi/ClusteredPi
          clone: yes
          update: yes
+         force: yes
        register: output
 
      - ansible.builtin.debug:
