@@ -12,6 +12,7 @@ RUN echo "setting up youtube python script"
 FROM alpine:latest AS youtube
 RUN echo "installing python and pip"
 RUN apk --no-cache add git python3 py3-pip
+RUN python3 -m ensurepip
 RUN mkdir /yt
 WORKDIR /yt
 RUN echo "cloning youtube python code"
