@@ -21,7 +21,7 @@ WORKDIR /yt/youtube
 RUN echo "installing requirements.txt"
 RUN pip3 install -r requirements.txt
 RUN echo "running youtube.py"
-RUN python3 youtube.py
+RUN python youtube.py
 
 FROM blafy/jekyll as jekyll
 COPY --from=getfiles /src/kevsrobots.com/web /src
