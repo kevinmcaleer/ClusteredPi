@@ -26,11 +26,12 @@ FROM blafy/jekyll as jekyll
 COPY --from=getfiles /src/kevsrobots.com/web /src
 WORKDIR /src
 RUN mkdir -p /src/_site
+COPY --from=youtube /yt/youtube.yaml /www/data/_data/youtube.yaml
 RUN jekyll build 
 
 FROM nginx
 COPY --from=getfiles /src/kevsrobots.com/stacks/kevsrobots/nginx.conf /etc/nginx/nginx.conf
 COPY --from=jekyll /src/_site /www/data
-COPY --from=youtube /yt/youtube.yaml /www/data/_data/youtube.yaml
+
 RUN chown -R nginx:nginx /www/data
 RUN chmod -R 755 /www/data/*
