@@ -1,16 +1,24 @@
 FROM alpine:latest AS getfiles
 # install git
+RUN echo "installing git"
 RUN apk --no-cache add git
+RUN echo "making /src"
 RUN mkdir /src
 WORKDIR /src
+RUN echo "cloning kevsrobots"
 RUN git clone https://www.github.com/kevinmcaleer/kevsrobots.com --recurse-submodules --remote-submodules
 
+RUN echo "setting up youtube python script"
 FROM alpine:latest AS youtube
+RUN echo "installing python and pip"
 RUN apk --no-cache add git python3 py3-pip
 RUN mkdir /yt
 WORKDIR /yt
+RUN echo "cloning youtube python code"
 RUN git clone https://www.github.com/kevinmcaleer/youtube
+RUN echo "installing requirements.txt"
 RUN pip3 install -r requirements.txt
+RUN echo "running youtube.py"
 RUN python3 youtube.py
 
 FROM blafy/jekyll as jekyll
