@@ -10,7 +10,7 @@ RUN apk --no-cache add git python3 py3-pip
 RUN mkdir /yt
 WORKDIR /yt
 RUN git clone https://www.github.com/kevinmcaleer/youtube
-RUN python3 -m pip install -r requirements.txt
+RUN pip install -r requirements.txt
 RUN python3 youtube.py
 
 FROM blafy/jekyll as jekyll
