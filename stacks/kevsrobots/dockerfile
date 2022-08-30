@@ -8,7 +8,8 @@ RUN git clone https://www.github.com/kevinmcaleer/kevsrobots.com --recurse-submo
 FROM alpine:latest AS youtube
 RUN apk --no-cache add git python3 py3-pip
 RUN mkdir /yt
-WORKDIR /ytRUN git clone https://www.github.com/kevinmcaleer/youtube
+WORKDIR /yt
+RUN git clone https://www.github.com/kevinmcaleer/youtube
 RUN python3 -m pip install -r requirements.txt
 RUN python3 youtube.py
 
