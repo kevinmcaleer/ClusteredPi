@@ -11,7 +11,7 @@ RUN git clone https://www.github.com/kevinmcaleer/kevsrobots.com --recurse-submo
 RUN echo "setting up youtube python script"
 FROM alpine:latest AS youtube
 RUN echo "installing python and pip"
-RUN apk --no-cache add git python3 py3-pip 
+RUN apk --no-cache add git python3 py3-pip pyyaml
 RUN ln -sf python3 /usr/bin/python
 RUN python3 -m ensurepip
 RUN mkdir /yt
