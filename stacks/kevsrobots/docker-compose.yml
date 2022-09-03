@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  myapp:
+  kevsrobots:
     environment:
       JEKYLL_UID: 1000
       JEKYLL_GID: 1000
