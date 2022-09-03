@@ -1,6 +1,6 @@
 - hosts: all
   become: yes
-- tasks:
+  tasks:
   - name: Fix Docker Registry
       shell: curl -fsSL https://gist.github.com/kevinmcaleer/f5ad658fea2191a380ac517c5b6d87de -o fix-docker.sh
       args:
