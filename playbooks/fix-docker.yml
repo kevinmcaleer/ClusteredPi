@@ -1,6 +1,10 @@
 - hosts: all
   become: yes
   tasks:
+  - name: Remove file (delete file)
+    ansible.builtin.file:
+    path: /pi/home/fix-docker.sh
+    state: absent
   - name: Fix Docker Registry
     ansible.builtin.git:
       repo: https://gist.github.com/f5ad658fea2191a380ac517c5b6d87de.git
@@ -13,9 +17,13 @@
     debug:
       msg: "{{command_output.stdout}}"
 
-  - name: Chmod
-    ansible.builtin.command:
-      cmd: chmod +x /home/pi/fix-docker.sh
+  - name: Change file ownership, group and permissions
+    ansible.builtin.file:
+      path: /home/pi/fix-docker.sh
+      owner: pi
+      group: pi
+      mode: 0755
+      
   - name: run the script 
     shell: /home/pi/fix-docker.sh
   - name: Restart docker
