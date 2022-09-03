@@ -3,7 +3,7 @@
   tasks:
   - name: Remove file (delete file)
     ansible.builtin.file:
-      path: /pi/home/fix-docker.sh
+      path: /home/pi/fix-docker.sh
       state: absent
 
   - name: Fix Docker Registry
