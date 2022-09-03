@@ -2,9 +2,8 @@
   become: yes
   tasks:
   - name: Fix Docker Registry
-    shell: curl -fsSL https://gist.github.com/kevinmcaleer/f5ad658fea2191a380ac517c5b6d87de -o fix-docker.sh
-    args:
-      creates: /home/pi/fix-docker.sh
+    cmd: curl -fsSL https://gist.github.com/kevinmcaleer/f5ad658fea2191a380ac517c5b6d87de -o fix-docker.sh
+    creates: /home/pi/fix-docker.sh
   - name: run the script 
     shell: /home/pi/fix-docker.sh
   - name: Restart docker
