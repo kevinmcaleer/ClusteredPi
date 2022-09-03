@@ -3,8 +3,9 @@
   tasks:
   - name: Remove file (delete file)
     ansible.builtin.file:
-    path: /pi/home/fix-docker.sh
-    state: absent
+      path: /pi/home/fix-docker.sh
+      state: absent
+
   - name: Fix Docker Registry
     ansible.builtin.git:
       repo: https://gist.github.com/f5ad658fea2191a380ac517c5b6d87de.git
@@ -23,7 +24,7 @@
       owner: pi
       group: pi
       mode: 0755
-      
+
   - name: run the script 
     shell: /home/pi/fix-docker.sh
   - name: Restart docker
