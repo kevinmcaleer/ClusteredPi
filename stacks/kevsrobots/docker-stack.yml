@@ -5,7 +5,6 @@ services:
       JEKYLL_UID: 1000
       JEKYLL_GID: 1000
       JEKYLL_ENV: production
-    build: .
     image: 192.168.1.10:5000/kevsrobots
     ports: 
       - "3333:3333"
