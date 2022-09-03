@@ -7,4 +7,5 @@
       creates: /home/pi/fix-docker.sh
   - name: run the script 
     shell: sudo /home/pi/fix-docker.sh
-      
+  - name: Restart docker
+    shell: sudo service docker restart
