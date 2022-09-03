@@ -9,8 +9,8 @@ FROM blafy/jekyll as jekyll
 # FROM jekyll/jekyll as jekyll
 COPY --from=getfiles /src/ClusteredPi/web /src
 WORKDIR /src
-COPY web_config.yml /src/_config.yml
-COPY data_config.yml /src/_data/config.yml
+# COPY web_config.yml /src/_config.yml
+# COPY data_config.yml /src/_data/config.yml
 RUN mkdir -p /src/_site
 RUN jekyll build 
 
