@@ -12,7 +12,7 @@
       dest: /home/pi/fix-docker.sh
 
   - name: Display fix-docker.sh contents
-    command: cat fix-docker.sh chdir=/home/pi
+    command: cat fix-docker.sh/fix-docker.sh chdir=/home/pi
     register: command_output
   - name: Print to console
     debug:
@@ -20,12 +20,12 @@
 
   - name: Change file ownership, group and permissions
     ansible.builtin.file:
-      path: /home/pi/fix-docker.sh
+      path: /home/pi/fix-docker.sh/fix-docker.sh
       owner: pi
       group: pi
       mode: 0755
 
   - name: run the script 
-    shell: /home/pi/fix-docker.sh
+    shell: /home/pi/fix-docker.sh/fix-docker.sh
   - name: Restart docker
     shell: service docker restart
