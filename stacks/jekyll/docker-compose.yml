@@ -9,6 +9,7 @@ services:
     ports: 
       - "2222:2222"
     # image: myapp
+    image: 192.168.1.10:5000/ClusteredPi:latest
     restart: always
     volumes:
       - /home/pi/ClusteredPi/certbot/conf:/etc/certbot:ro
