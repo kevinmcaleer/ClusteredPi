@@ -2,9 +2,9 @@
   become: yes
   tasks:
   - name: Fix Docker Registry
-    ansible.builtin.command:
-      cmd: curl -fsSL https://gist.github.com/kevinmcaleer/f5ad658fea2191a380ac517c5b6d87de -o fix-docker.sh
-      creates: /home/pi/fix-docker.sh
+    ansible.builtin.git:
+      repo: https://gist.github.com/f5ad658fea2191a380ac517c5b6d87de.git
+      dest: /home/pi/fix-docker.sh
 
   - name: Display fix-docker.sh contents
     command: cat fix-docker.sh chdir=/home/pi
