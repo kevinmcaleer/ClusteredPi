@@ -7,11 +7,11 @@
       creates: /home/pi/fix-docker.sh
 
   - name: Display fix-docker.sh contents
-      command: cat fix-docker.sh chdir=/home/pi
-      register: command_output
-    - name: Print to console
-      debug:
-        msg: "{{command_output.stdout}}"
+    command: cat fix-docker.sh chdir=/home/pi
+    register: command_output
+  - name: Print to console
+    debug:
+      msg: "{{command_output.stdout}}"
 
   - name: Chmod
     ansible.builtin.command:
