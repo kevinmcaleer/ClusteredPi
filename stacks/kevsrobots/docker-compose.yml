@@ -10,4 +10,7 @@ services:
     ports: 
       - "3333:3333"
     # image: myapp
-    restart: always
+    deploy:
+      mode: replicated
+      replicas: 4
+      restart: always
