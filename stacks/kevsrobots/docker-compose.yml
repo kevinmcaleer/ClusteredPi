@@ -6,11 +6,10 @@ services:
       JEKYLL_GID: 1000
       JEKYLL_ENV: production
     build: .
-    # image: 192.168.1.10:5000/kevsrobots
     ports: 
       - "3333:3333"
-    # image: myapp
     deploy:
       mode: replicated
       replicas: 4
-      restart: always
+      restart_policy:
+        condition: on-failure

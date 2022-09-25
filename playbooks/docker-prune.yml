@@ -1,0 +1,10 @@
+- hosts: all
+  become: yes
+
+  tasks:
+  - name: Remove all empty docker images
+    ansible.builtin.cron:
+      name: "Add Docker Prune to Cron - run at 2am"
+      minute: "0"
+      hour: "2,4,6,8,10,12,14,16,18,20,22"
+      job: "/usr/bin/docker system prune -f"
