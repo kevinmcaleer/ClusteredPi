@@ -8,3 +8,6 @@
       minute: "0"
       hour: "2,4,6,8,10,12,14,16,18,20,22"
       job: "/usr/bin/docker system prune -f"
+  
+  - name: Clean up docker now
+    shell: /usr/bin/docker system prune -f
