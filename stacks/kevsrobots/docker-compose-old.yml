@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  kevsrobots:
+    environment:
+      JEKYLL_UID: 1000
+      JEKYLL_GID: 1000
+      JEKYLL_ENV: production
+    build: .
+    # image: 192.168.1.10:5000/kevsrobots  ## goes to local registry
+    ports: 
+      - "3333:3333"
+    # deploy:
+    #   mode: replicated
+    #   replicas: 4
+    #   restart_policy:
+    #     condition: on-failure
