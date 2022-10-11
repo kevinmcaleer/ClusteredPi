@@ -6,6 +6,6 @@ services:
       JEKYLL_GID: 1000
       JEKYLL_ENV: production
     build: .
-
+    restart: always
     ports: 
       - "3333:3333"
