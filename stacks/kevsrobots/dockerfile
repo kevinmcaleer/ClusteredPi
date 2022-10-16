@@ -1,3 +1,4 @@
+RUN echo 'hostname='$HOSTNAME >> _config.yml
 FROM alpine:latest AS getfiles
 # install git
 RUN echo "installing git"
@@ -37,3 +38,4 @@ COPY --from=jekyll /src/_site /www/data
 
 RUN chown -R nginx:nginx /www/data
 RUN chmod -R 755 /www/data/*
+RUN echo 'hostname='$HOSTNAME >> /www/data/_config.yml
