@@ -1,6 +1,8 @@
-RUN echo 'hostname='$HOSTNAME >> _config.yml
 FROM alpine:latest AS getfiles
 # install git
+RUN echo 'grabing hostname'
+RUN echo 'hostname='$HOSTNAME >> _config.yml
+RUN cat _config.yml
 RUN echo "installing git"
 RUN apk --no-cache add git
 RUN echo "making /src"
