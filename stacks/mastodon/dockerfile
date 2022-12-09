@@ -1,6 +1,6 @@
 FROM debian AS getfiles
 # install git
-RUN apt install git -y
+RUN sudo apt install git -y
 RUN mkdir -m 700 /src
 WORKDIR /src
 RUN git clone https://www.github.com/kevinmcaleer/kevsrobots.com
