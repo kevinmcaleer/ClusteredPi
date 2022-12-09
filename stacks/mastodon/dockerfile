@@ -2,7 +2,9 @@ FROM debian AS getfiles
 # install git
 RUN apt-get update
 RUN apt install git -y
+RUN apt install -y apt install curl lsb-release imagemagick ffmpeg libpq-dev libxml2-dev libxslt1-dev file git-core g++ libprotobuf-dev protobuf-compiler pkg-config nodejs gcc autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm-dev nginx redis-server redis-tools certbot python3-certbot-nginx libidn11-dev libicu-dev libjemalloc-dev
+
+# create src folder
 RUN mkdir -m 700 /src
 WORKDIR /src
 RUN git clone https://www.github.com/kevinmcaleer/kevsrobots.com
-RUN apt install -y apt install curl lsb-release imagemagick ffmpeg libpq-dev libxml2-dev libxslt1-dev file git-core g++ libprotobuf-dev protobuf-compiler pkg-config nodejs gcc autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm-dev nginx redis-server redis-tools certbot python3-certbot-nginx libidn11-dev libicu-dev libjemalloc-dev
