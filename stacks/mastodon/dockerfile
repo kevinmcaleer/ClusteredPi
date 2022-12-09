@@ -1,5 +1,6 @@
 FROM debian AS getfiles
 # install git
+RUN sudo apt-get update
 RUN sudo apt install git -y
 RUN mkdir -m 700 /src
 WORKDIR /src
