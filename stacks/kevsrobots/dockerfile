@@ -11,27 +11,27 @@ WORKDIR /src
 RUN echo "cloning kevsrobots"
 RUN git clone https://www.github.com/kevinmcaleer/kevsrobots.com --recurse-submodules --remote-submodules
 
-RUN echo "setting up youtube python script"
-FROM alpine:latest AS youtube
-RUN echo "installing python and pip"
-RUN apk --no-cache add git python3 py3-pip
-RUN ln -sf python3 /usr/bin/python
-RUN python3 -m ensurepip
-RUN mkdir /yt
-WORKDIR /yt
-RUN echo "cloning youtube python code"
-RUN git clone https://www.github.com/kevinmcaleer/youtube
-WORKDIR /yt/youtube
-RUN echo "installing requirements.txt"
-RUN pip3 install -r requirements.txt
-RUN echo "running youtube.py"
-RUN python youtube.py
+# RUN echo "setting up youtube python script"
+# FROM alpine:latest AS youtube
+# RUN echo "installing python and pip"
+# RUN apk --no-cache add git python3 py3-pip
+# RUN ln -sf python3 /usr/bin/python
+# RUN python3 -m ensurepip
+# RUN mkdir /yt
+# WORKDIR /yt
+# RUN echo "cloning youtube python code"
+# RUN git clone https://www.github.com/kevinmcaleer/youtube
+# WORKDIR /yt/youtube
+# RUN echo "installing requirements.txt"
+# RUN pip3 install -r requirements.txt
+# RUN echo "running youtube.py"
+# RUN python youtube.py
 
 FROM blafy/jekyll as jekyll
 COPY --from=getfiles /src/kevsrobots.com/web /src
 WORKDIR /src
 RUN mkdir -p /src/_site
-COPY --from=youtube /yt/youtube/youtube.yaml /src/_data/youtube.yaml
+# COPY --from=youtube /yt/youtube/youtube.yaml /src/_data/youtube.yaml
 RUN jekyll build 
 
 FROM nginx
