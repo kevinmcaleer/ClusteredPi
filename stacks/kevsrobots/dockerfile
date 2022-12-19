@@ -44,7 +44,7 @@ RUN gem install \
   jekyll-redirect-from \
   kramdown \
   rdiscount \
-  rouge'
+  rouge
 
 COPY --from=getfiles /src/kevsrobots.com/web /src
 WORKDIR /src
