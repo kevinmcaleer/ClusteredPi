@@ -31,7 +31,7 @@ RUN git clone https://www.github.com/kevinmcaleer/kevsrobots.com --recurse-submo
 # FROM bretfisher/jekyll as jekyll
 # FROM jekyll/builder as jekyll
 
-FROM ruby:2.6.3  as jekyll
+FROM ruby:3.1.3  as jekyll
 RUN apt-get update \ 
    && apt-get install -y \
    python-pygments \
