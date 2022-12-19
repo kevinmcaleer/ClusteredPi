@@ -28,7 +28,7 @@ RUN git clone https://www.github.com/kevinmcaleer/kevsrobots.com --recurse-submo
 # RUN python youtube.py
 
 # FROM blafy/jekyll as jekyll
-FROM bretfisher/jekyll-serve as jekyll
+FROM bretfisher/jekyll as jekyll
 COPY --from=getfiles /src/kevsrobots.com/web /src
 WORKDIR /src
 RUN mkdir -p /src/_site
