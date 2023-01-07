@@ -1,11 +1,12 @@
 version: "3.9"
 services:
-  myapp:
-    environment:
-      JEKYLL_UID: 1000
-      JEKYLL_GID: 1000
-      JEKYLL_ENV: production
+  ros2:
     build: .
     restart: always
     ports: 
       - "3332:3332"
+    volumes:
+      - /home/kev/ros2:/home
+      - /home/kev/cubie-1:/ros2
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
