@@ -5,6 +5,10 @@ services:
     restart: always
     ports: 
       - "3332:3332"
+      - "32650:32650"
+      - "32651:32651"
+      - "32662:32662"
+      - "32663:32663"
     volumes:
       - /home/kev/ros2:/home
       - /home/kev/cubie-1:/ros2
