@@ -12,7 +12,7 @@ RUN mkdir /src
 WORKDIR /src
 RUN echo "cloning kevsrobots"
 RUN git clone https://www.github.com/kevinmcaleer/kevsrobots.com --recurse-submodules --remote-submodules
-
+RUN ls -la
 # COPY --from=getfiles /src/kevsrobots.com/web /src
 COPY /src/kevsrobots.com/web /src
 WORKDIR /src
@@ -20,7 +20,7 @@ RUN mkdir -p /src/_site
 
 RUN echo "Cloned kevsrobots.com"
 
-RUN ls -la
+
 ENV BUILD_PACKAGES bash curl curl-dev ruby-dev build-base
 ENV RUBY_PACKAGES \
   ruby ruby-io-console ruby-irb \
