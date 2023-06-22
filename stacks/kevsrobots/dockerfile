@@ -5,16 +5,19 @@ RUN echo 'hostname='$HOSTNAME >> _config.yml
 RUN cat _config.yml
 RUN echo "installing git"
 RUN apk --no-cache add git
-RUN apk add -y --virtual build-dependencies build-base
-RUN apk add -y ruby-dev
-RUN echo "making /src"
 RUN mkdir /src
 WORKDIR /src
 RUN echo "cloning kevsrobots"
 RUN git clone https://www.github.com/kevinmcaleer/kevsrobots.com --recurse-submodules --remote-submodules
 RUN ls -la
+
+FROM alpine:latest as secondstage
+RUN apk add -y --virtual build-dependencies build-base
+RUN apk add -y ruby-dev
+RUN echo "making /src"
+
 # COPY --from=getfiles /src/kevsrobots.com/web /src
-COPY /src/kevsrobots.com/web/ /src/
+COPY --from=getfiles /src/kevsrobots.com/web /src
 WORKDIR /src
 RUN mkdir -p /src/_site
 
@@ -52,5 +55,5 @@ RUN jekyll build
 FROM nginx
 COPY --from=getfiles /src/kevsrobots.com/stacks/kevsrobots/nginx.conf /etc/nginx/nginx.conf
 # COPY --from=jekyll /src/_site /www/data
-COPY --from=getfiles /src/_site /www/data
+COPY --from=secondstage /src/_site /www/data
 
