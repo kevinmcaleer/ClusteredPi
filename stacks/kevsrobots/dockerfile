@@ -14,7 +14,7 @@ RUN echo "cloning kevsrobots"
 RUN git clone https://www.github.com/kevinmcaleer/kevsrobots.com --recurse-submodules --remote-submodules
 RUN ls -la
 # COPY --from=getfiles /src/kevsrobots.com/web /src
-COPY /src/kevsrobots.com/web /src
+COPY /src/kevsrobots.com/web/ /src/
 WORKDIR /src
 RUN mkdir -p /src/_site
 
