@@ -6,7 +6,7 @@ RUN cat _config.yml
 RUN echo "installing git"
 RUN apk --no-cache add git
 RUN apk add --virtual build-dependencies build-base
-RUN apk add gem-dev
+RUN apk add ruby-dev
 RUN echo "making /src"
 RUN mkdir /src
 WORKDIR /src
