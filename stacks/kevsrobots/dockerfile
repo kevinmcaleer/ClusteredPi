@@ -13,7 +13,13 @@ WORKDIR /src
 RUN echo "cloning kevsrobots"
 RUN git clone https://www.github.com/kevinmcaleer/kevsrobots.com --recurse-submodules --remote-submodules
 
+# COPY --from=getfiles /src/kevsrobots.com/web /src
+COPY /src/kevsrobots.com/web /src
+WORKDIR /src
+RUN mkdir -p /src/_site
+
 RUN echo "Cloned kevsrobots.com"
+
 RUN ls -la
 ENV BUILD_PACKAGES bash curl curl-dev ruby-dev build-base
 ENV RUBY_PACKAGES \
@@ -41,11 +47,7 @@ RUN gem install \
   rdiscount \
   rouge
 
-# COPY --from=getfiles /src/kevsrobots.com/web /src
-COPY /src/kevsrobots.com/web /src
-WORKDIR /src
-RUN mkdir -p /src/_site
-# COPY --from=youtube /yt/youtube/youtube.yaml /src/_data/youtube.yaml
+# Build the site
 RUN jekyll build 
 
 FROM nginx
