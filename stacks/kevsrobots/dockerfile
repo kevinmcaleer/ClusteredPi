@@ -5,8 +5,8 @@ RUN echo 'hostname='$HOSTNAME >> _config.yml
 RUN cat _config.yml
 RUN echo "installing git"
 RUN apk --no-cache add git
-RUN apk add --virtual build-dependencies build-base
-RUN apk add ruby-dev
+RUN apk add -y --virtual build-dependencies build-base
+RUN apk add -y ruby-dev
 RUN echo "making /src"
 RUN mkdir /src
 WORKDIR /src
@@ -19,7 +19,6 @@ WORKDIR /src
 RUN mkdir -p /src/_site
 
 RUN echo "Cloned kevsrobots.com"
-
 
 ENV BUILD_PACKAGES bash curl curl-dev ruby-dev build-base
 ENV RUBY_PACKAGES \
@@ -55,6 +54,3 @@ COPY --from=getfiles /src/kevsrobots.com/stacks/kevsrobots/nginx.conf /etc/nginx
 # COPY --from=jekyll /src/_site /www/data
 COPY --from=getfiles /src/_site /www/data
 
-# RUN chown -R nginx:nginx /www/data
-# RUN chmod -R 755 /www/data/*
-RUN echo 'hostname='$HOSTNAME >> /www/data/_config.yml
