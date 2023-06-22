@@ -13,6 +13,8 @@ WORKDIR /src
 RUN echo "cloning kevsrobots"
 RUN git clone https://www.github.com/kevinmcaleer/kevsrobots.com --recurse-submodules --remote-submodules
 
+RUN echo "Cloned kevsrobots.com"
+RUN ls -la
 ENV BUILD_PACKAGES bash curl curl-dev ruby-dev build-base
 ENV RUBY_PACKAGES \
   ruby ruby-io-console ruby-irb \
