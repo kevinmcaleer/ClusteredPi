@@ -39,7 +39,7 @@ RUN gem install \
   rdiscount \
   rouge
 
-COPY --from=getfiles /src/kevsrobots.com/web /src
+# COPY --from=getfiles /src/kevsrobots.com/web /src
 WORKDIR /src
 RUN mkdir -p /src/_site
 # COPY --from=youtube /yt/youtube/youtube.yaml /src/_data/youtube.yaml
