@@ -12,8 +12,8 @@ RUN git clone https://www.github.com/kevinmcaleer/kevsrobots.com --recurse-submo
 RUN ls -la
 
 FROM alpine:latest as secondstage
-RUN apk add -y --virtual build-dependencies build-base
-RUN apk add -y ruby-dev
+RUN apk add --virtual build-dependencies build-base
+RUN apk add ruby-dev
 RUN echo "making /src"
 
 # COPY --from=getfiles /src/kevsrobots.com/web /src
