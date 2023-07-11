@@ -1,0 +1,59 @@
+FROM alpine:latest AS getfiles
+# install git
+RUN echo "installing git"
+RUN apk --no-cache add git
+RUN mkdir /src
+WORKDIR /src
+RUN echo "cloning kevsrobots"
+RUN git clone https://www.github.com/kevinmcaleer/kevstemplates.com --recurse-submodules --remote-submodules
+RUN ls -la
+
+FROM alpine:latest as secondstage
+RUN apk add --virtual build-dependencies build-base
+RUN apk add ruby-dev
+RUN echo "making /src"
+
+# COPY --from=getfiles /src/kevstemplates /src
+COPY --from=getfiles /src/kevstemplates.com /src
+WORKDIR /src
+RUN mkdir -p /src/_site
+
+ENV BUILD_PACKAGES bash curl curl-dev ruby-dev build-base
+ENV RUBY_PACKAGES \
+  ruby ruby-io-console ruby-irb \
+  ruby-json ruby-etc ruby-bigdecimal ruby-rdoc \
+  libffi-dev zlib-dev
+ENV TERM=linux
+ENV PS1 "\n\n>> ruby \W \$ "
+
+RUN apk --no-cache add $BUILD_PACKAGES $RUBY_PACKAGES
+
+# FROM ruby as jekyll
+# RUN apt-get update \ 
+#    && apt-get install -y \
+#    python3-pygments \
+#    && apt-get clean \
+#    && rm -rf /var/lib/apt/lists/*
+
+RUN gem install --platform ruby google-protobuf
+# RUN gem install bundler
+# RUN gem cleanup
+# RUN bundle install
+RUN gem install \
+  # github-pages \
+  jekyll \
+  jekyll-feed \
+  jekyll-octicons \
+  jekyll-redirect-from \
+  kramdown \
+  rdiscount \
+  rouge
+
+# Build the site
+RUN jekyll build 
+
+FROM nginx
+COPY nginx.conf /etc/nginx/nginx.conf
+# COPY --from=jekyll /src/_site /www/data
+COPY --from=secondstage /src/_site /www/data
+
