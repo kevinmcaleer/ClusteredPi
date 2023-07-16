@@ -1,0 +1,29 @@
+FROM alpine:latest AS getfiles
+RUN echo "installing git"
+RUN apk --no-cache add git
+
+FROM alpine:latest as secondstage
+RUN apk add --virtual build-dependencies build-base
+RUN apk add ruby-dev
+
+ENV BUILD_PACKAGES bash curl curl-dev ruby-dev build-base
+ENV RUBY_PACKAGES \
+  ruby ruby-io-console ruby-irb \
+  ruby-json ruby-etc ruby-bigdecimal ruby-rdoc \
+  libffi-dev zlib-dev
+ENV TERM=linux
+ENV PS1 "\n\n>> ruby \W \$ "
+
+RUN apk --no-cache add $BUILD_PACKAGES $RUBY_PACKAGES
+
+RUN gem install --platform ruby google-protobuf
+RUN gem install \
+  # github-pages \
+  jekyll \
+  jekyll-feed \
+  jekyll-octicons \
+  jekyll-redirect-from \
+  kramdown \
+  rdiscount \
+  rouge
+

@@ -7,5 +7,19 @@ services:
       JEKYLL_ENV: production
     build: .
     restart: always
+    volumes:
+      - '/Users/kev/Web/kevstemplates.com:/srv/jekyll'
     ports: 
       - "5555:5555"
+    command: "jekyll serve --watch --livereload"
+    
+# version: '3'
+# services:
+#   jekyll-serve:
+#     image: jekyll/jekyll:4.0
+#     volumes:
+#       - '/Users/kev/Web/kevstemplates.com:/srv/jekyll'
+#     ports:
+#       - 5555:5555
+#       - 35729:35729
+#     command: "jekyll serve --watch --livereload"

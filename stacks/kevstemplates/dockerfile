@@ -36,9 +36,6 @@ RUN apk --no-cache add $BUILD_PACKAGES $RUBY_PACKAGES
 #    && rm -rf /var/lib/apt/lists/*
 
 RUN gem install --platform ruby google-protobuf
-# RUN gem install bundler
-# RUN gem cleanup
-# RUN bundle install
 RUN gem install \
   # github-pages \
   jekyll \
@@ -51,9 +48,9 @@ RUN gem install \
 
 # Build the site
 RUN jekyll build 
+# RUN jekyll serve --port 5555 --host --watch
 
-FROM nginx
-COPY nginx.conf /etc/nginx/nginx.conf
-# COPY --from=jekyll /src/_site /www/data
-COPY --from=secondstage /src/_site /www/data
+# FROM nginx
+# COPY nginx.conf /etc/nginx/nginx.conf
+# COPY --from=secondstage /src/_site /www/data
 
