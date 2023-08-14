@@ -48,7 +48,8 @@ RUN gem install \
   kramdown \
   rdiscount \
   rouge \
-  byebug
+  byebug \ 
+  jekyll-sass-converter -v 3.0.0
 
 # Build the site
 RUN jekyll build --trace
