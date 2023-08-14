@@ -49,7 +49,7 @@ RUN gem install \
   rdiscount \
   rouge \
   byebug \ 
-  jekyll-sass-converter -v 3.0.0
+  jekyll-sass-converter:3.0.0
 
 # Build the site
 RUN jekyll build --trace
