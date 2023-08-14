@@ -47,7 +47,8 @@ RUN gem install \
   jekyll-redirect-from \
   kramdown \
   rdiscount \
-  rouge
+  rouge \
+  byebug
 
 # Build the site
 RUN jekyll build --trace
