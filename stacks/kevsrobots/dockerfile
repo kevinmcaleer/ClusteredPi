@@ -50,7 +50,7 @@ RUN gem install \
   rouge
 
 # Build the site
-RUN jekyll build 
+RUN jekyll build --trace
 
 FROM nginx
 COPY --from=getfiles /src/kevsrobots.com/stacks/kevsrobots/nginx.conf /etc/nginx/nginx.conf
