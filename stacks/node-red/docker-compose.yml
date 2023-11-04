@@ -1,6 +1,6 @@
 version: '3'
 services:
-  homeassistant:
+  node-red:
     container_name: nodered/node-red
     image: "nodered"
     volumes:
