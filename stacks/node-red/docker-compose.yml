@@ -4,7 +4,7 @@ services:
     container_name: nodered/node-red
     image: "nodered"
     volumes:
-      - node_red_data:/data
+      - node-red:/data
     restart: unless-stopped
     privileged: true
 
