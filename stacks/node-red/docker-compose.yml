@@ -1,0 +1,19 @@
+version: '3'
+services:
+  homeassistant:
+    container_name: nodered/node-red
+    image: "nodered"
+    volumes:
+      - node_red_data:/data
+    restart: unless-stopped
+    privileged: true
+
+    # networks:
+    #   mymacvlanActive:
+    #     ipv4_address: 192.168.1.150
+       
+networks:
+  mymacvlanActive:
+    external: true
+    
+    
