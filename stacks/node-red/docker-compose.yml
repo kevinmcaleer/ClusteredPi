@@ -3,7 +3,7 @@ services:
   node-red:
     build: .
     ports: 
-      - "1880:1881"
+      - "1881:1880"
     container_name: node-red
     image: "nodered/node-red"
     volumes:
