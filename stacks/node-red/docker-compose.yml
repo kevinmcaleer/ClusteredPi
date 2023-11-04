@@ -1,8 +1,8 @@
 version: '3'
 services:
   node-red:
-    container_name: nodered/node-red
-    image: "nodered"
+    container_name: node-red
+    image: "nodered/node-red"
     volumes:
       - /home/pi/nodered:/data
     restart: unless-stopped
