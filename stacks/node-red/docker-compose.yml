@@ -1,7 +1,6 @@
 version: '3'
 services:
   node-red:
-    build: .
     ports: 
       - "1881:1880"
       - "444:443"
