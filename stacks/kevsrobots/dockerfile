@@ -40,7 +40,7 @@ RUN apk --no-cache add $BUILD_PACKAGES $RUBY_PACKAGES
 #    && apt-get clean \
 #    && rm -rf /var/lib/apt/lists/*
 
-RUN gem install --platform ruby ruby-google-protobuf
+RUN gem install --platform ruby google-protobuf -v 3.24.0
 RUN gem install \
   # github-pages \
   jekyll \
