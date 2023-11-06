@@ -11,9 +11,9 @@ RUN echo "cloning kevsrobots"
 RUN git clone --depth=1 https://www.github.com/kevinmcaleer/kevsrobots.com.git --recurse-submodules --remote-submodules
 RUN ls -la
 
-FROM alpine:latest as secondstage
-RUN apk add --virtual build-dependencies build-base
-RUN apk add ruby-dev
+FROM ruby:3.2-slim as secondstage
+RUN apt-get update && apt-get install -y build-essential libc-dev linux-headers protobuf-dev
+RUN gem install google-protobuf --no-document
 RUN echo "making /src"
 
 # COPY --from=getfiles /src/kevsrobots.com/web /src
