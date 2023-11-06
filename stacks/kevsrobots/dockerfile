@@ -1,4 +1,4 @@
-FROM alpine:3.17.5 AS getfiles
+FROM alpine:latest AS getfiles
 # install git
 RUN echo 'grabing hostname'
 RUN echo 'hostname='$HOSTNAME >> _config.yml
@@ -11,7 +11,7 @@ RUN echo "cloning kevsrobots"
 RUN git clone --depth=1 https://www.github.com/kevinmcaleer/kevsrobots.com.git --recurse-submodules --remote-submodules
 RUN ls -la
 
-FROM alpine:3.17.5 as secondstage
+FROM alpine:latest as secondstage
 RUN apk add --virtual build-dependencies build-base
 RUN apk add ruby-dev
 RUN echo "making /src"
@@ -33,15 +33,14 @@ ENV PS1 "\n\n>> ruby \W \$ "
 
 RUN apk --no-cache add $BUILD_PACKAGES $RUBY_PACKAGES
 
-FROM ruby as jekyll
-RUN apt-get update \ 
-   && apt-get install -y \
-   python3-pygments \
-   && apt-get clean \
-   && rm -rf /var/lib/apt/lists/*
+# FROM ruby as jekyll
+# RUN apt-get update \ 
+#    && apt-get install -y \
+#    python3-pygments \
+#    && apt-get clean \
+#    && rm -rf /var/lib/apt/lists/*
 
 RUN gem install --platform ruby google-protobuf
-# RUN gem install --platform ruby 
 RUN gem install \
   # github-pages \
   jekyll \
