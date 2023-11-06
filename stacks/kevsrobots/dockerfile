@@ -1,4 +1,4 @@
-FROM alpine:latest AS getfiles
+FROM alpine:3.17.5 AS getfiles
 # install git
 RUN echo 'grabing hostname'
 RUN echo 'hostname='$HOSTNAME >> _config.yml
