@@ -33,14 +33,14 @@ ENV PS1 "\n\n>> ruby \W \$ "
 
 RUN apk --no-cache add $BUILD_PACKAGES $RUBY_PACKAGES
 
-# FROM ruby as jekyll
-# RUN apt-get update \ 
-#    && apt-get install -y \
-#    python3-pygments \
-#    && apt-get clean \
-#    && rm -rf /var/lib/apt/lists/*
+FROM ruby as jekyll
+RUN apt-get update \ 
+   && apt-get install -y \
+   python3-pygments \
+   && apt-get clean \
+   && rm -rf /var/lib/apt/lists/*
 
-RUN gem install --platform ruby google-protobuf
+# RUN gem install --platform ruby google-protobuf
 RUN gem install \
   # github-pages \
   jekyll \
