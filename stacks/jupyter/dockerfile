@@ -1,9 +1,6 @@
-FROM python:3-alpine
+FROM python
 
 WORKDIR /usr/src/app
-
-RUN apk update
-RUN apk add rust
 
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
