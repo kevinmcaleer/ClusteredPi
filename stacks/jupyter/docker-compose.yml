@@ -1,10 +1,12 @@
-version:  '3'
+version:  '3.6'
 services:
-  datascience-notebook:
-      image:    jupyter/scipy-notebook
-      volumes:
-        - /home/pi:/home/pi/ClusteredPi/stacks/jupyter/work
+  jupyter:
+      image: 'jupyter/scipy-notebook:latest'
+      # volumes:
+      #   - /home/pi:/home/pi/ClusteredPi/stacks/jupyter/work
       ports:
-        - 8888:8888
-      container_name:   jupyter_notebook
-      command: "start-notebook.sh"
+        - '8888:8888'
+      container_name: 'jupyter'
+      restart: always
+      environment:
+        -JUPYTER_TOKEN=AreallyREALLYreallyStrongPasswordORtoken
