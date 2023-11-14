@@ -5,6 +5,6 @@ services:
       volumes:
         - /home/pi:/home/pi/ClusteredPi/stacks/jupyter/work
       ports:
-        - ${PORT}:8888
+        - 8888:8888
       container_name:   jupyter_notebook
-      command: "start-notebook.sh 
+      command: "start-notebook.sh"
