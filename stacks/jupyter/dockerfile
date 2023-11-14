@@ -1,14 +1,8 @@
-# Use an ARM64 compatible base image, such as Ubuntu
-FROM arm64v8/ubuntu:latest
-
-# Install Python and pip
-RUN apt-get update -y && apt-get install -y --no-install-recommends python3 python3-pip python3-dev
-
-# Clean up APT when done
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+# Use a Python base image compatible with ARM64
+FROM arm64v8/python:3.8-slim-buster
 
 # Install Jupyter Notebook
-RUN pip3 install notebook
+RUN pip install notebook
 
 # Set up the working directory
 WORKDIR /notebooks
