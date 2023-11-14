@@ -1,6 +1,9 @@
 # Use a Python base image compatible with ARM64
 FROM arm64v8/python:3.11-slim-bookworm
 
+RUN apt update
+RUN apt install -y python3-pip
+
 # Install Jupyter Notebook
 RUN pip3 install notebook
 
