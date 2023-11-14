@@ -10,3 +10,5 @@ services:
       restart: always
       environment:
         - JUPYTER_TOKEN=AreallyREALLYreallyStrongPasswordORtoken
+
+
