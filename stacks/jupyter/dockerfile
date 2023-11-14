@@ -1,10 +1,17 @@
-FROM python
+# Use an ARM64 compatible base image, such as Ubuntu
+FROM arm64v8/ubuntu:latest
 
-WORKDIR /usr/src/app
+# Install Python and pip
+RUN apt-get update && apt-get install -y python3 python3-pip
 
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+# Install Jupyter Notebook
+RUN pip3 install notebook
 
-COPY . .
+# Set up the working directory
+WORKDIR /notebooks
 
-CMD [ "jupyter" ]
+# Expose the port Jupyter Notebook will run on
+EXPOSE 8888
+
+# Start Jupyter Notebook
+CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--no-browser", "--allow-root"]
