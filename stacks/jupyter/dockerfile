@@ -2,7 +2,10 @@
 FROM arm64v8/ubuntu:latest
 
 # Install Python and pip
-RUN apt-get update && apt-get install -y python3 python3-pip
+RUN apt-get update -y && apt-get install -y --no-install-recommends python3 python3-pip python3-dev
+
+# Clean up APT when done
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install Jupyter Notebook
 RUN pip3 install notebook
