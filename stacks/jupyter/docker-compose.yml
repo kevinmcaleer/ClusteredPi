@@ -9,4 +9,4 @@ services:
       container_name: 'jupyter'
       restart: always
       environment:
-        -JUPYTER_TOKEN=AreallyREALLYreallyStrongPasswordORtoken
+        - JUPYTER_TOKEN=AreallyREALLYreallyStrongPasswordORtoken
