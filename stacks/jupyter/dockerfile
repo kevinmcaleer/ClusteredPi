@@ -2,7 +2,7 @@
 FROM arm64v8/python:3.11-bookworm
 
 # Install Jupyter Notebook
-RUN pip3 install notebook
+RUN pip install notebook
 
 # Set up the working directory
 WORKDIR /notebooks
