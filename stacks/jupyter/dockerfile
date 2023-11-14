@@ -1,8 +1,10 @@
 # Use a Python base image compatible with ARM64
 FROM arm64v8/python:3.11-bookworm
 
+
+
 # Install Jupyter Notebook
-RUN pip install notebook
+RUN pip install notebook --no-cache-dir
 
 # Set up the working directory
 WORKDIR /notebooks
