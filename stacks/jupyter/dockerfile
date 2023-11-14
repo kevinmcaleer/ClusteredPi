@@ -7,7 +7,7 @@ FROM alpine:latest AS getfiles
 RUN apk --no-cache add python3 && python3 -m ensurepip
 
 # Install Jupyter Notebook
-RUN pip install notebook --no-cache-dir
+RUN pip3 install notebook --no-cache-dir
 
 # Set up the working directory
 WORKDIR /notebooks
