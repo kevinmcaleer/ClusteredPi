@@ -1,5 +1,6 @@
 # Use a Python base image compatible with ARM64
-FROM arm64v8/python:3.11-bookworm
+# FROM arm64v8/python:3.11-bookworm
+FROM buildpack-deps:bookworm
 
 
 
