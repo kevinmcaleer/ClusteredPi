@@ -1,7 +1,7 @@
 version:  '3.6'
 services:
   jupyter:
-      image: 'jupyter/scipy-notebook:latest'
+      image: 'quay.io/jupyter/scipy-notebook:latest'
       # volumes:
       #   - /home/pi:/home/pi/ClusteredPi/stacks/jupyter/work
       ports:
