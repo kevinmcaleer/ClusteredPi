@@ -48,6 +48,7 @@ RUN gem install \
   kramdown \
   rdiscount \
   rouge \
+  nokogiri \
   byebug \ 
   jekyll-sass-converter:3.0.0 \
   sass-embedded:1.64.1
