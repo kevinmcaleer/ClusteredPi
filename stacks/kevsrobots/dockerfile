@@ -52,7 +52,7 @@ RUN gem install \
   jekyll-sass-converter:3.0.0 \
   sass-embedded:1.64.1 
 
-RUN gem install nokogiri --use-system-libraries
+RUN gem install nokogiri
 # Build the site
 RUN jekyll build --trace
 
