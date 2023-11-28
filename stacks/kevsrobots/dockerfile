@@ -13,7 +13,7 @@ RUN ls -la
 
 FROM alpine:latest as secondstage
 RUN apk add --virtual build-dependencies build-base
-RUN apk add ruby-dev
+RUN apk add ruby-dev gcompat
 RUN echo "making /src"
 
 # COPY --from=getfiles /src/kevsrobots.com/web /src
