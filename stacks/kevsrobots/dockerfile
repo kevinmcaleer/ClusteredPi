@@ -11,7 +11,7 @@ RUN echo "cloning kevsrobots"
 RUN git clone --depth=1 https://www.github.com/kevinmcaleer/kevsrobots.com.git --recurse-submodules --remote-submodules
 RUN ls -la
 
-FROM ruby:3.1.3-alpine as secondstage
+FROM ruby:3.3.0-alpine as secondstage
 RUN apk add --virtual build-dependencies build-base
 RUN apk add gcompat
 RUN echo "making /src"
@@ -24,7 +24,7 @@ RUN mkdir -p /src/_site
 RUN echo "Cloned kevsrobots.com"
 
 # Install necessary gems
-RUN gem install google-protobuf -v 3.24.0
+# RUN gem install google-protobuf -v 3.24.0
 RUN gem install jekyll:4.3.2 jekyll-redirect-from kramdown rdiscount rouge byebug
 RUN gem install jekyll-sass-converter:3.0.0 sass-embedded:1.64.1
 RUN gem install nokogiri
