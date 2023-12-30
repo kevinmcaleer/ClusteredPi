@@ -11,9 +11,9 @@ RUN echo "cloning kevsrobots"
 RUN git clone --depth=1 https://www.github.com/kevinmcaleer/kevsrobots.com.git --recurse-submodules --remote-submodules
 RUN ls -la
 
-FROM alpine:latest as secondstage
+FROM ruby:3.2.2-alpine as secondstage
 RUN apk add --virtual build-dependencies build-base
-RUN apk add ruby-dev gcompat
+RUN apk add gcompat
 RUN echo "making /src"
 
 # COPY --from=getfiles /src/kevsrobots.com/web /src
@@ -23,36 +23,12 @@ RUN mkdir -p /src/_site
 
 RUN echo "Cloned kevsrobots.com"
 
-ENV BUILD_PACKAGES bash curl curl-dev ruby-dev build-base
-ENV RUBY_PACKAGES \
-  ruby ruby-io-console ruby-irb build-base libxml2-dev libxslt-dev \
-  ruby-json ruby-etc ruby-bigdecimal ruby-rdoc \
-  libffi-dev zlib-dev ruby-nokogiri
-ENV TERM=linux
-ENV PS1 "\n\n>> ruby \W \$ "
-
-RUN apk --no-cache add $BUILD_PACKAGES $RUBY_PACKAGES
-
-# FROM ruby as jekyll
-# RUN apt-get update \ 
-#    && apt-get install -y \
-#    python3-pygments \
-#    && apt-get clean \
-#    && rm -rf /var/lib/apt/lists/*
-
-RUN gem install --platform ruby -v 3.2.2 google-protobuf -v 3.24.0
-RUN gem install \
-  # github-pages \
-  jekyll \
-  jekyll-redirect-from \
-  kramdown \
-  rdiscount \
-  rouge \
-  byebug \ 
-  jekyll-sass-converter:3.0.0 \
-  sass-embedded:1.64.1 
-
+# Install necessary gems
+RUN gem install google-protobuf -v 3.24.0
+RUN gem install jekyll jekyll-redirect-from kramdown rdiscount rouge byebug
+RUN gem install jekyll-sass-converter:3.0.0 sass-embedded:1.64.1
 RUN gem install nokogiri
+
 # Build the site
 RUN jekyll build --trace
 
