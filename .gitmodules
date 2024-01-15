@@ -1,0 +1,3 @@
+[submodule "stacks/random_facts"]
+	path = stacks/random_facts
+	url = https://www.github.com/kevinmcaleer/random_robot_facts
