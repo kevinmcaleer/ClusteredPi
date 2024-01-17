@@ -12,7 +12,8 @@ services:
     networks:
       mymacvlanActive:
         ipv4_address: 192.168.1.150
-       
+    environment:
+      - DISABLE_JEMALLOC=true
 networks:
   mymacvlanActive:
     external: true
