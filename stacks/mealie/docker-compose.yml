@@ -1,0 +1,28 @@
+---
+version: "3.7"
+services:
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:v1.0.0-RC2
+    container_name: mealie
+    ports:
+        - "9925:9000" # 
+    deploy:
+      resources:
+        limits:
+          memory: 1000M # 
+    volumes:
+      - mealie-data:/app/data/
+    environment:
+    # Set Backend ENV Variables Here
+      - ALLOW_SIGNUP=true
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Anchorage
+      - MAX_WORKERS=1
+      - WEB_CONCURRENCY=1
+      - BASE_URL=https://mealie.kevsrobots.com
+    restart: always
+
+volumes:
+  mealie-data:
+    driver: local
