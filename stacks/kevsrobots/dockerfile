@@ -1,19 +1,39 @@
-# Stage 1: Get files and clone the repo
 FROM alpine:latest AS getfiles
-RUN apk --no-cache add git && \
-    mkdir /src && \
-    git clone --depth=1 https://www.github.com/kevinmcaleer/kevsrobots.com.git /src/kevsrobots.com --recurse-submodules --remote-submodules
-
-# Stage 2: Build the Jekyll site
-FROM ruby:3.3.0-alpine as secondstage
+# install git
+RUN echo 'grabing hostname'
+RUN echo 'hostname='$HOSTNAME >> _config.yml
+RUN cat _config.yml
+RUN echo "installing git"
+RUN apk --no-cache add git
+RUN mkdir /src
 WORKDIR /src
-COPY --from=getfiles /src/kevsrobots.com/web /src
-RUN apk add --virtual build-dependencies build-base gcompat && \
-    gem install jekyll:4.3.3 jekyll-redirect-from kramdown rdiscount rouge byebug jekyll-sass-converter:3.0.0 sass-embedded:1.64.1 nokogiri && \
-    jekyll build --trace && \
-    apk del build-dependencies
+RUN echo "cloning kevsrobots"
+RUN git clone --depth=1 https://www.github.com/kevinmcaleer/kevsrobots.com.git --recurse-submodules --remote-submodules
+RUN ls -la
 
-# Stage 3: Setup the Nginx server
+FROM ruby:3.3.0-alpine as secondstage
+RUN apk add --virtual build-dependencies build-base
+RUN apk add gcompat
+RUN echo "making /src"
+
+# COPY --from=getfiles /src/kevsrobots.com/web /src
+COPY --from=getfiles /src/kevsrobots.com/web /src
+WORKDIR /src
+RUN mkdir -p /src/_site
+
+RUN echo "Cloned kevsrobots.com"
+
+# Install necessary gems
+# RUN gem install google-protobuf -v 3.24.0
+RUN gem install jekyll:4.3.3 jekyll-redirect-from kramdown rdiscount rouge byebug
+RUN gem install jekyll-sass-converter:3.0.0 sass-embedded:1.64.1
+RUN gem install nokogiri
+
+# Build the site
+RUN jekyll build --trace
+
 FROM nginx
 COPY --from=getfiles /src/kevsrobots.com/stacks/kevsrobots/nginx.conf /etc/nginx/nginx.conf
+# COPY --from=jekyll /src/_site /www/data
 COPY --from=secondstage /src/_site /www/data
+
