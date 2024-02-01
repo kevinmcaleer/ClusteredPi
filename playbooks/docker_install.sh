@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Elevate privileges
-sudo su
-
 # Define list of packages to install
 pkgstoinstall=(libffi-dev libssl-dev python3 python3-pip)
 
