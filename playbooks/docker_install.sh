@@ -9,12 +9,12 @@ sudo apt-get install -y "${pkgstoinstall[@]}"
 
 # Download Docker convenience script if it doesn't exist
 if [ ! -f /home/pi/get-docker.sh ]; then
-    curl -fsSL https://get.docker.com -o /home/pi/get-docker.sh
+    curl -fsSL https://get.docker.com -o /home/kev/get-docker.sh
 fi
 
 # Install Docker if not already installed
 if [ ! -f /usr/bin/docker ]; then
-    sh /home/pi/get-docker.sh
+    sh /home/kev/get-docker.sh
 fi
 
 # Add 'pi' user to the 'docker' group
