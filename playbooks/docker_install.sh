@@ -18,7 +18,7 @@ if [ ! -f /usr/bin/docker ]; then
 fi
 
 # Add 'pi' user to the 'docker' group
-sudo usermod -aG docker pi
+sudo usermod -aG docker kev
 
 # Unmask the Docker service
 sudo systemctl unmask docker
@@ -28,7 +28,7 @@ sudo chmod 666 /var/run/docker.sock
 
 # Install docker-compose if it doesn't exist
 if [ ! -f /usr/local/bin/docker-compose ]; then
-    sudo pip3 -v install docker-compose
+    sudo python3-pip3 -v install docker-compose
 fi
 
 # Start Docker service
