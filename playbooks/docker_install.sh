@@ -10,9 +10,6 @@ pkgstoinstall=(libffi-dev libssl-dev python3 python3-pip)
 sudo apt-get update
 sudo apt-get install -y "${pkgstoinstall[@]}"
 
-# Remove the Python-configparser package
-sudo apt-get remove -y python-configparser
-
 # Download Docker convenience script if it doesn't exist
 if [ ! -f /home/pi/get-docker.sh ]; then
     curl -fsSL https://get.docker.com -o /home/pi/get-docker.sh
