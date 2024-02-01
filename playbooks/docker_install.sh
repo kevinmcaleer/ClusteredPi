@@ -28,7 +28,8 @@ sudo chmod 666 /var/run/docker.sock
 
 # Install docker-compose if it doesn't exist
 if [ ! -f /usr/local/bin/docker-compose ]; then
-    sudo python3-pip3 -v install docker-compose
+    # sudo python3-pip3 -v install docker-compose
+    sudo apt install -y docker-compose
 fi
 
 # Start Docker service
