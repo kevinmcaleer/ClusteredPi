@@ -9,4 +9,7 @@ services:
       - '3001:3001'
     volumes:
       - /:/mnt/host:ro
-    mode: global
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
