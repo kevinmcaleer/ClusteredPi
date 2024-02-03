@@ -11,6 +11,6 @@ services:
       - "3333:3333"
     deploy:
       mode: global
-      replicas: 4
+      # replicas: 4
       restart_policy:
         condition: on-failure
