@@ -9,3 +9,4 @@ services:
       - '3001:3001'
     volumes:
       - /:/mnt/host:ro
+    mode: global
