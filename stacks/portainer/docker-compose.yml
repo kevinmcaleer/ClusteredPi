@@ -13,4 +13,5 @@ services:
     deploy:
       placement:
         constraints:
-          - node.hostname==dev01ß
+          - node.hostname==dev01
+          
