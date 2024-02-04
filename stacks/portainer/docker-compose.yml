@@ -10,3 +10,7 @@ services:
     ports:
       - "8000:8000"
       - "9443:9443"
+    deploy:
+      placement:
+        constraints:
+          - node.hostname==dev01ß
