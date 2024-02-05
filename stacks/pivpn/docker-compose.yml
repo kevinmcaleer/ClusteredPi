@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  pivpn:
+    build: .
+    container_name: pivpn
+    volumes:
+      - ./data:/etc/pivpn
+    ports:
+      - "1194:1194/udp"
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+    restart: unless-stopped
