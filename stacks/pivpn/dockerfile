@@ -1,3 +1,4 @@
 FROM alpine:latest
 RUN apk add --no-cache curl bash
+ENV TERM xterm
 RUN curl -L https://install.pivpn.io | bash
