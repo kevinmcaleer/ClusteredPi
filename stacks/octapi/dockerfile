@@ -1,0 +1,5 @@
+FROM python:3.7-alpine
+RUN apk add --no-cache curl bash nmap git
+RUN pip3 install --upgrade pip
+RUN pip3 install dispy
+RUN git clone https://github.com/raspberrypilearning/octapi-setup.git

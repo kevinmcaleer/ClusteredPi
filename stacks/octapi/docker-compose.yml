@@ -1,0 +1,10 @@
+version: '3'
+services:
+  octapi:
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - .:/usr/src/app
+    environment:
+      NAME: OctaPi
