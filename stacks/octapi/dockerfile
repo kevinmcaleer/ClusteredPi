@@ -8,8 +8,7 @@ RUN apk add gcc python3-dev musl-dev linux-headers
 RUN pip3 install dispy psutil 
 
 # Create the start_dispynode.sh script
-RUN echo '#!/bin/sh -e\nsleep 30\n_IP=$(hostname -I | awk \'{print $1}\')\ndispynode.py -i $_IP --daemon' > start_dispynode.sh \
-    && chmod +x start_dispynode.sh
+RUN echo '#!/bin/sh -e\nsleep 30\n_IP=$(hostname -I | awk \'{print $1}\')\ndispynode.py -i $_IP --daemon' > start_dispynode.sh && chmod +x start_dispynode.sh
 
 # Expose any ports if necessary (adjust according to your setup)
 EXPOSE 80
