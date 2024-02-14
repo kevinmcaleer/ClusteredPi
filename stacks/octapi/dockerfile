@@ -1,5 +1,17 @@
-FROM python:3.7-alpine
-RUN apk add --no-cache curl bash nmap git
-RUN pip3 install --upgrade pip
-RUN pip3 install dispy
-RUN git clone https://github.com/raspberrypilearning/octapi-setup.git
+# Use a base image with Python 3, Raspberry Pi OS images aren't directly available for Docker,
+# but we can use a Debian image as it's the closest equivalent.
+FROM python:3.12-alpine
+
+# Install dispy and psutil
+RUN pip3 install dispy psutil
+
+# Create the start_dispynode.sh script
+RUN echo '#!/bin/sh -e\nsleep 30\n_IP=$(hostname -I | awk \'{print $1}\')\ndispynode.py -i $_IP --daemon' > start_dispynode.sh \
+    && chmod +x start_dispynode.sh
+
+# Expose any ports if necessary (adjust according to your setup)
+EXPOSE 80
+
+# CMD to run the dispynode script. In Docker, we typically use CMD or ENTRYPOINT to start the main process.
+# The sleep 30 is omitted as network availability is managed differently in Docker.
+CMD ["sh", "-c", "start_dispynode.sh"]
