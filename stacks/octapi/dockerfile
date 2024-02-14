@@ -11,4 +11,4 @@ EXPOSE 80
 
 # CMD to run the dispynode script. In Docker, we typically use CMD or ENTRYPOINT to start the main process.
 # The sleep 30 is omitted as network availability is managed differently in Docker.
-CMD ["sh", "-c", "start_dispynode.sh"]
+CMD ["sh", "-c", "/start_dispynode.sh"]
