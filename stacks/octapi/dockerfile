@@ -2,7 +2,7 @@
 # but we can use a Debian image as it's the closest equivalent.
 FROM python:3.12-alpine
 
-RUN apk add gcc python3-dev musl-dev linux-headers &&  pip3 install dispy psutil 
+RUN apk add gcc python3-dev musl-dev linux-headers &&  pip3 install dispy psutil py-enigma
 
 # Create the start_dispynode.sh script
 COPY start_node.sh /start_dispynode.sh
