@@ -6,8 +6,6 @@ RUN apk add gcc python3-dev musl-dev linux-headers &&  pip3 install dispy psutil
 
 # Create the start_dispynode.sh script
 COPY start_node.sh /start_dispynode.sh
-# Expose any ports if necessary (adjust according to your setup)
-EXPOSE 8002
 
 # CMD to run the dispynode script. In Docker, we typically use CMD or ENTRYPOINT to start the main process.
 # The sleep 30 is omitted as network availability is managed differently in Docker.
