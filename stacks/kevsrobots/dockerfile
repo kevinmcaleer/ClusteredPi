@@ -11,7 +11,7 @@ RUN echo "cloning kevsrobots"
 RUN git clone --depth=1 https://www.github.com/kevinmcaleer/kevsrobots.com.git --recurse-submodules --remote-submodules
 RUN ls -la
 
-FROM ruby:3.3.0-alpine as secondstage
+FROM ruby:3.2.3-alpine as secondstage
 RUN apk add --virtual build-dependencies build-base
 RUN apk add gcompat
 RUN echo "making /src"
