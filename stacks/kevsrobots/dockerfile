@@ -1,40 +1,39 @@
-FROM alpine:latest AS getfiles
-# install git
-RUN echo 'grabing hostname'
-RUN echo 'hostname='$HOSTNAME >> _config.yml
-RUN cat _config.yml
-RUN echo "installing git"
-RUN apk --no-cache add git
-RUN mkdir /src
-WORKDIR /src
-RUN echo "cloning kevsrobots"
-RUN git clone --depth=1 https://www.github.com/kevinmcaleer/kevsrobots.com.git --recurse-submodules --remote-submodules
-RUN ls -la
+# Use Ubuntu as the base image for the first stage
+FROM ubuntu:latest AS getfiles
 
-FROM ruby:3.2.3-alpine as secondstage
-RUN apk add --virtual build-dependencies build-base
-RUN apk add gcompat
-RUN echo "making /src"
+# Install necessary tools and clone the repository
+RUN apt-get update && apt-get install -y git \
+    && mkdir /src \
+    && cd /src \
+    && git clone --depth=1 https://www.github.com/kevinmcaleer/kevsrobots.com.git --recurse-submodules --remote-submodules \
+    && ls -la /src
 
-# COPY --from=getfiles /src/kevsrobots.com/web /src
+# Start with an Ubuntu base image for the Ruby stage
+FROM ubuntu:latest as secondstage
+
+# Install Ruby and build dependencies
+RUN apt-get update && apt-get install -y ruby-full build-essential zlib1g-dev
+
+# Configure gem installation location and PATH for Ruby Gems
+RUN echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc \
+    && echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc \
+    && echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc \
+    && /bin/bash -c "source ~/.bashrc"
+
+# Copy the cloned repository from the first stage
 COPY --from=getfiles /src/kevsrobots.com/web /src
 WORKDIR /src
-RUN mkdir -p /src/_site
-
-RUN echo "Cloned kevsrobots.com"
 
 # Install necessary gems
-# RUN gem install google-protobuf -v 3.24.0
-RUN gem install jekyll:4.3.3 jekyll-redirect-from kramdown rdiscount rouge byebug
-RUN gem install jekyll-sass-converter:3.0.0 sass-embedded:1.64.1
-RUN gem install nokogiri
-RUN gem install google-protobuf -v 3.25.2 --platform ruby
+RUN gem install jekyll:4.3.3 jekyll-redirect-from kramdown rdiscount rouge byebug \
+    && gem install jekyll-sass-converter:3.0.0 sass-embedded:1.64.1 \
+    && gem install nokogiri \
+    && gem install google-protobuf -v 3.25.2 --platform ruby
 
 # Build the site
 RUN jekyll build --trace
 
+# Use Nginx to serve the site, starting with the official image
 FROM nginx
 COPY --from=getfiles /src/kevsrobots.com/stacks/kevsrobots/nginx.conf /etc/nginx/nginx.conf
-# COPY --from=jekyll /src/_site /www/data
 COPY --from=secondstage /src/_site /www/data
-
