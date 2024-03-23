@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  redis:
+    image: redis:latest
+    command: redis-server --appendonly yes
+    volumes:
+      - ./redis-data:/data
+    ports:
+      - "6379:6379"
+    restart: always
