@@ -13,6 +13,8 @@ services:
       POSTGRES_DB_FILE: /run/secrets/postgres_db
     volumes:
       - postgres-primary-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     networks:
       - postgres-network
     deploy:
