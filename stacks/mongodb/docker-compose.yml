@@ -1,12 +1,12 @@
 version: '3'
 services:
   mongo:
-    image: mongodb:latest
+    image: mongodb/mongodb-community-server:7.0-ubuntu2004
     ports:
       - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+    # environment:
+    #   MONGO_INITDB_ROOT_USERNAME: root
+    #   MONGO_INITDB_ROOT_PASSWORD: example
     volumes:
       - mongo_data:/data/db
 
