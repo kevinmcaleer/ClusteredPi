@@ -1,7 +1,7 @@
 version: '3'
 services:
   mongo:
-    image: mongodb/mongodb-community-server:7.0-ubuntu2004
+    image: mongodb/mongodb-community-server:latest
     ports:
       - "27017:27017"
     # environment:
