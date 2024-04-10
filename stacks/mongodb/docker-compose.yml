@@ -1,7 +1,7 @@
 version: '3'
 services:
   mongo:
-    image: mongo
+    image: bitnami/mongodb:latest
     ports:
       - "27017:27017"
     environment:
