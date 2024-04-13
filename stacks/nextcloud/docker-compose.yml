@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   db:
-    image: linuxserver/mariadb:arm32v7-latest
+    image: linuxserver/mariadb:arm64v8-latest
     container_name: nextcloud_db
     environment:
       - MYSQL_ROOT_PASSWORD=your_root_password
@@ -18,7 +18,7 @@ services:
     container_name: nextcloud_app
     ports:
       - 8080:80
-    links:
+    depends_on:
       - db
     volumes:
       - nextcloud_data:/var/www/html
