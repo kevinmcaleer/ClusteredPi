@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    user: 1000:1000  # Ensure this user ID has permissions for the volume directories
+    network_mode: host  # Uses the host network to easily manage networking
+    volumes:
+      - /home/kev/jellyfin/config:/config  # Replace /path/to/config with the path to store Jellyfin configuration
+      - /home/kev/jellyfin/cache:/cache  # Replace /path/to/cache with the path to store Jellyfin cache
+      - /home/kev/jellyfin/media:/media  # Replace /path/to/media with the path to your media files
+    devices:
+      - /dev/vchiq:/dev/vchiq  # Necessary for hardware acceleration on Raspberry Pi
+      - /dev/video10:/dev/video10  # Necessary for hardware acceleration on Raspberry Pi
+      - /dev/video11:/dev/video11  # Necessary for hardware acceleration on Raspberry Pi
+      - /dev/video12:/dev/video12  # Necessary for hardware acceleration on Raspberry Pi
+    environment:
+      - PUID=1000  # User ID
+      - PGID=1000  # Group ID
+      - TZ=Europe/London  # Set your timezone
+    restart: unless-stopped
+
