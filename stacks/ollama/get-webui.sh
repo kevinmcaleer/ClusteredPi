@@ -1,4 +1,8 @@
 !#/bin/bash
 
 echo "downloading Ollama WebUI"
-git clone https://github.com/ollama-webui/ollama-webui webui
+git clone https://github.com/open-webui/open-webui webui
+cd webui
+./run-compose
+cd ..
+docker-compose up -d
