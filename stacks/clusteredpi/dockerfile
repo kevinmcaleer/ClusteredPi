@@ -1,0 +1,21 @@
+FROM alpine:latest AS getfiles
+# install git
+RUN apk --no-cache add git
+RUN mkdir /src
+WORKDIR /src
+RUN git clone https://www.github.com/kevinmcaleer/ClusteredPi
+
+FROM jekyll/jekyll as jekyll
+# FROM jekyll/jekyll as jekyll
+COPY --from=getfiles /src/ClusteredPi/web /src
+WORKDIR /src
+# COPY web_config.yml /src/_config.yml
+# COPY data_config.yml /src/_data/config.yml
+RUN mkdir -p /src/_site
+RUN jekyll build 
+
+FROM nginx
+COPY --from=getfiles /src/ClusteredPi/stacks/jekyll/nginx.conf /etc/nginx/nginx.conf
+COPY --from=jekyll /src/_site /www/data
+RUN chown -R nginx:nginx /www/data
+RUN chmod -R 755 /www/data/*
