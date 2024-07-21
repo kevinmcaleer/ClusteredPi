@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y git \
     && ls -la /src
 
 # Start with an Ubuntu base image for the Ruby stage
-FROM ubuntu:latest as secondstage
+FROM ubuntu:latest AS secondstage
 
 # Install Ruby and build dependencies
 RUN apt-get update && apt-get install -y ruby-full build-essential zlib1g-dev
