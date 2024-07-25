@@ -15,8 +15,13 @@ services:
     networks:
       mymacvlanActive:
         ipv4_address: 192.168.1.152
-       
+
 networks:
   mymacvlanActive:
-    external: true
-    
+    driver: macvlan
+    driver_opts:
+      parent: eth0  # Change this to the appropriate network interface
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
+          gateway: 192.168.1.1
