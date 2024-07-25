@@ -21,7 +21,7 @@ RUN echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc \
     && /bin/bash -c "source ~/.bashrc"
 
 # Copy the cloned repository from the first stage
-COPY --from=getfiles /src/kevsrobots.com/web /src
+COPY --from=getfiles /src/ClusteredPi/web /src
 WORKDIR /src
 
 # Install necessary gems
