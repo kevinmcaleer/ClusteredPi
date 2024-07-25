@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  influxdb:
+    image: influxdb:1.8
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+      - "8083:8083"
+    volumes:
+      - influxdb:/var/lib/influxdb
+
+volumes:
+  influxdb:
