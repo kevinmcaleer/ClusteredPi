@@ -1,5 +1,5 @@
 services:
-  myapp_load_balancer:
+  nginx_load_balancer:
     build: .
     ports: 
       - "80:80"
