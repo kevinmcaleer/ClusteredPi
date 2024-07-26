@@ -3,7 +3,7 @@ FROM alpine:latest AS getfiles
 RUN apk add git
 RUN mkdir -m 700 /src
 WORKDIR /src
-RUN git clone --depth=1 https://www.github.com/kevinmcaleer/ClusteredPi.git/
+RUN git clone https://www.github.com/kevinmcaleer/ClusteredPi
 
 FROM nginx
 COPY --from=getfiles /src/ClusteredPi/stacks/nginx/nginx.conf /etc/nginx/nginx.conf
