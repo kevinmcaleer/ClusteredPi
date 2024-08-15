@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  postgres-primary:
+    image: postgres:latest
+    secrets:
+      - postgres_password
+      - postgres_user
+      - postgres_db
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      POSTGRES_USER_FILE: /run/secrets/postgres_user
+      POSTGRES_DB_FILE: /run/secrets/postgres_db
+    volumes:
+      - postgres-primary-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres-network
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  postgres-backup:
+    image: postgres:latest
+    secrets:
+      - postgres_password
+      - postgres_user
+      - postgres_db
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      POSTGRES_USER_FILE: /run/secrets/postgres_user
+      POSTGRES_DB_FILE: /run/secrets/postgres_db
+    volumes:
+      - postgres-backup-data:/var/lib/postgresql/data
+    networks:
+      - postgres-network
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+volumes:
+  postgres-primary-data:
+  postgres-backup-data:
+
+networks:
+  postgres-network:
+    driver: overlay
+
+secrets:
+  postgres_password:
+    external: true
+  postgres_user:
+    external: true
+  postgres_db:
+    external: true
