@@ -4,8 +4,9 @@ services:
     container_name: postgres-container
     environment:
       POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_PORT: 5433
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "5433:5433"
     command: /bin/bash -c "mkdir -p /var/lib/postgresql/data && exec docker-entrypoint.sh postgres"
