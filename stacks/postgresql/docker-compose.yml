@@ -8,5 +8,5 @@ services:
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
     ports:
-      - "5433:5433"
+      - "5433:5432"
     command: /bin/bash -c "mkdir -p /var/lib/postgresql/data && exec docker-entrypoint.sh postgres"
