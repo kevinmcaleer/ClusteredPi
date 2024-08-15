@@ -9,6 +9,6 @@ services:
       - "8083:8083"
     volumes:
       - influxdb:/var/lib/influxdb
-
+    restart: unless-stopped
 volumes:
   influxdb:
