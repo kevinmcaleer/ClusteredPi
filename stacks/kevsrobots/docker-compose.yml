@@ -8,9 +8,5 @@ services:
     image: 192.168.2.1:5000/kevsrobots:latest  ## goes to local registry
     ports: 
       - "3333:3333"
-    restart: unless-stopped
-    deploy:
-      mode: global
-      # replicas: 4
-      restart_policy:
-        condition: on-failure
+    restart: always
+    
