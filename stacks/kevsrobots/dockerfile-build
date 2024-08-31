@@ -1,0 +1,15 @@
+FROM 192.168.2.1:5000/kevinmcaleer:latest AS getfiles
+
+RUN git clone --depth=1 https://www.github.com/kevinmcaleer/kevsrobots.com.git --recurse-submodules --remote-submodules \
+
+# Copy the cloned repository from the first stage
+COPY /src/kevsrobots.com/web /src
+WORKDIR /src
+
+# Build the site
+RUN jekyll build --trace
+
+# Use Nginx to serve the site, starting with the official image
+FROM nginx
+COPY /src/kevsrobots.com/stacks/kevsrobots/nginx.conf /etc/nginx/nginx.conf
+COPY --from=secondstage /src/_site /www/data

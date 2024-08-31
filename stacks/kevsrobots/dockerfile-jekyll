@@ -1,0 +1,28 @@
+# Use Ubuntu as the base image for the first stage
+FROM ubuntu:latest AS getfiles
+
+# Install necessary tools and clone the repository
+RUN apt-get update && apt-get install -y git \
+    && mkdir /src \
+    && cd /src \
+
+# Start with an Ubuntu base image for the Ruby stage
+FROM ubuntu:latest AS secondstage
+
+# Install Ruby and build dependencies
+RUN apt-get update && apt-get install -y ruby-full build-essential zlib1g-dev
+
+# Configure gem installation location and PATH for Ruby Gems
+RUN echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc \
+    && echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc \
+    && echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc \
+    && /bin/bash -c "source ~/.bashrc"
+
+# Install necessary gems
+RUN gem install jekyll:4.3.3 jekyll-redirect-from kramdown rdiscount rouge byebug \
+    && gem install jekyll-sass-converter:3.0.0 sass-embedded:1.64.1 \
+    && gem install nokogiri \
+    && gem install google-protobuf -v 3.25.2 \
+    && gem install ruby
+
+
