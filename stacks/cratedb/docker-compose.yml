@@ -3,16 +3,19 @@ services:
     image: crate
     environment:
       - CRATE_HEAP_SIZE=1g
-      - CRATE_CLUSTER_NAME=crate-cluster
+      - CRATE_CLUSTER_NAME=my_cluster
       - CRATE_NODE_NAME=${CRATE_NODE_NAME:-default_name}
       - CRATE_DISCOVERY_SEED_HOSTS=192.168.1.10:4300,192.168.2.1:4300,192.168.2.2:4300
       - network.host=0.0.0.0
-      - network.publish_host=${MACHINE_IP}
+      - network.publish_host=${MACHINE_IP}  # Publishes the host's IP to the cluster
       - transport.publish_port=4300
       - discovery.type=zen
-      - cluster.initial_master_nodes=192.168.1.10,192.168.2.1,192.168.2.2
+      - cluster.initial_master_nodes=192.168.1.10,192.168.2.1,192.168.2.2  # Initial master-eligible nodes
+      - gateway.expected_data_nodes=3  # Ensures recovery waits for all nodes
+      - gateway.recover_after_data_nodes=3  # Delays recovery until all nodes are ready
     networks:
-      - crate-network
+      crate-network:
+        ipv4_address: ${MACHINE_IP}  # Assigns static IP based on environment variable
     ports:
       - "4200:4200"
       - "5432:5432"
@@ -21,8 +24,12 @@ services:
       - crate-data:/data
     restart: always
 
-networks:
-  crate-network:
-    external: true
 volumes:
   crate-data:
+
+networks:
+  crate-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${DOCKER_NETWORK_SUBNET}  # Dynamically set unique subnet per host
