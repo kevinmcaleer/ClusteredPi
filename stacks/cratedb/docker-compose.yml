@@ -6,6 +6,7 @@ services:
     environment:
       - CRATE_HEAP_SIZE=1g
       - CRATE_PUBLISH_HOST=$MACHINE_IP   # Detects the host's IP dynamically
+      - CRATE_NODE_NAME=${HOSTNAME}      # Automatically sets each node's name to the hostname
     networks:
       - crate-network
     ports:
