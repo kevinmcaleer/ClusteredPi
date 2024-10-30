@@ -5,16 +5,19 @@ services:
       - CRATE_HEAP_SIZE=1g
       - CRATE_CLUSTER_NAME=crate-cluster
       - CRATE_NODE_NAME=${CRATE_NODE_NAME:-default_name}
-      - CRATE_DISCOVERY_SEED_HOSTS=${CRATE_DISCOVERY_SEED_HOSTS}
+      - CRATE_DISCOVERY_SEED_HOSTS=192.168.1.10:4300,192.168.2.1:4300,192.168.2.2:4300
       - network.host=0.0.0.0
-      - network.publish_host=${MACHINE_IP}
+      - network.publish_host=${MACHINE_IP}   # Replace MACHINE_IP dynamically if needed
       - transport.publish_port=4300
       - discovery.type=zen
-
-    network_mode: "host"   # Use host networking mode for direct IP access
+    ports:
+      - "4200:4200"
+      - "5432:5432"
+      - "4300:4300"
+    network_mode: "bridge"  # Use bridge mode if host networking is incompatible
     volumes:
       - crate-data:/data
     restart: always
 
 volumes:
-  crate-data:   # Declare the named volume here
+  crate-data:
