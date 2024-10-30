@@ -10,15 +10,19 @@ services:
       - network.publish_host=${MACHINE_IP}
       - transport.publish_port=4300
       - discovery.type=zen
-      - cluster.initial_master_nodes=192.168.1.10,192.168.2.1,192.168.2.2  # Define initial master nodes
-    # ports:
-    #   - "4200:4200"
-    #   - "5432:5432"
-    #   - "4300:4300"
-    network_mode: "host"
+      - cluster.initial_master_nodes=192.168.1.10,192.168.2.1,192.168.2.2
+    networks:
+      - crate-network
+    ports:
+      - "4200:4200"
+      - "5432:5432"
+      - "4300:4300"
     volumes:
       - crate-data:/data
     restart: always
 
+networks:
+  crate-network:
+    external: true
 volumes:
   crate-data:
