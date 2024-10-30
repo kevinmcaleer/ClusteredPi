@@ -4,7 +4,7 @@
 export CRATE_NODE_NAME=$(hostname)
 
 # Define CRATE_DISCOVERY_SEED_HOSTS with specific IPs
-export CRATE_DISCOVERY_SEED_HOSTS="192.168.1.10:4300,192.168.2.1:4300"
+export CRATE_DISCOVERY_SEED_HOSTS="192.168.1.10:4300,192.168.2.1:4300,192.168.2.2:4300"
 
 echo "Starting CrateDB with node name: $CRATE_NODE_NAME"
 echo "Discovery seed hosts: $CRATE_DISCOVERY_SEED_HOSTS"
