@@ -10,10 +10,7 @@ services:
       - network.publish_host=${MACHINE_IP}
       - transport.publish_port=4300
       - discovery.type=zen
-    ports:
-      - "4200:4200"
-      - "5432:5432"
-      - "4300:4300"  # Internal transport port for clustering
+
     network_mode: "host"   # Use host networking mode for direct IP access
     volumes:
       - crate-data:/data
