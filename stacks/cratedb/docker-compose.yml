@@ -13,8 +13,11 @@ services:
     ports:
       - "4200:4200"
       - "5432:5432"
-      - "4300:4300"
+      - "4300:4300"  # Internal transport port for clustering
     network_mode: "host"   # Use host networking mode for direct IP access
     volumes:
       - crate-data:/data
     restart: always
+
+volumes:
+  crate-data:   # Declare the named volume here
