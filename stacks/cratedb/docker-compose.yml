@@ -4,7 +4,7 @@ services:
     environment:
       - CRATE_HEAP_SIZE=1g
       - CRATE_CLUSTER_NAME=crate-cluster
-      - CRATE_NODE_NAME=${CRATE_NODE_NAME:-node}
+      - CRATE_NODE_NAME=${CRATE_NODE_NAME}
       - CRATE_DISCOVERY_SEED_HOSTS=${CRATE_DISCOVERY_SEED_HOSTS}
     ports:
       - "4200:4200"
