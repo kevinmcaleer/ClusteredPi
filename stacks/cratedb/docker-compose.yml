@@ -6,17 +6,15 @@ services:
       - CRATE_CLUSTER_NAME=crate-cluster
       - CRATE_NODE_NAME=${CRATE_NODE_NAME:-default_name}
       - CRATE_DISCOVERY_SEED_HOSTS=${CRATE_DISCOVERY_SEED_HOSTS}
-      - network.host=0.0.0.0               # Bind to all interfaces
-      - network.publish_host=${MACHINE_IP}  # Publish the detected IP of the host machine
-      - transport.publish_port=4300         # Set the external transport port
+      - network.host=0.0.0.0
+      - network.publish_host=${MACHINE_IP}
+      - transport.publish_port=4300
       - discovery.type=zen
     ports:
       - "4200:4200"
       - "5432:5432"
-      - "4300:4300"  # Internal transport port for clustering
+      - "4300:4300"
+    network_mode: "host"   # Use host networking mode for direct IP access
     volumes:
       - crate-data:/data
     restart: always
-
-volumes:
-  crate-data:
