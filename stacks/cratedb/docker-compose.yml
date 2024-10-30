@@ -1,23 +1,25 @@
+version: '3.8'
+
 services:
   crate:
     image: crate
     environment:
       - CRATE_HEAP_SIZE=1g
-      - CRATE_CLUSTER_NAME=crate-cluster
-      - CRATE_NODE_NAME=${CRATE_NODE_NAME}
-      - CRATE_DISCOVERY_SEED_HOSTS=192.168.1.10:4300,192.168.2.1:4300,192.168.2.2:4300
-      - network.host=0.0.0.0
-      - network.publish_host=${MACHINE_IP}
-      - transport.publish_port=4300
-      - cluster.initial_master_nodes=192.168.1.10,192.168.2.1,192.168.2.2  # Define initial master nodes
-    # ports:
-    #   - "4200:4200"
-    #   - "5432:5432"
-    #   - "4300:4300"
-    network_mode: "host"
+      - CRATE_PUBLISH_HOST=$(hostname -I | awk '{print $1}')   # Detects the host's IP dynamically
+    networks:
+      - crate-network
+    ports:
+      - "4200:4200"
+      - "5432:5432"
+      - "4300:4300"
     volumes:
       - crate-data:/data
+      - ./crate.yml:/crate/config/crate.yml  # Mount custom crate.yml file into container
     restart: always
 
 volumes:
   crate-data:
+
+networks:
+  crate-network:
+    driver: bridge
