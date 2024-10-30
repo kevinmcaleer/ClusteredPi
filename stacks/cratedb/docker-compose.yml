@@ -6,15 +6,16 @@ services:
     environment:
       - CRATE_HEAP_SIZE=1g
       - CRATE_CLUSTER_NAME=my_cluster
-      - CRATE_NODE_NAME=${HOSTNAME}                     # Uses the machine hostname as the node name
+      - CRATE_NODE_NAME=${HOSTNAME}
       - CRATE_DISCOVERY_SEED_HOSTS=192.168.1.10:4300,192.168.2.1:4300,192.168.2.2:4300
       - network.host=0.0.0.0
-      - network.publish_host=$(hostname -I | awk '{print $1}')  # Detects the host's primary IP dynamically
+      - network.publish_host=${MACHINE_IP}
       - transport.publish_port=4300
       - discovery.type=zen
       - cluster.initial_master_nodes=192.168.1.10,192.168.2.1,192.168.2.2
     networks:
-      - crate-network
+      crate-network:
+        ipv4_address: ${MACHINE_IP}
     ports:
       - "4200:4200"
       - "5432:5432"
@@ -22,8 +23,6 @@ services:
     volumes:
       - crate-data:/data
     restart: always
-    init: true                               # Ensures the container can run commands on startup
-    entrypoint: /bin/sh -c "exec crate"      # Starts CrateDB after setting up env variables
 
 volumes:
   crate-data:
@@ -33,4 +32,4 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 192.168.10.0/24           # Single subnet shared across hosts
+        - subnet: 192.168.10.0/24
