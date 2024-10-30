@@ -6,10 +6,13 @@ export CRATE_NODE_NAME=$(hostname)
 # Define CRATE_DISCOVERY_SEED_HOSTS with specific IPs
 export CRATE_DISCOVERY_SEED_HOSTS="192.168.1.10:4300,192.168.2.1:4300,192.168.2.2:4300"
 
-echo "Starting CrateDB with node name: $CRATE_NODE_NAME"
-echo "Discovery seed hosts: $CRATE_DISCOVERY_SEED_HOSTS"
+# Debug output
+echo "CRATE_NODE_NAME is set to: $CRATE_NODE_NAME"
+echo "CRATE_DISCOVERY_SEED_HOSTS is set to: $CRATE_DISCOVERY_SEED_HOSTS"
+
+# Write environment variables to .env file for Docker Compose
+echo "CRATE_NODE_NAME=$CRATE_NODE_NAME" > .env
+echo "CRATE_DISCOVERY_SEED_HOSTS=$CRATE_DISCOVERY_SEED_HOSTS" >> .env
 
 # Start the docker-compose service
-docker-compose up -d
-
-echo "CrateDB node $CRATE_NODE_NAME started successfully and joined the cluster."
+docker-compose --env-file .env up -d
