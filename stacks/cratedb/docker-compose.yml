@@ -4,7 +4,7 @@ services:
     environment:
       - CRATE_HEAP_SIZE=1g
       - CRATE_CLUSTER_NAME=crate-cluster
-      - CRATE_NODE_NAME=${CRATE_NODE_NAME:-default_name}
+      - CRATE_NODE_NAME=${HOSTNAME}
       - CRATE_DISCOVERY_SEED_HOSTS=192.168.1.10:4300,192.168.2.1:4300,192.168.2.2:4300
       - network.host=0.0.0.0
       - network.publish_host=${MACHINE_IP}
