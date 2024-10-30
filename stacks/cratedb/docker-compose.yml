@@ -6,7 +6,9 @@ services:
       - CRATE_CLUSTER_NAME=crate-cluster
       - CRATE_NODE_NAME=${CRATE_NODE_NAME}
       - CRATE_DISCOVERY_SEED_HOSTS=${CRATE_DISCOVERY_SEED_HOSTS}
-      - network.host=0.0.0.0
+      - network.host=0.0.0.0               # Bind to all interfaces
+      - network.publish_host=<external_ip>  # Advertise this host's external IP
+      - transport.publish_port=4300         # Set the external transport port
       - discovery.type=zen
     ports:
       - "4200:4200"
