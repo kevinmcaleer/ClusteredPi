@@ -4,13 +4,10 @@ services:
     environment:
       - CRATE_HEAP_SIZE=1g
       - CRATE_CLUSTER_NAME=crate-cluster
-      # - CRATE_NODE_NAME=${CRATE_NODE_NAME}
       - CRATE_NODE_NAME=${CRATE_NODE_NAME:-default_name}
-
-      # - CRATE_DISCOVERY_SEED_HOSTS=${CRATE_DISCOVERY_SEED_HOSTS}
-      - CRATE_DISCOVERY_SEED_HOSTS=192.168.1.10:4300,192.168.2.1:4300,192.168.2.2:4300
+      - CRATE_DISCOVERY_SEED_HOSTS=${CRATE_DISCOVERY_SEED_HOSTS}
       - network.host=0.0.0.0               # Bind to all interfaces
-      - network.publish_host=<external_ip>  # Advertise this host's external IP
+      - network.publish_host=${MACHINE_IP}  # Publish the detected IP of the host machine
       - transport.publish_port=4300         # Set the external transport port
       - discovery.type=zen
     ports:
