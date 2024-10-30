@@ -3,9 +3,13 @@ services:
     image: crate
     environment:
       - CRATE_HEAP_SIZE=1g
+      - CRATE_CLUSTER_NAME=crate-cluster
+      - CRATE_NODE_NAME=${CRATE_NODE_NAME:-node}
+      - CRATE_DISCOVERY_SEED_HOSTS=${CRATE_DISCOVERY_SEED_HOSTS}
     ports:
       - "4200:4200"
       - "5432:5432"
+      - "4300:4300"  # Internal transport port for clustering
     volumes:
       - crate-data:/data
     restart: always
