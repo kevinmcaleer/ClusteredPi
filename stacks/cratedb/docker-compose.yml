@@ -7,7 +7,8 @@ services:
       # - CRATE_NODE_NAME=${CRATE_NODE_NAME}
       - CRATE_NODE_NAME=${CRATE_NODE_NAME:-default_name}
 
-      - CRATE_DISCOVERY_SEED_HOSTS=${CRATE_DISCOVERY_SEED_HOSTS}
+      # - CRATE_DISCOVERY_SEED_HOSTS=${CRATE_DISCOVERY_SEED_HOSTS}
+      - CRATE_DISCOVERY_SEED_HOSTS=192.168.1.10:4300,192.168.2.1:4300,192.168.2.2:4300
       - network.host=0.0.0.0               # Bind to all interfaces
       - network.publish_host=<external_ip>  # Advertise this host's external IP
       - transport.publish_port=4300         # Set the external transport port
