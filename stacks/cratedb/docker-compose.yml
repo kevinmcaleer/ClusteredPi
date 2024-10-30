@@ -1,0 +1,14 @@
+services:
+  crate:
+    image: crate
+    environment:
+      - CRATE_HEAP_SIZE=1g
+    ports:
+      - "4200:4200"
+      - "5432:5432"
+    volumes:
+      - crate-data:/data
+    restart: always
+
+volumes:
+  crate-data:
