@@ -10,11 +10,11 @@ services:
       - network.publish_host=${MACHINE_IP}   # Replace MACHINE_IP dynamically if needed
       - transport.publish_port=4300
       - discovery.type=zen
-    ports:
-      - "4200:4200"
-      - "5432:5432"
-      - "4300:4300"
-    network_mode: "bridge"  # Use bridge mode if host networking is incompatible
+    # ports:
+    #   - "4200:4200"
+    #   - "5432:5432"
+    #   - "4300:4300"
+    network_mode: "host"  # Use bridge mode if host networking is incompatible
     volumes:
       - crate-data:/data
     restart: always
