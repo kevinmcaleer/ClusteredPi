@@ -1,6 +1,6 @@
 # crate.yml
 cluster.name: "my_cluster"
-node.name: ${HOSTNAME}                         # Automatically sets each node's name to the hostname
+node.name: ${CRATE_NODE_NAME}                         # Automatically sets each node's name to the hostname
 
 discovery:
   seed_hosts:                                  # Define the list of seed nodes for discovery
