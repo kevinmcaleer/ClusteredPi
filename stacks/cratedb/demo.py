@@ -1,7 +1,7 @@
 from crate import client
 
 # CrateDB connection settings
-CRATE_HOST = "http://localhost:4200"  # Change this to your CrateDB instance IP if not running locally
+CRATE_HOST = "http://192.168.1.10:4200"  # Change this to your CrateDB instance IP if not running locally
 
 # Connect to CrateDB
 connection = client.connect(CRATE_HOST)
@@ -28,9 +28,9 @@ INSERT INTO my_table (id, name, age, city) VALUES (?, ?, ?, ?)
 
 # Sample data to insert
 sample_data = [
-    (1, 'Alice', 30, 'New York'),
-    (2, 'Bob', 25, 'Los Angeles'),
-    (3, 'Charlie', 35, 'Chicago')
+    (4, 'Alice', 30, 'New York'),
+    (5, 'Bob', 25, 'Los Angeles'),
+    (6, 'Charlie', 35, 'Chicago')
 ]
 
 # Insert each row of sample data
