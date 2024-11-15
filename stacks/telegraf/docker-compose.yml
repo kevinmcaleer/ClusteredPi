@@ -1,0 +1,13 @@
+services:
+  telegraf:
+    image: telegraf
+    container_name: telegraf
+    volumes:
+      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    networks:
+      - influx_network
+    restart: unless-stopped
+
+networks:
+  influx_network:
+    external: true  # Ensure your InfluxDB container is on this network
