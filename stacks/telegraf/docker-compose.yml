@@ -1,4 +1,21 @@
+version: '3.8'
 services:
+  influxdb:
+    image: influxdb:latest
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=adminpassword
+      - DOCKER_INFLUXDB_INIT_ORG=example-org
+      - DOCKER_INFLUXDB_INIT_BUCKET=telegraf
+    networks:
+      - influx_network
+    volumes:
+      - influxdb_data:/var/lib/influxdb2
+
   telegraf:
     image: telegraf
     container_name: telegraf
@@ -6,8 +23,13 @@ services:
       - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
     networks:
       - influx_network
+    depends_on:
+      - influxdb
     restart: unless-stopped
 
 networks:
   influx_network:
-    external: true  # Ensure your InfluxDB container is on this network
+    driver: bridge
+
+volumes:
+  influxdb_data:
