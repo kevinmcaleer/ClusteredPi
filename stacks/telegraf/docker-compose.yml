@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   influxdb:
-    image: influxdb:latest
+    image: influxdb:2.7
     container_name: influxdb
     ports:
       - "8086:8086"
@@ -9,26 +9,36 @@ services:
       - DOCKER_INFLUXDB_INIT_MODE=setup
       - DOCKER_INFLUXDB_INIT_USERNAME=admin
       - DOCKER_INFLUXDB_INIT_PASSWORD=adminpassword
-      - DOCKER_INFLUXDB_INIT_ORG=example-org
+      - DOCKER_INFLUXDB_INIT_ORG=my-org
       - DOCKER_INFLUXDB_INIT_BUCKET=telegraf
-    networks:
-      - influx_network
     volumes:
       - influxdb_data:/var/lib/influxdb2
+    networks:
+      - monitoring_net
 
   telegraf:
     image: telegraf
     container_name: telegraf
+    depends_on:
+      - influxdb
     volumes:
       - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
     networks:
-      - influx_network
-    depends_on:
-      - influxdb
-    restart: unless-stopped
+      - monitoring_net
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - monitoring_net
 
 networks:
-  influx_network:
+  monitoring_net:
     driver: bridge
 
 volumes:
