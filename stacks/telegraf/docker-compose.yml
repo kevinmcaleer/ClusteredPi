@@ -15,6 +15,7 @@ services:
       - influxdb_data:/var/lib/influxdb2
     networks:
       - monitoring_net
+    restart: always  # Automatically restart the container
 
   telegraf:
     image: telegraf
@@ -25,6 +26,7 @@ services:
       - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
     networks:
       - monitoring_net
+    restart: always  # Automatically restart the container
 
   grafana:
     image: grafana/grafana:latest
@@ -36,6 +38,7 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     networks:
       - monitoring_net
+    restart: always  # Automatically restart the container
 
 networks:
   monitoring_net:
