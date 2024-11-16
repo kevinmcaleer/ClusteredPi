@@ -8,5 +8,7 @@ services:
     volumes:
       - influxdb:/var/lib/influxdb
     restart: unless-stopped
+    post_start:
+      - sh -c "influx -execute 'CREATE USER telegraf WITH PASSWORD \'$telegraf_password\''"
 volumes:
   influxdb:
