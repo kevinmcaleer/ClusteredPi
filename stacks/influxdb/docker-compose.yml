@@ -1,6 +1,6 @@
 services:
   influxdb:
-    image: influxdb:latest # 1.8 is a known good version
+    image: influxdb:latest  # 1.8 is a known good version
     container_name: influxdb
     ports:
       - "8086:8086"
@@ -14,20 +14,16 @@ services:
       - DOCKER_INFLUXDB_INIT_PASSWORD=adminpassword
       - DOCKER_INFLUXDB_INIT_ORG=my-org
       - DOCKER_INFLUXDB_INIT_BUCKET=telegraf
-      - INFLUXDB_ADMIN_USER=admin
-      - INFLUXDB_ADMIN_PASSWORD=adminpassword
-      - INFLUXDB_TELEGRAF_USER=telegraf
-      - INFLUXDB_TELEGRAF_PASSWORD=telegrafpassword
+
   influxdb-init:
     image: influxdb
     volumes:
-      - ./influxdb.conf:/etc/influxdb/influxdb.conf
+      - influxdb:/var/lib/influxdb
     entrypoint: ["sh", "-c"]
-    environment:
-      - TELEGRAF_PASSWORD=password
-    command: influx -execute "CREATE USER telegraf WITH PASSWORD '$TELEGRAF_PASSWORD'"
+    command: |
+      influx -execute "CREATE USER admin WITH PASSWORD 'adminpassword' ADMIN"
+      influx -execute "CREATE USER telegraf WITH PASSWORD 'telegrafpassword'"
     depends_on:
       - influxdb
 volumes:
   influxdb:
-
