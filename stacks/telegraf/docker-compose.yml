@@ -9,6 +9,7 @@ services:
     hostname: "${HOSTNAME}"
     environment:
       - HOSTNAME=${HOSTNAME}
+    env_file: ".env"
 networks:
   monitoring_net:
     driver: bridge
