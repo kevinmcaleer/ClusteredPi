@@ -8,7 +8,18 @@ services:
     volumes:
       - influxdb:/var/lib/influxdb
     restart: unless-stopped
-    post_start:
-      - sh -c "influx -execute 'CREATE USER telegraf WITH PASSWORD \'$telegraf_password\''"
+    environment:
+      TELEGRAF_PASSWORD: password
+  
+  influxdb-init:
+    image: influxdb
+    volumes:
+      - ./influxdb.conf:/etc/influxdb/influxdb.conf
+    entrypoint: ["sh", "-c"]
+    command: >
+      influx -execute 'CREATE USER telegraf WITH PASSWORD \'$TELEGRAF_PASSWORD\''
+    depends_on:
+      - influxdb
 volumes:
   influxdb:
+
