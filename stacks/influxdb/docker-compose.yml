@@ -14,10 +14,10 @@ services:
       - DOCKER_INFLUXDB_INIT_PASSWORD=adminpassword
       - DOCKER_INFLUXDB_INIT_ORG=my-org
       - DOCKER_INFLUXDB_INIT_BUCKET=telegraf
-      INFLUXDB_ADMIN_USER: admin
-      INFLUXDB_ADMIN_PASSWORD: adminpassword
-      INFLUXDB_TELEGRAF_USER: telegraf
-      INFLUXDB_TELEGRAF_PASSWORD: telegrafpassword
+      - INFLUXDB_ADMIN_USER=admin
+      - INFLUXDB_ADMIN_PASSWORD=adminpassword
+      - INFLUXDB_TELEGRAF_USER=telegraf
+      - INFLUXDB_TELEGRAF_PASSWORD=telegrafpassword
   influxdb-init:
     image: influxdb
     volumes:
