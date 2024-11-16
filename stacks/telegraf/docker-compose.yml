@@ -9,8 +9,6 @@ services:
     hostname: "${HOSTNAME}"
     environment:
       - HOSTNAME=${HOSTNAME}
-    post_start:
-      - sh -c 'hostnamectl set-hostname $(hostname)'
 networks:
   monitoring_net:
     driver: bridge
