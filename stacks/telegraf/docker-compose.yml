@@ -8,7 +8,7 @@ services:
       - monitoring_net
     hostname: $(HOSTNAME)
     environment:
-      - HOSTNAME=${HOSTNAME}
+      - HOSTNAME: ${HOSTNAME}
     env_file: ".env"
 networks:
   monitoring_net:
