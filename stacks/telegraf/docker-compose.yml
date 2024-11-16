@@ -7,8 +7,8 @@ services:
     networks:
       - monitoring_net
     environment:
-      - HOSTNAME=$(HOSTNAME)
-      - hostname=$(HOSTNAME)
+      - HOSTNAME=$HOSTNAME
+      - hostname=$HOSTNAME
 networks:
   monitoring_net:
     driver: bridge
