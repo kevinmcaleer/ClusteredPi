@@ -6,9 +6,9 @@ services:
     restart: always
     networks:
       - monitoring_net
+    hostname: "${HOSTNAME}"
     environment:
-      - HOSTNAME=$HOSTNAME
-      - hostname=$HOSTNAME
+      - HOSTNAME=${HOSTNAME}
 networks:
   monitoring_net:
     driver: bridge
