@@ -9,5 +9,5 @@ services:
 
 networks:
   monitoring_net:
-    driver: host
+    driver: bridge
   
