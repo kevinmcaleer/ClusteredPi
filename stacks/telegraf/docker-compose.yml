@@ -3,6 +3,7 @@ services:
     image: telegraf
     volumes:
       - ./telegraf.conf:/etc/telegraf/telegraf.conf
+      - /var/run/docker.sock:/var/run/docker.sock
     restart: always
     networks:
       - monitoring_net
