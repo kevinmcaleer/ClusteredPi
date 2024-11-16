@@ -6,7 +6,7 @@ services:
     restart: always
     networks:
       - monitoring_net
-
+    hostname: “{{.Node.Hostname}}”
 networks:
   monitoring_net:
     driver: bridge
