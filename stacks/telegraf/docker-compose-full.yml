@@ -17,28 +17,6 @@ services:
       - monitoring_net
     restart: always  # Automatically restart the container
 
-  telegraf:
-    image: telegraf
-    container_name: telegraf
-    depends_on:
-      - influxdb
-    volumes:
-      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
-    networks:
-      - monitoring_net
-    restart: always  # Automatically restart the container
-
-  grafana:
-    image: grafana/grafana:latest
-    container_name: grafana
-    ports:
-      - "3000:3000"
-    environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-    networks:
-      - monitoring_net
-    restart: always  # Automatically restart the container
 
 networks:
   monitoring_net:

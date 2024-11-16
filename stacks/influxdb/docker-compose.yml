@@ -9,7 +9,11 @@ services:
       - influxdb:/var/lib/influxdb
     restart: unless-stopped
     environment:
-      TELEGRAF_PASSWORD: password
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=adminpassword
+      - DOCKER_INFLUXDB_INIT_ORG=my-org
+      - DOCKER_INFLUXDB_INIT_BUCKET=telegraf
   
   influxdb-init:
     image: influxdb
@@ -17,7 +21,7 @@ services:
       - ./influxdb.conf:/etc/influxdb/influxdb.conf
     entrypoint: ["sh", "-c"]
     environment:
-      TELEGRAF_PASSWORD: password
+      - TELEGRAF_PASSWORD=password
     command: influx -execute "CREATE USER telegraf WITH PASSWORD '$TELEGRAF_PASSWORD'"
     depends_on:
       - influxdb
