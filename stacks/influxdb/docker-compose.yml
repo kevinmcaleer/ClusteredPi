@@ -16,8 +16,9 @@ services:
     volumes:
       - ./influxdb.conf:/etc/influxdb/influxdb.conf
     entrypoint: ["sh", "-c"]
-    command: >
-      influx -execute 'CREATE USER telegraf WITH PASSWORD \'$TELEGRAF_PASSWORD\''
+    environment:
+      TELEGRAF_PASSWORD: password
+    command: influx -execute "CREATE USER telegraf WITH PASSWORD '$TELEGRAF_PASSWORD'"
     depends_on:
       - influxdb
 volumes:
