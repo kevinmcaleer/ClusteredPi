@@ -7,6 +7,7 @@ services:
       - "8083:8083"
     volumes:
       - influxdb:/var/lib/influxdb
+      - ./influxdb.conf:/etc/influxdb/influxdb.conf
     restart: unless-stopped
     environment:
       - DOCKER_INFLUXDB_INIT_MODE=setup
@@ -14,16 +15,3 @@ services:
       - DOCKER_INFLUXDB_INIT_PASSWORD=adminpassword
       - DOCKER_INFLUXDB_INIT_ORG=my-org
       - DOCKER_INFLUXDB_INIT_BUCKET=telegraf
-
-  influxdb-init:
-    image: influxdb
-    volumes:
-      - influxdb:/var/lib/influxdb
-    entrypoint: ["sh", "-c"]
-    command: |
-      influx -execute "CREATE USER admin WITH PASSWORD 'adminpassword' ADMIN"
-      influx -execute "CREATE USER telegraf WITH PASSWORD 'telegrafpassword'"
-    depends_on:
-      - influxdb
-volumes:
-  influxdb:
