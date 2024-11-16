@@ -4,3 +4,6 @@ services:
     volumes:
       - ./telegraf.conf:/etc/telegraf/telegraf.conf
     restart: always
+    ports:
+      - "8086:8086" # Maps port 8086 on the host to port 8086 in the container
+  
