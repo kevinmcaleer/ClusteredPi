@@ -1,0 +1,23 @@
+services:
+  ros2-humble-arm64:
+    # Build from your local Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ros2-humble-arm64:latest
+    
+    # Give the container a friendly name (optional)
+    container_name: ros2-humble-arm64
+    
+    # If you need to interact with it, run a shell:
+    command: /bin/bash
+    
+    # Example volume mount:
+    # You can mount a local directory into the container for your ROS workspace.
+    # Uncomment the lines below if you want that behavior.
+    # volumes:
+    #   - ./my_ros_workspace:/root/ros_ws
+    
+    # Optionally define environment variables, networks, etc. if you need them.
+    # environment:
+    #   - MY_ENV_VAR=some_value

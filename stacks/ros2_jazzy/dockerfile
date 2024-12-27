@@ -1,0 +1,32 @@
+# Use the official arm64v8 Ubuntu base image
+FROM arm64v8/ubuntu:22.04
+
+# Prevent interactive dialogs
+ENV DEBIAN_FRONTEND=noninteractive
+
+# 1. Update and install some base dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    gnupg2 \
+    lsb-release
+
+# 2. Add the ROS 2 GPG key
+RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add -
+
+# 3. Add the ROS 2 APT repository for your Ubuntu release
+#    (In this case, jammy -> Ubuntu 22.04)
+RUN echo "deb [arch=arm64] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" \
+    | tee /etc/apt/sources.list.d/ros2-latest.list
+
+# 4. Install ROS 2 (Humble desktop variant). 
+#    If you prefer a smaller footprint, you can install "ros-humble-ros-base" instead.
+RUN apt-get update && apt-get install -y \
+    ros-jazzy-desktop \
+ && rm -rf /var/lib/apt/lists/*
+
+# 5. Source the ROS setup script automatically for every new shell
+#    (when you run `docker run -it <image> bash`)
+RUN echo "source /opt/ros/jazzy/setup.bash" >> /root/.bashrc
+
+# Default command: drop into a bash shell
+CMD ["/bin/bash"]
