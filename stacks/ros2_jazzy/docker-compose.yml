@@ -1,5 +1,5 @@
 services:
-  ros2-humble-arm64:
+  ros2-jazzy-arm64:
     # Build from your local Dockerfile
     build:
       context: .
