@@ -4,10 +4,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: ros2-humble-arm64:latest
+    image: ros2-jazzy-arm64:latest
     
     # Give the container a friendly name (optional)
-    container_name: ros2-humble-arm64
+    container_name: ros2-jazzy-arm64
     
     # If you need to interact with it, run a shell:
     command: /bin/bash
