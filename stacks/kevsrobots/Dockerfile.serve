@@ -5,4 +5,4 @@ FROM nginx:latest
 COPY ./nginx.conf /etc/nginx/nginx.conf
 
 # Copy the generated site from the fetch-generate stage
-COPY --from=192.168.2.1:5000/fetch-generate /src/kevsrobots.com/web/_site /usr/share/nginx/html
+COPY --from=192.168.2.1:5000/jekyll-fetch-generate /src/kevsrobots.com/web/_site /usr/share/nginx/html
