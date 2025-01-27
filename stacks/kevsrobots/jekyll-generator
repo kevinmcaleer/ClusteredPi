@@ -3,7 +3,7 @@ FROM alpine:latest AS generator
 RUN apk add --no-cache git
 
 # Copy the Jekyll build environment from the builder image
-COPY --from=builder /usr/local/bundle /usr/local/bundle
+COPY --from=jekyll-builder /usr/local/bundle /usr/local/bundle
 
 WORKDIR /app
 
