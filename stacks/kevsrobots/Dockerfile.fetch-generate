@@ -1,8 +1,19 @@
-# Use Nginx as the base image
-FROM nginx:latest
+# Use the prebuilt Jekyll environment as the base
+FROM jekyll-env:latest
 
-# Copy the Nginx configuration file
-COPY ./nginx.conf /etc/nginx/nginx.conf
+# Set the working directory
+WORKDIR /src
 
-# Copy the generated site from the fetch-generate stage
-COPY --from=fetch-generate /src/kevsrobots.com/web/_site /usr/share/nginx/html
+# Install Git to clone the repository
+RUN apt-get update && apt-get install -y git
+
+# Clone the repository
+RUN git clone --depth=1 https://www.github.com/kevinmcaleer/kevsrobots.com.git --recurse-submodules --remote-submodules
+
+# Change to the website directory
+WORKDIR /src/kevsrobots.com/web
+
+# Build the Jekyll site
+RUN jekyll build --trace
+
+# The generated site will be in `/src/kevsrobots.com/web/_site`
