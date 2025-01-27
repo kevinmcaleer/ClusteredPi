@@ -1,6 +1,6 @@
 FROM alpine:latest AS builder
 
-RUN apk add --no-cache git ruby ruby-dev build-base zlib-dev
+RUN apk add --no-cache git ruby ruby-dev build-base zlib-dev bash
 
 
 RUN echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc \
