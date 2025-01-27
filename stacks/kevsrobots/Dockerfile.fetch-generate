@@ -1,5 +1,5 @@
 # Use the prebuilt Jekyll environment as the base
-FROM 192.168.2.1:/jekyll-env:latest
+FROM 192.168.2.1:5000/jekyll-env:latest
 
 # Set the working directory
 WORKDIR /src
