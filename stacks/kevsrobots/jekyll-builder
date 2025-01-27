@@ -2,13 +2,20 @@ FROM alpine:latest AS builder
 
 RUN apk add --no-cache git ruby ruby-dev build-base zlib-dev
 
-# Set GEM_HOME and PATH for user-installed gems
-ENV GEM_HOME=/usr/local/bundle
-ENV PATH="${GEM_HOME}/bin:${PATH}"
+
+RUN echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc \
+    && echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc \
+    && echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc \
+    && /bin/bash -c "source ~/.bashrc"
 
 # Install Jekyll and dependencies
 # COPY Gemfile Gemfile.lock ./
-RUN bundle install
+# Install necessary gems
+RUN gem install jekyll:4.3.3 jekyll-redirect-from kramdown rdiscount rouge byebug \
+    && gem install jekyll-sass-converter:3.0.0 sass-embedded:1.64.1 \
+    && gem install nokogiri \
+    && gem install google-protobuf -v 3.25.2 \
+    && gem install ruby
 
 # Make the 'jekyll' command available
 CMD ["jekyll"]
