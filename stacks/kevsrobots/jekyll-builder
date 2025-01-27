@@ -7,7 +7,7 @@ ENV GEM_HOME=/usr/local/bundle
 ENV PATH="${GEM_HOME}/bin:${PATH}"
 
 # Install Jekyll and dependencies
-COPY Gemfile Gemfile.lock ./
+# COPY Gemfile Gemfile.lock ./
 RUN bundle install
 
 # Make the 'jekyll' command available
