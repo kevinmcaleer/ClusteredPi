@@ -1,0 +1,19 @@
+# Use the prebuilt Jekyll environment as the base
+FROM jekyll-env:latest as kevsrobots:latest
+
+# Set the working directory
+WORKDIR /src
+
+# Install Git to clone the repository
+RUN apt-get update && apt-get install -y git
+
+# Clone the repository
+RUN git clone --depth=1 sparse-checkout https://www.github.com/kevinmcaleer/kevsrobots.com.git --recurse-submodules --remote-submodules
+
+# Change to the website directory
+WORKDIR /src/kevsrobots.com/web
+
+# Build the Jekyll site
+RUN jekyll build --trace
+
+# The generated site will be in `/src/kevsrobots.com/web/_site`

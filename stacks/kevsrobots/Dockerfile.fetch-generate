@@ -1,0 +1,8 @@
+# Use Nginx as the base image
+FROM nginx:latest
+
+# Copy the Nginx configuration file
+COPY ./nginx.conf /etc/nginx/nginx.conf
+
+# Copy the generated site from the fetch-generate stage
+COPY --from=fetch-generate /src/kevsrobots.com/web/_site /usr/share/nginx/html
