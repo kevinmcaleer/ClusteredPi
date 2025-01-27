@@ -4,16 +4,20 @@ FROM 192.168.2.1:5000/jekyll-env:latest
 # Set the working directory
 WORKDIR /src
 
-# Install Git to clone the repository
+# Install Git to enable sparse checkout
 RUN apt-get update && apt-get install -y git
 
-# Clone the repository
-RUN git clone --depth=1 https://www.github.com/kevinmcaleer/kevsrobots.com.git --recurse-submodules --remote-submodules
+# Clone the repository using sparse checkout to limit files pulled
+RUN git init \
+    && git remote add origin https://www.github.com/kevinmcaleer/kevsrobots.com.git \
+    && git config core.sparseCheckout true \
+    && echo "web/*" >> .git/info/sparse-checkout \
+    && git pull --depth=1 origin main
 
 # Change to the website directory
-WORKDIR /src/kevsrobots.com/web
+WORKDIR /src/web
 
 # Build the Jekyll site
 RUN jekyll build --trace
 
-# The generated site will be in `/src/kevsrobots.com/web/_site`
+# The generated site will be in `/src/web/_site`
