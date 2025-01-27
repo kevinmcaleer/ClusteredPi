@@ -1,0 +1,13 @@
+services:
+  jekyll-generator:
+    image: jekyll-generator
+    volumes:
+      - ./:/app  # Mount your local repository for updates
+    depends_on:
+      - jekyll-builder
+  jekyll-server:
+    image: jekyll-server
+    ports:
+      - "80:80"
+    depends_on:
+      - jekyll-generator

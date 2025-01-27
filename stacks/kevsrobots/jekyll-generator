@@ -1,0 +1,17 @@
+FROM alpine:latest AS generator
+
+RUN apk add --no-cache git
+
+# Copy the Jekyll build environment from the builder image
+COPY --from=builder /usr/local/bundle /usr/local/bundle
+
+WORKDIR /app
+
+# Clone the repository using sparse-checkout
+RUN git clone --depth=1 --sparse-checkout https://github.com/kevinmcaleer/kevsrobots.com.git .
+
+# Specify the files to clone (adjust the path as needed)
+RUN git sparse-checkout set web
+
+# Generate the site
+RUN jekyll build --trace --destination /site

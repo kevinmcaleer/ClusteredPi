@@ -1,0 +1,14 @@
+FROM alpine:latest AS builder
+
+RUN apk add --no-cache git ruby ruby-dev build-base zlib-dev
+
+# Set GEM_HOME and PATH for user-installed gems
+ENV GEM_HOME=/usr/local/bundle
+ENV PATH="${GEM_HOME}/bin:${PATH}"
+
+# Install Jekyll and dependencies
+COPY Gemfile Gemfile.lock ./
+RUN bundle install
+
+# Make the 'jekyll' command available
+CMD ["jekyll"]
