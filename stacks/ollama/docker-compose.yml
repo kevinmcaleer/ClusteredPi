@@ -21,6 +21,8 @@ services:
     tty: true
     restart: unless-stopped
     image: ollama/ollama:${OLLAMA_DOCKER_TAG-latest}
+    ports:
+      - "11434:11434"  # <-- Expose port for external access
 
   open-webui:
     build:
