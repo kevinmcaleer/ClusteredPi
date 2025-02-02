@@ -1,0 +1,33 @@
+# Use a minimal Debian-based image
+FROM debian:latest
+
+# Install required packages
+RUN apt-get update && apt-get install -y \
+    apache2 \
+    libapache2-mod-cgi \
+    && rm -rf /var/lib/apt/lists/*
+
+# Enable CGI module in Apache
+RUN a2enmod cgi
+
+# Set up CGI execution directory
+RUN mkdir -p /usr/lib/cgi-bin
+COPY seppo.cgi /usr/lib/cgi-bin/seppo.cgi
+RUN chmod +x /usr/lib/cgi-bin/seppo.cgi
+
+# Configure Apache to allow CGI execution
+RUN echo "ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/" >> /etc/apache2/conf-available/cgi-bin.conf
+RUN echo "<Directory \"/usr/lib/cgi-bin\">" >> /etc/apache2/conf-available/cgi-bin.conf
+RUN echo "    AllowOverride None" >> /etc/apache2/conf-available/cgi-bin.conf
+RUN echo "    Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch" >> /etc/apache2/conf-available/cgi-bin.conf
+RUN echo "    Require all granted" >> /etc/apache2/conf-available/cgi-bin.conf
+RUN echo "</Directory>" >> /etc/apache2/conf-available/cgi-bin.conf
+
+# Enable the CGI configuration
+RUN a2enconf cgi-bin
+
+# Expose port 80
+EXPOSE 80
+
+# Start Apache in the foreground
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
