@@ -23,6 +23,9 @@ if [ ! -f /usr/bin/docker ]; then
     sh "$DOCKER_SCRIPT_PATH"
 fi
 
+# Get the real user running the script
+CURRENT_USER=${SUDO_USER:-$USER}
+
 # Add the current user to the 'docker' group
 sudo usermod -aG docker "$CURRENT_USER"
 
