@@ -26,6 +26,9 @@ fi
 # Get the real user running the script
 CURRENT_USER=${SUDO_USER:-$USER}
 
+# Create the docker group
+sudo groupadd docker
+
 # Add the current user to the 'docker' group
 sudo usermod -aG docker "$CURRENT_USER"
 
