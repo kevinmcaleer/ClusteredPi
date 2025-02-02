@@ -1,32 +1,30 @@
-# Use the latest Debian base image
+# Use Debian as base
 FROM debian:latest
 
-# Install Apache and enable CGI
-RUN apt-get update && apt-get install -y \
-    apache2 \
-    && rm -rf /var/lib/apt/lists/*
+# Install Apache with CGI support
+RUN apt-get update && apt-get install -y apache2 && rm -rf /var/lib/apt/lists/*
 
 # Enable CGI module
 RUN a2enmod cgid
 
-# Set up CGI execution directory
+# Create CGI directory and set permissions
 RUN mkdir -p /usr/lib/cgi-bin
 COPY seppo.cgi /usr/lib/cgi-bin/seppo.cgi
 RUN chmod +x /usr/lib/cgi-bin/seppo.cgi
 
-# Configure Apache to allow CGI execution
-RUN echo "ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/" > /etc/apache2/conf-available/cgi-bin.conf
-RUN echo "<Directory \"/usr/lib/cgi-bin\">" >> /etc/apache2/conf-available/cgi-bin.conf
-RUN echo "    AllowOverride None" >> /etc/apache2/conf-available/cgi-bin.conf
-RUN echo "    Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch" >> /etc/apache2/conf-available/cgi-bin.conf
-RUN echo "    Require all granted" >> /etc/apache2/conf-available/cgi-bin.conf
-RUN echo "</Directory>" >> /etc/apache2/conf-available/cgi-bin.conf
+# Configure Apache to execute CGI
+RUN echo "ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/" > /etc/apache2/conf-available/serve-cgi-bin.conf
+RUN echo "<Directory \"/usr/lib/cgi-bin\">" >> /etc/apache2/conf-available/serve-cgi-bin.conf
+RUN echo "    AllowOverride None" >> /etc/apache2/conf-available/serve-cgi-bin.conf
+RUN echo "    Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch" >> /etc/apache2/conf-available/serve-cgi-bin.conf
+RUN echo "    Require all granted" >> /etc/apache2/conf-available/serve-cgi-bin.conf
+RUN echo "</Directory>" >> /etc/apache2/conf-available/serve-cgi-bin.conf
 
 # Enable CGI configuration
-RUN a2enconf cgi-bin
+RUN a2enconf serve-cgi-bin
 
-# Expose port 80
+# Expose port
 EXPOSE 80
 
-# Start Apache in the foreground
+# Start Apache
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
