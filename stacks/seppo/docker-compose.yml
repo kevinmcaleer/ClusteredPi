@@ -4,6 +4,6 @@ services:
     container_name: seppo-cgi
     restart: unless-stopped
     ports:
-      - "8080:80"
+      - "6060:80"
     volumes:
       - ./seppo.cgi:/usr/lib/cgi-bin/seppo.cgi
