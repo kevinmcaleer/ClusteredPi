@@ -1,26 +1,12 @@
-# version: "3.9"
-# services:
-#   ollama:
-#     container_name: ollama
-#     image: ollama/ollama:latest
-#     restart: always
-#     volumes:
-#       - /home/pi/ollama:/root/.ollama
-  
-# volumes:
-#   # ollama-webui: {}
-#   ollama: {}
-
 services:
   ollama:
     volumes:
-      # - ollama:/root/.ollama
-      - /home/pi/ollama:/root/.ollama
+      - ${USER_HOME}/ollama:/root/.ollama
     container_name: ollama
     pull_policy: always
     tty: true
     restart: unless-stopped
-    image: ollama/ollama:${OLLAMA_DOCKER_TAG-latest}
+    image: ollama/ollama:${OLLAMA_DOCKER_TAG:-latest}
     ports:
       - "11434:11434"  # <-- Expose port for external access
 
@@ -30,14 +16,14 @@ services:
       args:
         OLLAMA_BASE_URL: '/ollama'
       dockerfile: Dockerfile
-    image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG-main}
+    image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG:-main}
     container_name: open-webui
     volumes:
       - open-webui:/app/backend/data
     depends_on:
       - ollama
     ports:
-      - ${OPEN_WEBUI_PORT-3000}:8080
+      - ${OPEN_WEBUI_PORT:-3000}:8080
     environment:
       - 'OLLAMA_BASE_URL=http://ollama:11434'
       - 'WEBUI_SECRET_KEY='
