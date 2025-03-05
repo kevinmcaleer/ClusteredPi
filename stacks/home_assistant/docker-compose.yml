@@ -1,4 +1,3 @@
-version: '3'
 services:
   homeassistant:
     container_name: homeassistant
@@ -16,5 +15,11 @@ services:
       - DISABLE_JEMALLOC=true
 networks:
   mymacvlanActive:
-    external: true
+    driver: macvlan
+    driver_opts:
+      parent: eth0 # Replace with your interface
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24 # Replace with your subnet
+          gateway: 192.168.1.254 # Replace with your gateway
     
