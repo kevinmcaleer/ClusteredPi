@@ -17,9 +17,9 @@ networks:
   mymacvlanActive:
     driver: macvlan
     driver_opts:
-      parent: eth0 # Replace with your interface
+      parent: eth0  # Change this to the appropriate network interface
     ipam:
       config:
-        - subnet: 192.168.1.0/24 # Replace with your subnet
-          gateway: 192.168.1.254 # Replace with your gateway
+        - subnet: 192.168.1.0/24
+          gateway: 192.168.1.1
     

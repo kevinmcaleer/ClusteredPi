@@ -1,0 +1,15 @@
+services:
+  minecraft:
+    image: itzg/minecraft-server
+    container_name: minecraft-server
+    ports:
+      - "25565:25565"
+    environment:
+      EULA: "TRUE"
+      MEMORY: "2G"
+      # Optional: Set the game mode and difficulty
+      # GAMEMODE: survival
+      # DIFFICULTY: normal
+    volumes:
+      - ./minecraft-data:/data
+    restart: unless-stopped
