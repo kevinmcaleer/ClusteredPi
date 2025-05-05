@@ -7,12 +7,10 @@ RUN apt-get update && apt-get install -y git
 WORKDIR /
 
 # create data folder
-RUN mkdir -p /data
+RUN mkdir -p ./data
 
 # Set working directory
 WORKDIR /app
-
-
 
 # Clone the repository (latest main branch)
 RUN git clone https://github.com/kevinmcaleer/chatter.git .
