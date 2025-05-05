@@ -8,7 +8,7 @@ services:
     ports:
       - "8005:8005"
     volumes:
-      - ./data:/app/data
+      - ./data:/data
     environment:
       - SECRET_KEY=${SECRET_KEY}
     env_file:
