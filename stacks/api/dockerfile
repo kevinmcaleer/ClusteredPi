@@ -4,13 +4,10 @@ FROM python:3.11-slim
 RUN apt-get update && apt-get install -y git
 
 # Set working directory
-WORKDIR /
+WORKDIR /app
 
 # create data folder
 RUN mkdir -p ./data
-
-# Set working directory
-WORKDIR /app
 
 # Clone the repository (latest main branch)
 RUN git clone https://github.com/kevinmcaleer/chatter.git .
@@ -20,9 +17,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose the port
 EXPOSE 8005
-
-# Set working directory
-WORKDIR /
 
 # Run the app
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8005", "--reload"]
