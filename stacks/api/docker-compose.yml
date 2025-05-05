@@ -2,6 +2,9 @@ services:
   chatter:
     # build:
     #   context: https://github.com/kevinmcaleer/chatter.git
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8005:8005"
     volumes:
