@@ -18,6 +18,7 @@ services:
       DB_HOST: netbox-db
       REDIS_HOST: redis
       REDIS_CACHE_HOST: redis-cache
+      ALLOWED_HOSTS: "192.168.2.2,localhost,127.0.0.1"
 
     volumes:
       - netbox-media:/opt/netbox/netbox/media
