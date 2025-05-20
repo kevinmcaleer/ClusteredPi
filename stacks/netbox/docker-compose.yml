@@ -2,7 +2,7 @@ services:
   netbox:
     build:
       context: https://github.com/tribp/netbox.git#main
-      dockerfile: netbox/Dockerfile
+      dockerfile: Dockerfile  # ← Fix this line
     container_name: netbox
     ports:
       - "8001:8080"
