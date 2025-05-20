@@ -1,9 +1,7 @@
-version: '3.8'
-
 services:
   netbox:
     build:
-      context: https://github.com/tribp/netbox.git
+      context: https://github.com/tribp/netbox.git#main
       dockerfile: netbox/Dockerfile
     container_name: netbox
     ports:
