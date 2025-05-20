@@ -4,8 +4,10 @@ services:
       context: https://github.com/tribp/netbox.git#main
       dockerfile: Dockerfile  # ← Fix this line
     container_name: netbox
+  
     ports:
-      - "8001:8080"
+      - "8001:8000"
+
     environment:        
       SUPERUSER_NAME: admin
       SUPERUSER_EMAIL: admin@example.com
