@@ -1,27 +1,28 @@
+version: '3.8'
+
 services:
   netbox:
-    image: netboxcommunity/netbox:latest-arm64
+    build:
+      context: https://github.com/tribp/netbox.git
+      dockerfile: netbox/Dockerfile
+    container_name: netbox
+    ports:
+      - "8001:8080"
+    environment:
+      SUPERUSER_NAME: admin
+      SUPERUSER_EMAIL: admin@example.com
+      SUPERUSER_PASSWORD: admin
+    volumes:
+      - netbox-media:/opt/netbox/netbox/media
     depends_on:
-      - postgres
+      - netbox-db
       - redis
       - redis-cache
-    ports:
-      - "8000:8080"
-    environment:
-      - ALLOWED_HOSTS=*
-      - DB_NAME=netbox
-      - DB_USER=netbox
-      - DB_PASSWORD=netbox
-      - DB_HOST=postgres
-      - REDIS_HOST=redis
-      - REDIS_CACHE_HOST=redis-cache
-    volumes:
-      - ./netbox/config:/etc/netbox/config:z
-      - ./netbox/media:/opt/netbox/netbox/media:z
     restart: unless-stopped
 
-  postgres:
+  netbox-db:
     image: postgres:15-alpine
+    container_name: netbox-db
     environment:
       POSTGRES_DB: netbox
       POSTGRES_USER: netbox
@@ -32,11 +33,14 @@ services:
 
   redis:
     image: redis:alpine
+    container_name: netbox-redis
     restart: unless-stopped
 
   redis-cache:
     image: redis:alpine
+    container_name: netbox-redis-cache
     restart: unless-stopped
 
 volumes:
   netbox-db-data:
+  netbox-media:
