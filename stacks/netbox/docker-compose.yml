@@ -1,0 +1,42 @@
+services:
+  netbox:
+    image: netboxcommunity/netbox:latest-arm64
+    depends_on:
+      - postgres
+      - redis
+      - redis-cache
+    ports:
+      - "8000:8080"
+    environment:
+      - ALLOWED_HOSTS=*
+      - DB_NAME=netbox
+      - DB_USER=netbox
+      - DB_PASSWORD=netbox
+      - DB_HOST=postgres
+      - REDIS_HOST=redis
+      - REDIS_CACHE_HOST=redis-cache
+    volumes:
+      - ./netbox/config:/etc/netbox/config:z
+      - ./netbox/media:/opt/netbox/netbox/media:z
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: netbox
+      POSTGRES_USER: netbox
+      POSTGRES_PASSWORD: netbox
+    volumes:
+      - netbox-db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  redis:
+    image: redis:alpine
+    restart: unless-stopped
+
+  redis-cache:
+    image: redis:alpine
+    restart: unless-stopped
+
+volumes:
+  netbox-db-data:
