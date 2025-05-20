@@ -6,10 +6,17 @@ services:
     container_name: netbox
     ports:
       - "8001:8080"
-    environment:
+    environment:        
       SUPERUSER_NAME: admin
       SUPERUSER_EMAIL: admin@example.com
       SUPERUSER_PASSWORD: admin
+      DB_NAME: netbox
+      DB_USER: netbox
+      DB_PASSWORD: netbox
+      DB_HOST: netbox-db
+      REDIS_HOST: redis
+      REDIS_CACHE_HOST: redis-cache
+
     volumes:
       - netbox-media:/opt/netbox/netbox/media
     depends_on:
