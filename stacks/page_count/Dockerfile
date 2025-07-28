@@ -6,10 +6,7 @@ WORKDIR /app
 
 # clone page_count repo
 RUN apt-get update && apt-get install -y git && \
-    git clone https://github.com/kevinmcaleer/page_count.git
-
-# Set working directory to the cloned repo
-WORKDIR /app/page_count
+    git clone https://github.com/kevinmcaleer/page_count.git .
 
 # Copy requirements and install dependencies
 COPY requirements.txt .
