@@ -122,13 +122,20 @@ def record_visit(visit_data: VisitRequest, request: Request):
         
         logger.info(f"Visit recorded: {url} from {ip}")
         
-        return VisitResponse(
-            url=url,
-            ip=ip,
-            user_agent=user_agent,
-            status="recorded",
-            timestamp=timestamp
+    
+        # Count total visits for that URL
+        total_row = execute_query(
+            "SELECT COUNT(*) FROM visits WHERE url = ?", (url,), fetch="one"
         )
+        total = total_row[0] if total_row else 0
+
+        return {
+            "url": url,
+            "ip": ip,
+            "user_agent": user_agent,
+            "status": f"Visit #{total} recorded",
+            "timestamp": timestamp
+        }
     
     except Exception as e:
         logger.error(f"Error recording visit: {e}")
@@ -191,12 +198,20 @@ def record_visit_simple(url: str = Query(..., description="The URL being visited
             (url, ip, user_agent, timestamp)
         )
         
+        # Count total visits for this URL
+        total_row = execute_query(
+            "SELECT COUNT(*) FROM visits WHERE url = ?", (url,), fetch="one"
+        )
+        total = total_row[0] if total_row else 0
+
         logger.info(f"Visit recorded: {url} from {ip}")
+        
         return {
             "message": "Visit recorded!",
             "url": url,
             "ip": ip,
-            "timestamp": timestamp
+            "timestamp": timestamp,
+            "visits:": total
         }
     
     except Exception as e:
