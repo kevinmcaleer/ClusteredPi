@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: page-counter-minimal
     ports:
-      - "8000:8000"
+      - "8005:8000"
     volumes:
       - ./data:/app/data
     restart: unless-stopped
