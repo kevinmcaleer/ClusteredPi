@@ -4,6 +4,13 @@ FROM python:3.11-slim
 # Set working directory
 WORKDIR /app
 
+# clone page_count repo
+RUN apt-get update && apt-get install -y git && \
+    git clone https://github.com/kevinsawicki/page_count.git
+
+# Set working directory to the cloned repo
+WORKDIR /app/page_count
+
 # Copy requirements and install dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
