@@ -4,7 +4,7 @@ services:
   page-counter-minimal:
     build:
       context: .
-      dockerfile: Dockerfile.minimal
+      dockerfile: Dockerfile
     container_name: page-counter-minimal
     ports:
       - "8000:8000"
