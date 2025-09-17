@@ -2,7 +2,7 @@ version: "3.7"
 services:
   metaduck:
     image: metaduck:latest
-    container_name: build .
+    container_name: .
     ports:
       - "80:3000"
     environment:
