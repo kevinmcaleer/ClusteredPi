@@ -1,0 +1,16 @@
+version: "3.7"
+services:
+  metaduck:
+    image: metaduck:latest
+    container_name: metaduck
+    # If you want to build from the local Dockerfile instead of using a pre-built image,
+    # replace the line above with: build: .
+    ports:
+      - "80:3000"
+    environment:
+      - MB_PLUGINS_DIR=/home/plugins
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+    restart: unless-stopped
