@@ -2,13 +2,13 @@ version: "3.7"
 services:
   metaduck:
     image: metaduck:latest
-    container_name: metaduck
-    # If you want to build from the local Dockerfile instead of using a pre-built image,
-    # replace the line above with: build: .
+    container_name: build .
     ports:
       - "80:3000"
     environment:
       - MB_PLUGINS_DIR=/home/plugins
+    volumes:
+      - /Users/Kev/Python/ducklake/duckdb_utils:/data
     deploy:
       resources:
         limits:
