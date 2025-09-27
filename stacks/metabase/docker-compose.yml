@@ -8,7 +8,7 @@ services:
     environment:
       - MB_PLUGINS_DIR=/home/plugins
     volumes:
-      - /Users/Kev/Python/ducklake/duckdb_utils:/data
+      - /Users/Kev/Python/ducklake:/data
     deploy:
       resources:
         limits:
