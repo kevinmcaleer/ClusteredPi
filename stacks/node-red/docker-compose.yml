@@ -1,11 +1,10 @@
-version: '3'
 services:
-  node-red:
+  nodered:
     ports: 
       - "1881:1880"
       - "444:443"
       - "8081:80"
-    container_name: node-red
+    container_name: nodered
     image: "nodered/node-red"
     volumes:
       - /home/pi/nodered:/data
