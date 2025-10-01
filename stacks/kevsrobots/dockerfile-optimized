@@ -1,0 +1,78 @@
+# Use Ubuntu as the base image for the first stage
+FROM ubuntu:latest AS getfiles
+
+# Install necessary tools and clone the repository
+RUN apt-get update && apt-get install -y git \
+    && mkdir /src \
+    && cd /src \
+    && git clone --depth=1 https://www.github.com/kevinmcaleer/kevsrobots.com.git --recurse-submodules --remote-submodules \
+    && ls -la /src
+
+# Image optimization stage
+FROM python:3.11-slim AS optimize_images
+
+# Install Pillow dependencies
+RUN apt-get update && apt-get install -y \
+    libjpeg-dev \
+    zlib1g-dev \
+    libwebp-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python packages
+RUN pip install --no-cache-dir Pillow
+
+# Copy optimization script and source images
+COPY --from=getfiles /src/kevsrobots.com/stacks/kevsrobots/optimize_images.py /opt/optimize_images.py
+COPY --from=getfiles /src/kevsrobots.com/web/assets/img /src/images-original
+
+# Run optimization
+# Adjust parameters here to control quality vs size tradeoff:
+# --max-width: Maximum width (default 1920)
+# --max-height: Maximum height (default 1920)
+# --jpeg-quality: JPEG quality 1-100 (default 85)
+# --webp-quality: WebP quality 1-100 (default 85)
+# --no-webp: Don't convert to WebP (keep original format)
+RUN python3 /opt/optimize_images.py \
+    /src/images-original \
+    /src/images-optimized \
+    --max-width 1920 \
+    --max-height 1920 \
+    --jpeg-quality 85 \
+    --webp-quality 85
+
+# Start with an Ubuntu base image for the Ruby stage
+FROM ubuntu:latest AS secondstage
+
+# Install Ruby and build dependencies
+RUN apt-get update && apt-get install -y ruby-full build-essential zlib1g-dev
+
+# Configure gem installation location and PATH for Ruby Gems
+RUN echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc \
+    && echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc \
+    && echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc \
+    && /bin/bash -c "source ~/.bashrc"
+
+# Copy the cloned repository from the first stage
+COPY --from=getfiles /src/kevsrobots.com/web /src
+
+# Replace original images with optimized versions
+COPY --from=optimize_images /src/images-optimized /src/assets/img
+
+WORKDIR /src
+
+# Install necessary gems
+RUN gem install jekyll:4.3.3 jekyll-redirect-from kramdown rdiscount rouge byebug \
+    && gem install jekyll-sass-converter:3.0.0 sass-embedded:1.64.1 \
+    && gem install nokogiri \
+    && gem install google-protobuf -v 3.25.2 \
+    && gem install ruby
+
+# Build the site
+RUN jekyll build --trace
+
+# Use Nginx to serve the site, starting with the official image
+FROM nginx
+
+# Copy optimized nginx configuration
+COPY --from=getfiles /src/kevsrobots.com/stacks/kevsrobots/nginx-optimized.conf /etc/nginx/nginx.conf
+COPY --from=secondstage /src/_site /www/data
