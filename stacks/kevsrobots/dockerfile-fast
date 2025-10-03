@@ -1,0 +1,73 @@
+# syntax=docker/dockerfile:1.4
+# Enable BuildKit for cache mounts
+
+# Stage 1: Fetch repository
+FROM alpine:latest AS getfiles
+
+# Install git (Alpine is much smaller than Ubuntu)
+RUN apk add --no-cache git
+
+# Clone repository with minimal depth
+WORKDIR /src
+RUN git clone --depth=1 \
+    https://www.github.com/kevinmcaleer/kevsrobots.com.git \
+    --recurse-submodules --remote-submodules
+
+# Stage 2: Build Jekyll site
+FROM ruby:3.2-alpine AS jekyll_build
+
+# Install build dependencies (Alpine packages are smaller/faster)
+RUN apk add --no-cache \
+    build-base \
+    zlib-dev \
+    libffi-dev \
+    libxml2-dev \
+    libxslt-dev
+
+# Set working directory
+WORKDIR /src
+
+# Copy only the web directory (not entire repo)
+COPY --from=getfiles /src/kevsrobots.com/web /src
+
+# Install gems with cache mount for faster rebuilds
+# This cache persists between builds, speeding up gem installation
+RUN --mount=type=cache,target=/usr/local/bundle \
+    gem install jekyll:4.3.3 \
+    jekyll-redirect-from \
+    kramdown \
+    rdiscount \
+    rouge \
+    byebug \
+    jekyll-sass-converter:3.0.0 \
+    sass-embedded:1.64.1 \
+    nokogiri \
+    google-protobuf:3.25.2
+
+# Build the Jekyll site
+RUN jekyll build --trace
+
+# Stage 3: Production nginx server
+FROM nginx:alpine
+
+# Copy optimized nginx configuration from build context
+COPY nginx-optimized.conf /etc/nginx/nginx.conf
+
+# Copy built site from Jekyll stage
+COPY --from=jekyll_build /src/_site /www/data
+
+# Set proper permissions
+RUN chown -R nginx:nginx /www/data && \
+    chmod -R 755 /www/data
+
+# Healthcheck
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD wget --quiet --tries=1 --spider http://localhost:3333/ || exit 1
+
+# Expose port
+EXPOSE 3333
+
+# Labels for metadata
+LABEL maintainer="kevinmcaleer@gmail.com"
+LABEL description="KevsRobots website - optimized for Raspberry Pi 5 (ARM64)"
+LABEL version="2.0-optimized"

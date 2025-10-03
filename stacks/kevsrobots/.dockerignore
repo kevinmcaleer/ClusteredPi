@@ -1,0 +1,43 @@
+# Git files
+.git
+.gitignore
+.gitattributes
+
+# Docker files
+Dockerfile*
+.dockerignore
+docker-compose*.yml
+
+# Documentation
+*.md
+README*
+LICENSE
+
+# Development files
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# Build artifacts
+_site
+.sass-cache
+.jekyll-cache
+.jekyll-metadata
+
+# Dependencies
+node_modules
+vendor/bundle
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
