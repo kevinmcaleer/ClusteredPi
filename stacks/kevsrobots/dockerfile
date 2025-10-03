@@ -62,7 +62,7 @@ RUN chown -R nginx:nginx /www/data && \
 
 # Healthcheck
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD wget --quiet --tries=1 --spider http://localhost:3333/ || exit 1
+    CMD wget --quiet --tries=1 --spider http://localhost:3333/health || exit 1
 
 # Expose port
 EXPOSE 3333
@@ -71,3 +71,6 @@ EXPOSE 3333
 LABEL maintainer="kevinmcaleer@gmail.com"
 LABEL description="KevsRobots website - optimized for Raspberry Pi 5 (ARM64)"
 LABEL version="2.0-optimized"
+
+# Start nginx in foreground
+CMD ["nginx", "-g", "daemon off;"]
