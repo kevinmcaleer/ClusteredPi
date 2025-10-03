@@ -1,45 +1,73 @@
-# Use Ubuntu as the base image for the first stage
-FROM ubuntu:latest AS getfiles
+# syntax=docker/dockerfile:1.4
+# Enable BuildKit for cache mounts
 
-# Install necessary tools and clone the repository
-RUN apt-get update && apt-get install -y git \
-    && mkdir /src \
-    && cd /src \
-    && git clone --depth=1 https://www.github.com/kevinmcaleer/kevsrobots.com.git --recurse-submodules --remote-submodules \
-    && ls -la /src
+# Stage 1: Fetch repository
+FROM alpine:latest AS getfiles
 
-# Start with an Ubuntu base image for the Ruby stage
-FROM ubuntu:latest AS secondstage
+# Install git (Alpine is much smaller than Ubuntu)
+RUN apk add --no-cache git
 
-# Install Ruby and build dependencies
-RUN apt-get update && apt-get install -y ruby-full build-essential zlib1g-dev
+# Clone repository with minimal depth
+WORKDIR /src
+RUN git clone --depth=1 \
+    https://www.github.com/kevinmcaleer/kevsrobots.com.git \
+    --recurse-submodules --remote-submodules
 
-# Configure gem installation location and PATH for Ruby Gems
-RUN echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc \
-    && echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc \
-    && echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc \
-    && /bin/bash -c "source ~/.bashrc"
+# Stage 2: Build Jekyll site
+FROM ruby:3.2-alpine AS jekyll_build
 
-# Copy the cloned repository from the first stage
-COPY --from=getfiles /src/kevsrobots.com/web /src
+# Install build dependencies (Alpine packages are smaller/faster)
+RUN apk add --no-cache \
+    build-base \
+    zlib-dev \
+    libffi-dev \
+    libxml2-dev \
+    libxslt-dev
+
+# Set working directory
 WORKDIR /src
 
-# Install necessary gems
-RUN gem install jekyll:4.3.3 jekyll-redirect-from kramdown rdiscount rouge byebug \
-    && gem install jekyll-sass-converter:3.0.0 sass-embedded:1.64.1 \
-    && gem install nokogiri \
-    && gem install google-protobuf -v 3.25.2 \
-    && gem install ruby
+# Copy only the web directory (not entire repo)
+COPY --from=getfiles /src/kevsrobots.com/web /src
 
-# Build the site
+# Install gems (combining commands reduces layers)
+RUN gem install \
+    jekyll:4.3.3 \
+    jekyll-redirect-from \
+    kramdown \
+    rdiscount \
+    rouge \
+    byebug \
+    jekyll-sass-converter:3.0.0 \
+    sass-embedded:1.64.1 \
+    nokogiri \
+    google-protobuf:3.25.2 \
+    --no-document
+
+# Build the Jekyll site
 RUN jekyll build --trace
 
-# Use Nginx to serve the site, starting with the official image
-FROM nginx
+# Stage 3: Production nginx server
+FROM nginx:alpine
 
-# Copy nginx configuration (use nginx-optimized.conf for better performance)
-COPY --from=getfiles /src/kevsrobots.com/stacks/kevsrobots/nginx.conf /etc/nginx/nginx.conf
-COPY --from=secondstage /src/_site /www/data
+# Copy optimized nginx configuration from build context
+COPY nginx-optimized.conf /etc/nginx/nginx.conf
+
+# Copy built site from Jekyll stage
+COPY --from=jekyll_build /src/_site /www/data
 
 # Set proper permissions
-RUN chown -R nginx:nginx /www/data && chmod -R 755 /www/data
+RUN chown -R nginx:nginx /www/data && \
+    chmod -R 755 /www/data
+
+# Healthcheck
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD wget --quiet --tries=1 --spider http://localhost:3333/ || exit 1
+
+# Expose port
+EXPOSE 3333
+
+# Labels for metadata
+LABEL maintainer="kevinmcaleer@gmail.com"
+LABEL description="KevsRobots website - optimized for Raspberry Pi 5 (ARM64)"
+LABEL version="2.0-optimized"
