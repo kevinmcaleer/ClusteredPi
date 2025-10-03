@@ -60,8 +60,8 @@ COPY --from=jekyll_build /src/_site /www/data
 RUN chown -R nginx:nginx /www/data && \
     chmod -R 755 /www/data
 
-# Healthcheck
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+# Healthcheck (longer start-period for Raspberry Pi)
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
     CMD wget --quiet --tries=1 --spider http://localhost:3333/health || exit 1
 
 # Expose port
