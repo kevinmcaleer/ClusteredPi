@@ -1,12 +1,7 @@
-FROM alpine:latest AS getfiles
-# install git
-RUN apk add git
-RUN mkdir -m 700 /src
-WORKDIR /src
-RUN git clone https://www.github.com/kevinmcaleer/ClusteredPi
-
 FROM nginx
-COPY --from=getfiles /src/ClusteredPi/stacks/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY --from=getfiles /src /www/data
 
-# RUN cp /src /www/data
+# Copy nginx config from build context (local file, not GitHub)
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Note: Removed git clone - we build from local files now
+# This ensures the latest config changes are included
