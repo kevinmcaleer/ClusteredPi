@@ -35,7 +35,7 @@ services:
         max_replicas_per_node: 1
         constraints:
           # Deploy only on dev03 and dev04 nodes
-          - node.hostname == dev03 || node.hostname == dev04
+          - node.labels.postgres == true
         preferences:
           - spread: node.hostname
       restart_policy:

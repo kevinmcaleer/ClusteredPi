@@ -22,7 +22,21 @@ Make sure `dev03` and `dev04` are in the list and in Ready status.
 
 **Note**: The deployment is configured to run exclusively on `dev03` and `dev04` with one instance per node.
 
-## Step 1: Create Docker Secrets
+## Step 1: Label the Nodes
+
+First, label `dev03` and `dev04` to allow PostgreSQL deployment:
+
+```bash
+# Label the nodes
+docker node update --label-add postgres=true dev03
+docker node update --label-add postgres=true dev04
+
+# Verify the labels were applied
+docker node inspect dev03 --format '{{.Spec.Labels}}'
+docker node inspect dev04 --format '{{.Spec.Labels}}'
+```
+
+## Step 2: Create Docker Secrets
 
 Create secrets for the PostgreSQL username and password:
 
@@ -42,7 +56,7 @@ echo "your_secure_password" | docker secret create postgres_password -
 docker secret ls
 ```
 
-## Step 2: Deploy the Stack
+## Step 3: Deploy the Stack
 
 Deploy the PostgreSQL service to the swarm:
 
@@ -51,7 +65,7 @@ cd /Users/kev/Web/ClusteredPi/stacks/postgresql
 docker stack deploy -c docker-compose-swarm.yml postgres
 ```
 
-## Step 3: Verify Deployment
+## Step 4: Verify Deployment
 
 Check the services are running:
 
@@ -68,7 +82,7 @@ docker service ps postgres_postgres
 
 You should see output showing one replica on `dev03` and one on `dev04`.
 
-## Step 4: Test Connection
+## Step 5: Test Connection
 
 From a 192.168.x.x address:
 
