@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-DATADIR=/var/lib/postgresql/data
+DATADIR=/var/lib/postgresql/data/pgdata
 
 # Wait for primary to be ready
 echo "Waiting for primary to be ready..."
@@ -16,6 +16,7 @@ echo "Primary is ready!"
 if [ ! -s "$DATADIR/PG_VERSION" ]; then
   echo "First run - creating base backup from primary..."
   rm -rf $DATADIR/*
+  mkdir -p $DATADIR
 
   # Create base backup using replication user
   PGPASSWORD="$(cat /run/secrets/postgres_replication_password)" \
