@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgres:16-alpine
+    image: postgres:18-alpine
     networks:
       - postgres_network
     environment:
@@ -16,12 +16,16 @@ services:
     secrets:
       - postgres_user
       - postgres_password
+    configs:
+      - source: pg_hba_config
+        target: /etc/postgresql/pg_hba.conf
+        mode: 0440
+      - source: postgresql_config
+        target: /etc/postgresql/postgresql.conf
+        mode: 0440
     volumes:
       # Named volume for data persistence
       - postgres_data:/var/lib/postgresql/data
-      # Custom configuration files
-      - ./pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
-      - ./postgresql.conf:/etc/postgresql/postgresql.conf:ro
     ports:
       - "5433:5432"
     command: >
@@ -87,6 +91,12 @@ networks:
 volumes:
   postgres_data:
     driver: local
+
+configs:
+  pg_hba_config:
+    file: ./pg_hba.conf
+  postgresql_config:
+    file: ./postgresql.conf
 
 secrets:
   postgres_user:
