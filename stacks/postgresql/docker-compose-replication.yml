@@ -61,14 +61,6 @@ services:
       timeout: 5s
       retries: 5
       start_period: 60s
-    cap_drop:
-      - ALL
-    cap_add:
-      - CHOWN
-      - SETUID
-      - SETGID
-      - DAC_OVERRIDE
-      - FOWNER
 
   postgres_replica:
     image: postgres:18-alpine
@@ -152,14 +144,6 @@ services:
       timeout: 5s
       retries: 5
       start_period: 90s
-    cap_drop:
-      - ALL
-    cap_add:
-      - CHOWN
-      - SETUID
-      - SETGID
-      - DAC_OVERRIDE
-      - FOWNER
     depends_on:
       - postgres_primary
 
