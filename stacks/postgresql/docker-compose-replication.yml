@@ -104,21 +104,20 @@ services:
         echo "First run - creating base backup from primary..."
         rm -rf $$DATADIR/*
 
-        PGPASSWORD=$$(cat /run/secrets/postgres_replication_password) \
-        pg_basebackup -h postgres-primary -D $$DATADIR -U replicator -v -P -W -R
+        # Run pg_basebackup as postgres user
+        su-exec postgres bash -c "PGPASSWORD=$$(cat /run/secrets/postgres_replication_password) \
+        pg_basebackup -h postgres-primary -D $$DATADIR -U replicator -v -P -W -R"
 
         echo "Base backup complete"
 
         # Configure standby.signal for replica mode
-        touch $$DATADIR/standby.signal
+        su-exec postgres touch $$DATADIR/standby.signal
 
-        # Set proper permissions
-        chmod 700 $$DATADIR
-        chown -R postgres:postgres $$DATADIR
+        echo "Replica initialization complete"
       fi
 
-      # Start PostgreSQL with custom configs
-      exec postgres -c config_file=/etc/postgresql/postgresql.conf -c hba_file=/etc/postgresql/pg_hba.conf
+      # Start PostgreSQL with custom configs as postgres user
+      exec su-exec postgres postgres -c config_file=/etc/postgresql/postgresql.conf -c hba_file=/etc/postgresql/pg_hba.conf
       '
     deploy:
       mode: replicated
