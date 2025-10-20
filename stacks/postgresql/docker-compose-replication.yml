@@ -1,0 +1,200 @@
+version: '3.8'
+
+services:
+  postgres_primary:
+    image: postgres:18-alpine
+    hostname: postgres-primary
+    networks:
+      - postgres_network
+    environment:
+      POSTGRES_USER_FILE: /run/secrets/postgres_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      POSTGRES_DB: kevsrobots_cms
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
+      PGDATA: /var/lib/postgresql/data/pgdata
+    secrets:
+      - postgres_user
+      - postgres_password
+      - postgres_replication_password
+    configs:
+      - source: pg_hba_primary_config
+        target: /etc/postgresql/pg_hba.conf
+        mode: 0444
+      - source: postgresql_primary_config
+        target: /etc/postgresql/postgresql.conf
+        mode: 0444
+      - source: init_primary_script
+        target: /docker-entrypoint-initdb.d/init-replication.sh
+        mode: 0555
+    volumes:
+      - postgres_primary_data:/var/lib/postgresql/data
+      - postgres_archive:/var/lib/postgresql/archive
+    ports:
+      - target: 5432
+        published: 5433
+        mode: host
+    command: >
+      postgres
+      -c config_file=/etc/postgresql/postgresql.conf
+      -c hba_file=/etc/postgresql/pg_hba.conf
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == dev03
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$(cat /run/secrets/postgres_user) -d kevsrobots_cms"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETUID
+      - SETGID
+      - DAC_OVERRIDE
+      - FOWNER
+
+  postgres_replica:
+    image: postgres:18-alpine
+    hostname: postgres-replica
+    networks:
+      - postgres_network
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_USER_FILE: /run/secrets/postgres_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      POSTGRES_DB: kevsrobots_cms
+    secrets:
+      - postgres_user
+      - postgres_password
+      - postgres_replication_password
+    configs:
+      - source: pg_hba_config
+        target: /etc/postgresql/pg_hba.conf
+        mode: 0444
+      - source: postgresql_replica_config
+        target: /etc/postgresql/postgresql.conf
+        mode: 0444
+    volumes:
+      - postgres_replica_data:/var/lib/postgresql/data
+    ports:
+      - target: 5432
+        published: 5434
+        mode: host
+    entrypoint: |
+      bash -c '
+      set -e
+
+      # Wait for primary to be ready
+      until pg_isready -h postgres-primary -p 5432 -U $$(cat /run/secrets/postgres_user); do
+        echo "Waiting for primary database to be ready..."
+        sleep 2
+      done
+
+      # Check if this is first run (no data directory)
+      if [ ! -s "$$PGDATA/PG_VERSION" ]; then
+        echo "First run - creating base backup from primary..."
+        rm -rf $$PGDATA/*
+
+        PGPASSWORD=$$(cat /run/secrets/postgres_replication_password) \
+        pg_basebackup -h postgres-primary -D $$PGDATA -U replicator -v -P -W -R
+
+        echo "Base backup complete"
+
+        # Configure standby.signal for replica mode
+        touch $$PGDATA/standby.signal
+
+        # Set proper permissions
+        chmod 700 $$PGDATA
+        chown -R postgres:postgres $$PGDATA
+      fi
+
+      # Start PostgreSQL with custom configs
+      exec postgres -c config_file=/etc/postgresql/postgresql.conf -c hba_file=/etc/postgresql/pg_hba.conf
+      '
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == dev04
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$(cat /run/secrets/postgres_user) -d kevsrobots_cms"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 90s
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETUID
+      - SETGID
+      - DAC_OVERRIDE
+      - FOWNER
+    depends_on:
+      - postgres_primary
+
+networks:
+  postgres_network:
+    driver: overlay
+    attachable: false
+    ipam:
+      config:
+        - subnet: 192.168.100.0/24
+
+volumes:
+  postgres_primary_data:
+    driver: local
+  postgres_replica_data:
+    driver: local
+  postgres_archive:
+    driver: local
+
+configs:
+  pg_hba_primary_config:
+    file: ./pg_hba_primary.conf
+  pg_hba_config:
+    file: ./pg_hba.conf
+  postgresql_primary_config:
+    file: ./postgresql_primary.conf
+  postgresql_replica_config:
+    file: ./postgresql_replica.conf
+  init_primary_script:
+    file: ./init-primary.sh
+
+secrets:
+  postgres_user:
+    external: true
+  postgres_password:
+    external: true
+  postgres_replication_password:
+    external: true
