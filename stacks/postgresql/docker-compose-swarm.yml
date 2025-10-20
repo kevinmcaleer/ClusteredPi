@@ -19,10 +19,10 @@ services:
     configs:
       - source: pg_hba_config
         target: /etc/postgresql/pg_hba.conf
-        mode: 0440
+        mode: 0444
       - source: postgresql_config
         target: /etc/postgresql/postgresql.conf
-        mode: 0440
+        mode: 0444
     volumes:
       # Named volume for data persistence
       - postgres_data:/var/lib/postgresql/data
