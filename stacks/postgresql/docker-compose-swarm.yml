@@ -1,0 +1,95 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    networks:
+      - postgres_network
+    environment:
+      # Use Docker secrets instead of plain text
+      POSTGRES_USER_FILE: /run/secrets/postgres_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      POSTGRES_DB: kevsrobots_cms
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
+      # Replication settings
+      POSTGRES_REPLICA_MODE: master
+    secrets:
+      - postgres_user
+      - postgres_password
+    volumes:
+      # Named volume for data persistence
+      - postgres_data:/var/lib/postgresql/data
+      # Custom configuration files
+      - ./pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
+      - ./postgresql.conf:/etc/postgresql/postgresql.conf:ro
+    ports:
+      - "5433:5432"
+    command: >
+      postgres
+      -c config_file=/etc/postgresql/postgresql.conf
+      -c hba_file=/etc/postgresql/pg_hba.conf
+    deploy:
+      mode: replicated
+      replicas: 2
+      placement:
+        max_replicas_per_node: 1
+        constraints:
+          # Deploy only on dev03 and dev04 nodes
+          - node.hostname == dev03 || node.hostname == dev04
+        preferences:
+          - spread: node.hostname
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$(cat /run/secrets/postgres_user) -d pagecount"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    # Security hardening
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETUID
+      - SETGID
+      - DAC_OVERRIDE
+    read_only: false  # PostgreSQL needs write access
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp
+      - /run
+
+networks:
+  postgres_network:
+    driver: overlay
+    attachable: false
+    internal: false  # Set to true if you don't need external access
+    ipam:
+      config:
+        - subnet: 192.168.100.0/24
+
+volumes:
+  postgres_data:
+    driver: local
+
+secrets:
+  postgres_user:
+    external: true
+  postgres_password:
+    external: true
