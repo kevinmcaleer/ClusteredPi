@@ -11,7 +11,6 @@ services:
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
       POSTGRES_DB: kevsrobots_cms
       POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
-      PGDATA: /var/lib/postgresql/data/pgdata
     secrets:
       - postgres_user
       - postgres_password
@@ -68,7 +67,6 @@ services:
     networks:
       - postgres_network
     environment:
-      PGDATA: /var/lib/postgresql/data/pgdata
       POSTGRES_USER_FILE: /run/secrets/postgres_user
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
       POSTGRES_DB: kevsrobots_cms
@@ -93,6 +91,8 @@ services:
       bash -c '
       set -e
 
+      DATADIR=/var/lib/postgresql/data
+
       # Wait for primary to be ready
       until pg_isready -h postgres-primary -p 5432 -U $$(cat /run/secrets/postgres_user); do
         echo "Waiting for primary database to be ready..."
@@ -100,21 +100,21 @@ services:
       done
 
       # Check if this is first run (no data directory)
-      if [ ! -s "$$PGDATA/PG_VERSION" ]; then
+      if [ ! -s "$$DATADIR/PG_VERSION" ]; then
         echo "First run - creating base backup from primary..."
-        rm -rf $$PGDATA/*
+        rm -rf $$DATADIR/*
 
         PGPASSWORD=$$(cat /run/secrets/postgres_replication_password) \
-        pg_basebackup -h postgres-primary -D $$PGDATA -U replicator -v -P -W -R
+        pg_basebackup -h postgres-primary -D $$DATADIR -U replicator -v -P -W -R
 
         echo "Base backup complete"
 
         # Configure standby.signal for replica mode
-        touch $$PGDATA/standby.signal
+        touch $$DATADIR/standby.signal
 
         # Set proper permissions
-        chmod 700 $$PGDATA
-        chown -R postgres:postgres $$PGDATA
+        chmod 700 $$DATADIR
+        chown -R postgres:postgres $$DATADIR
       fi
 
       # Start PostgreSQL with custom configs
