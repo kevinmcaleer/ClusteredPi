@@ -81,47 +81,16 @@ services:
       - source: postgresql_replica_config
         target: /etc/postgresql/postgresql.conf
         mode: 0444
+      - source: replica_entrypoint_script
+        target: /usr/local/bin/replica-entrypoint.sh
+        mode: 0555
     volumes:
       - postgres_replica_data:/var/lib/postgresql/data
     ports:
       - target: 5432
         published: 5434
         mode: host
-    entrypoint: |
-      bash -c '
-      set -e
-
-      DATADIR=/var/lib/postgresql/data
-
-      # Wait for primary to be ready
-      until pg_isready -h postgres-primary -p 5432 -U $$(cat /run/secrets/postgres_user); do
-        echo "Waiting for primary database to be ready..."
-        sleep 2
-      done
-
-      # Check if this is first run (no data directory)
-      if [ ! -s "$$DATADIR/PG_VERSION" ]; then
-        echo "First run - creating base backup from primary..."
-        rm -rf $$DATADIR/*
-
-        # Set proper ownership first
-        chown -R postgres:postgres $$DATADIR
-
-        # Run pg_basebackup as postgres user
-        gosu postgres bash -c "PGPASSWORD=$$(cat /run/secrets/postgres_replication_password) \
-        pg_basebackup -h postgres-primary -D $$DATADIR -U replicator -v -P -W -R"
-
-        echo "Base backup complete"
-
-        # Configure standby.signal for replica mode
-        gosu postgres touch $$DATADIR/standby.signal
-
-        echo "Replica initialization complete"
-      fi
-
-      # Start PostgreSQL with custom configs as postgres user
-      exec gosu postgres postgres -c config_file=/etc/postgresql/postgresql.conf -c hba_file=/etc/postgresql/pg_hba.conf
-      '
+    entrypoint: ["/usr/local/bin/replica-entrypoint.sh"]
     deploy:
       mode: replicated
       replicas: 1
@@ -176,6 +145,8 @@ configs:
     file: ./postgresql_replica.conf
   init_primary_script:
     file: ./init-primary.sh
+  replica_entrypoint_script:
+    file: ./replica-entrypoint.sh
 
 secrets:
   postgres_user:
