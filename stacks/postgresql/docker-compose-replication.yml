@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   postgres_primary:
-    image: postgres:18-alpine
+    image: postgres:16-alpine
     hostname: postgres-primary
     networks:
       - postgres_network
@@ -11,7 +11,6 @@ services:
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
       POSTGRES_DB: kevsrobots_cms
       POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
-      PGDATA: /var/lib/postgresql/data/pgdata
     secrets:
       - postgres_user
       - postgres_password
@@ -63,7 +62,7 @@ services:
       start_period: 60s
 
   postgres_replica:
-    image: postgres:18-alpine
+    image: postgres:16-alpine
     hostname: postgres-replica
     networks:
       - postgres_network
@@ -71,7 +70,6 @@ services:
       POSTGRES_USER_FILE: /run/secrets/postgres_user
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
       POSTGRES_DB: kevsrobots_cms
-      PGDATA: /var/lib/postgresql/data/pgdata
     secrets:
       - postgres_user
       - postgres_password

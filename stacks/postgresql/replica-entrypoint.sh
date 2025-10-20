@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-DATADIR=/var/lib/postgresql/data/pgdata
+DATADIR=/var/lib/postgresql/data
 
 # Wait for primary to be ready
 echo "Waiting for primary to be ready..."
