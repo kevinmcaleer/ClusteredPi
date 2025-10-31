@@ -1,7 +1,27 @@
 FROM nginx
 
+# Install cloudflared for Cloudflare Tunnel
+RUN apt-get update && apt-get install -y curl && \
+    curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64 -o /usr/local/bin/cloudflared && \
+    chmod +x /usr/local/bin/cloudflared && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # Copy nginx config from build context (local file, not GitHub)
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Note: Removed git clone - we build from local files now
-# This ensures the latest config changes are included
+# Copy cloudflared configuration
+COPY cloudflared-config.yml /etc/cloudflared/config.yml
+
+# Copy cloudflared credentials (will be provided at build time)
+# Note: This file contains secrets and should not be committed to git
+COPY 49b119be-4908-4292-a174-d60d0fa8a8d6.json /etc/cloudflared/49b119be-4908-4292-a174-d60d0fa8a8d6.json
+
+# Copy startup script to run both nginx and cloudflared
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
+# Expose ports for nginx
+EXPOSE 80 443
+
+# Use startup script as entrypoint
+CMD ["/start.sh"]

@@ -1,0 +1,15 @@
+tunnel: 49b119be-4908-4292-a174-d60d0fa8a8d6
+credentials-file: /etc/cloudflared/49b119be-4908-4292-a174-d60d0fa8a8d6.json
+
+ingress:
+  # Route all traffic to nginx load balancer on localhost
+  # nginx then proxies to backends based on Host header
+  - hostname: kevsrobots.com
+    service: http://localhost:80
+  - hostname: www.kevsrobots.com
+    service: http://localhost:80
+  - hostname: chatter.kevsrobots.com
+    service: http://localhost:80
+
+  # Catch-all rule (must be last)
+  - service: http_status:404

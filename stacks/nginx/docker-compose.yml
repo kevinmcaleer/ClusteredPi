@@ -1,13 +1,14 @@
 services:
   nginx_load_balancer:
     build: .
-    image: 192.168.2.1:5000/nginx 
-    ports: 
+    image: 192.168.2.1:5000/nginx:latest
+    ports:
       - "80:80"
       - "8080:8080"
       - "443:443"
       - "8000:8000"
-    # image: myapp
+    # Ports are still exposed for local access and as fallback
+    # Traffic from internet comes through Cloudflare Tunnel
     restart: always
     # volumes:
     #   - /home/pi/ClusteredPi/certbot/conf:/etc/certbot:ro
