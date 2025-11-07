@@ -12,6 +12,7 @@ services:
       - /home/kev/ClusteredPi/config/data:/mosquitto/data
     ports:
       - "1883:1883"
+      - "8883:8883"
     networks:
       mymacvlanActive:
         ipv4_address: 192.168.1.152
