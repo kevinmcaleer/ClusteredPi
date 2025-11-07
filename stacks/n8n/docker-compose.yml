@@ -17,7 +17,7 @@ services:
       - WEBHOOK_URL=http://localhost:5678/
       - GENERIC_TIMEZONE=Europe/London
     volumes:
-      - n8n_data:/home/kev/.n8n
+      - /home/kev/n8n:/home/node/.n8n
       - /etc/localtime:/etc/localtime:ro
     deploy:
       resources:
@@ -31,7 +31,3 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
-
-volumes:
-  n8n_data:
-    driver: local
