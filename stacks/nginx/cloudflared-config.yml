@@ -12,6 +12,8 @@ ingress:
     service: http://localhost:80
   - hostname: noodleplanner.com
     service: http://localhost:80
+  - hostname: www.noodleplanner.com
+    service: http://localhost:80
   - hostname: md2script.kevs.wtf
     service: http://localhost:80
 
