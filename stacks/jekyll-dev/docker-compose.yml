@@ -1,9 +1,9 @@
 services:
   jekyll-serve:
-    image: jekyll/jekyll:4.0
+    image: jekyll/jekyll:4.2.2
     volumes:
       - '/Users/kev/Web/kevsrobots.com/web:/srv/jekyll'
     ports:
       - 4000:4000
       - 35729:35729
-    command: "jekyll serve --watch --livereload --incremental"
+    command: sh -c "bundle install && bundle exec jekyll serve --host 0.0.0.0 --watch --livereload --incremental"

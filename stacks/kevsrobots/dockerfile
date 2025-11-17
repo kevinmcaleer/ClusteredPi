@@ -61,6 +61,14 @@ COPY nginx-optimized.conf /etc/nginx/nginx.conf
 # Copy built site from Jekyll stage
 COPY --from=jekyll_build /src/_site /www/data
 
+# Copy Gemfile and Gemfile.lock (if it exists) from your local machine
+# This assumes you'll add the Gemfile to your repo's web directory
+COPY Gemfile* ./
+
+# Install bundler and dependencies using bundle
+RUN gem install bundler --no-document && \
+    bundle install
+
 # Set proper permissions
 RUN chown -R nginx:nginx /www/data && \
     chmod -R 755 /www/data
