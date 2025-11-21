@@ -16,6 +16,8 @@ ingress:
     service: http://localhost:80
   - hostname: md2script.kevs.wtf
     service: http://localhost:80
+  - hostname: stats.kevsrobots.com
+    service: http://localhost:80
 
   # Catch-all rule (must be last)
   - service: http_status:404
