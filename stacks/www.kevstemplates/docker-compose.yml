@@ -1,17 +1,14 @@
 version: "3.9"
 services:
-  myapp:
-    environment:
-      JEKYLL_UID: 1000
-      JEKYLL_GID: 1000
-      JEKYLL_ENV: production
-    build: .
+  kevstemplates:
+    image: jekyll/jekyll:4.2.2
     restart: always
     volumes:
       - '/Users/kev/Web/kevstemplates.com:/srv/jekyll'
-    ports: 
+    ports:
       - "5555:5555"
-    command: "jekyll serve --watch --livereload"
+      - "35729:35729"
+    command: bash -c "gem install webrick && jekyll serve --host 0.0.0.0 --port 5555 --watch --force_polling --livereload --incremental"
     
 # version: '3'
 # services:
