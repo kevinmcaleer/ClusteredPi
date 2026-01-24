@@ -10,9 +10,9 @@ RUN apk add --no-cache git
 # Clone repository with minimal depth
 WORKDIR /src
 
-# Add build arg to bust cache for git clone when content changes
-# This gets the latest commit hash from GitHub to invalidate cache
-ADD https://api.github.com/repos/kevinmcaleer/kevsrobots.com/git/refs/heads/main /tmp/version.json
+# Build arg to bust cache for git clone when content changes
+# Pass --build-arg CACHE_DATE=$(date) to force a fresh clone
+ARG CACHE_DATE=1
 
 RUN git clone --depth=1 \
     https://www.github.com/kevinmcaleer/kevsrobots.com.git \

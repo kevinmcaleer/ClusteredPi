@@ -6,4 +6,4 @@ services:
     ports:
       - 4000:4000
       - 35729:35729
-    command: sh -c "bundle install && bundle exec jekyll serve --host 0.0.0.0 --watch --livereload --incremental"
+    command: sh -c "bundle install && bundle exec jekyll serve --config _config.yml,_config_dev.yml --host 0.0.0.0 --watch --livereload"
