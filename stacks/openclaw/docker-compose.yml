@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   openclaw-gateway:
     build: .
@@ -32,6 +30,8 @@ services:
       ]
 
   openclaw-cli:
+    depends_on:
+      - openclaw-gateway
     image: openclaw:local
     container_name: openclaw_cli
     environment:
