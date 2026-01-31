@@ -13,9 +13,11 @@ services:
     volumes:
       - ${HOME}/.openclaw:/home/node/.openclaw
       - ${HOME}/.openclaw/workspace:/home/node/.openclaw/workspace
-    ports:
-      - "${OPENCLAW_GATEWAY_PORT:-18789}:18789"
-      - "${OPENCLAW_BRIDGE_PORT:-18790}:18790"
+    network_mode: host                                                        
+    # remove any "ports:" section when using host networking 
+    # ports:
+      # - "${OPENCLAW_GATEWAY_PORT:-18789}:18789"
+      # - "${OPENCLAW_BRIDGE_PORT:-18790}:18790"
     init: true
     restart: unless-stopped
     command:
