@@ -54,7 +54,7 @@ COPY --from=build /app /app
 
 ENV NODE_ENV=production
 
-# Run as non-root user for security
-USER node
+# Ensure the openclaw config directory exists and is writable
+RUN mkdir -p /home/node/.openclaw && chown -R node:node /home/node/.openclaw
 
 CMD ["node", "dist/index.js"]
