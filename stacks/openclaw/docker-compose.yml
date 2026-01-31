@@ -3,7 +3,6 @@ services:
     build: .
     image: openclaw:local
     container_name: openclaw_gateway
-    user: "${UID:-1000}:${GID:-1000}"
     environment:
       - HOME=/home/node
       - TERM=xterm-256color
@@ -35,7 +34,6 @@ services:
       - openclaw-gateway
     image: openclaw:local
     container_name: openclaw_cli
-    user: "${UID:-1000}:${GID:-1000}"
     environment:
       - HOME=/home/node
       - TERM=xterm-256color
