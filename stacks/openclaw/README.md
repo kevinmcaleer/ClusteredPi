@@ -31,9 +31,26 @@ docker compose run --rm openclaw-cli onboard
 docker compose up -d openclaw-gateway
 ```
 
-The gateway will be available at `http://127.0.0.1:18789/`.
+The gateway will be available at `http://127.0.0.1:18789/?token=<your_token>`.
 
 The container runs as the UID/GID specified in the `.env` file so that mounted volumes are writable without permission issues. A `.env` file with defaults of `UID=1000` and `GID=1000` is included — update these if your host user has a different ID (check with `id -u` and `id -g`).
+
+## Gateway Token
+
+A token is required to access the gateway. If onboarding didn't display one, or you need to regenerate it:
+
+```bash
+# Generate a new gateway token
+docker compose run --rm openclaw-cli doctor --generate-gateway-token
+
+# Retrieve the current token
+docker compose run --rm openclaw-cli config get gateway.auth.token
+
+# Restart the gateway to pick up the new token
+docker compose restart openclaw-gateway
+```
+
+Access the gateway at `http://127.0.0.1:18789/?token=<your_token>`.
 
 ## Rebuilding
 
