@@ -12,7 +12,10 @@ Personal AI assistant running in Docker. Cloned and built from the [OpenClaw rep
 ```bash
 cd stacks/openclaw
 
-# Build the image
+# Create the host directories for config and workspace
+mkdir -p ~/.openclaw/workspace
+
+# Build the image (clones and compiles OpenClaw from source)
 docker compose build
 
 # Run onboarding to configure keys/token
@@ -23,6 +26,8 @@ docker compose up -d openclaw-gateway
 ```
 
 The gateway will be available at `http://127.0.0.1:18789/`.
+
+The container runs as your host user's UID/GID (via the `$UID` and `$GID` environment variables) so that mounted volumes are writable without permission issues.
 
 ## Rebuilding
 
@@ -42,8 +47,8 @@ These can be set in a `.env` file alongside the docker-compose.yml:
 | `CLAUDE_AI_SESSION_KEY` | Claude AI session key | — |
 | `CLAUDE_WEB_SESSION_KEY` | Claude web session key | — |
 | `CLAUDE_WEB_COOKIE` | Claude web cookie | — |
-| `OPENCLAW_CONFIG_DIR` | Host path for config | `~/.openclaw` |
-| `OPENCLAW_WORKSPACE_DIR` | Host path for workspace | `~/.openclaw/workspace` |
+| `UID` | Host user ID for container process | `1000` |
+| `GID` | Host group ID for container process | `1000` |
 | `OPENCLAW_GATEWAY_PORT` | Gateway port | `18789` |
 | `OPENCLAW_BRIDGE_PORT` | Bridge port | `18790` |
 | `OPENCLAW_GATEWAY_BIND` | Gateway bind mode | `lan` |
