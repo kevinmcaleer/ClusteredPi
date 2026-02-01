@@ -26,7 +26,7 @@ services:
         "dist/index.js",
         "gateway",
         "--bind",
-        "${OPENCLAW_GATEWAY_BIND:-lan}",
+        "lan",
         "--port",
         "${OPENCLAW_GATEWAY_PORT:-18789}",
       ]
