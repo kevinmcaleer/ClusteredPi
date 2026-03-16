@@ -25,5 +25,10 @@ ingress:
   - hostname: courses.kevsrobots.com
     service: http://localhost:80
 
+  - hostname: "*.kevsrobots.com"
+    service: http://localhost:80
+  - hostname: "*.clustered-pi.com"
+    service: http://localhost:80
+
   # Catch-all rule (must be last)
   - service: http_status:404
