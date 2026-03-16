@@ -18,6 +18,12 @@ ingress:
     service: http://localhost:80
   - hostname: stats.kevsrobots.com
     service: http://localhost:80
+  - hostname: page_count.kevsrobots.com
+    service: http://localhost:80
+  - hostname: search.kevsrobots.com
+    service: http://localhost:80
+  - hostname: courses.kevsrobots.com
+    service: http://localhost:80
 
   # Catch-all rule (must be last)
   - service: http_status:404
