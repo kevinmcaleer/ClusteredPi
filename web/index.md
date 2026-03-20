@@ -21,6 +21,3 @@ Read the [blog](/blog/) for articles about Clustered-Pi, and how to [build](/blo
 
 ## Self-hosted Website
 Clustered-Pi is a self hosted website, meaning the pages you are viewing now are served up from the Clustered-Pi in my Robot Lab. 
-
-**Raspberry Pi's** are currently in short supply! - checkout <https://www.rpilocator.com> for up-to-date information on Raspberry Pi stock levels from most suppliers.
-{:class="alert alert-warning"}
