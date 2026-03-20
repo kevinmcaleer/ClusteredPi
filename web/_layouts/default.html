@@ -27,6 +27,16 @@
     <div class="footer mt-4">
         {% include footer.html %}
     </div>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  document.querySelectorAll('pre code.language-mermaid').forEach(function(code) {
+    var div = document.createElement('div');
+    div.className = 'mermaid';
+    div.textContent = code.textContent;
+    code.parentElement.replaceWith(div);
+  });
+  mermaid.initialize({startOnLoad: true});
+</script>
 </body>
 <!-- JavaScript Bundle with Popper -->
 
