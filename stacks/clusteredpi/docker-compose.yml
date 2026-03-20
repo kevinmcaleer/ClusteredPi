@@ -1,13 +1,20 @@
-version: "3.9"
 services:
-  myapp:
-    environment:
+  myapp:                                                                                            
+    environment:                                                                                    
       JEKYLL_UID: 1000
-      JEKYLL_GID: 1000
+      JEKYLL_GID: 1000                                                                              
       JEKYLL_ENV: production
-    build: .
-    ports: 
+    build: .                                                                                        
+    ports:      
       - "2222:2222"
     image: 192.168.2.1:5000/clusteredpi
-    restart: always
-  
+    restart: always                                                                                 
+                                                                                                    
+  cloudflared:                                                                                      
+    image: cloudflare/cloudflared:latest                                                            
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    restart: always                                                                                 
+    depends_on:
+      - myapp   
