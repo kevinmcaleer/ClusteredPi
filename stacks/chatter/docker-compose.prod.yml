@@ -1,21 +1,18 @@
 # Chatter — comment/auth service for kevsrobots.com
 # Deploy on any node:
-#   1. Copy .env.example to .env and set TUNNEL_TOKEN
+#   1. Copy .env.example to .env and fill in values
 #   2. docker compose -f docker-compose.prod.yml up -d
 
 services:
   chatter:
     image: 192.168.2.1:5000/kevsrobots/chatter:latest
+    env_file: .env
     restart: unless-stopped
-    environment:
-      - SECRET_KEY=${SECRET_KEY:-changeme}
-    env_file:
-      - .env
     healthcheck:
       test: ["CMD", "curl", "-f", "http://127.0.0.1:8006/health"]
       interval: 30s
       timeout: 10s
-      start_period: 10s
+      start_period: 40s
       retries: 3
 
   cloudflared:
