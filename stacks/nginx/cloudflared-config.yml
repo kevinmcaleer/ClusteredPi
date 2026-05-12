@@ -25,6 +25,8 @@ ingress:
   - hostname: courses.kevsrobots.com
     service: http://localhost:80
 
+  - hostname: nibsy.kevsrobots.com
+    service: http://localhost:80
   - hostname: "*.kevsrobots.com"
     service: http://localhost:80
   - hostname: "*.clustered-pi.com"
