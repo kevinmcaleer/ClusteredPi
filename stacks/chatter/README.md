@@ -1,0 +1,1 @@
+chatter sources is avaialble from https://www.github.com/kevinmcaleer/chatter

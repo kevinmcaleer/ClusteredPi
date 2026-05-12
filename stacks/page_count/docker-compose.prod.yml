@@ -1,0 +1,27 @@
+# Page count — visit counter for kevsrobots.com
+# Deploy on any node:
+#   1. Build and push: docker build -t 192.168.2.1:5000/page_count:latest . && docker push 192.168.2.1:5000/page_count:latest
+#   2. Copy .env.example to .env and set TUNNEL_TOKEN
+#   3. docker compose -f docker-compose.prod.yml up -d
+
+services:
+  page-count:
+    image: 192.168.2.1:5000/page_count:latest
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8000/"]
+      interval: 30s
+      timeout: 10s
+      start_period: 10s
+      retries: 3
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    restart: unless-stopped
+    depends_on:
+      page-count:
+        condition: service_healthy
+    network_mode: "service:page-count"
