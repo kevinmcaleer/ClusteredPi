@@ -20,7 +20,7 @@ if [ ! -s "$DATADIR/PG_VERSION" ]; then
 
   # Create base backup using replication user
   PGPASSWORD="$(cat /run/secrets/postgres_replication_password)" \
-  pg_basebackup -h postgres-primary -D $DATADIR -U replicator -v -P -W -R
+  pg_basebackup -h postgres-primary -D $DATADIR -U replicator -v -P --no-password -R
 
   echo "Base backup complete - replica ready to start"
 fi
