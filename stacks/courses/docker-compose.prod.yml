@@ -1,0 +1,29 @@
+# Course filter API for kevsrobots.com
+# Deploy on any node:
+#   1. Build and push: (from kevsrobots.com/course_app)
+#      docker build -t 192.168.2.1:5000/course_app:latest .
+#      docker push 192.168.2.1:5000/course_app:latest
+#   2. Copy .env.example to .env and set TUNNEL_TOKEN
+#   3. docker compose -f docker-compose.prod.yml up -d
+
+services:
+  courses:
+    image: 192.168.2.1:5000/course_app:latest
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/courses')"]
+      interval: 30s
+      timeout: 10s
+      start_period: 10s
+      retries: 3
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    restart: unless-stopped
+    depends_on:
+      courses:
+        condition: service_healthy
+    network_mode: "service:courses"
