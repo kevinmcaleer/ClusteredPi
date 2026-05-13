@@ -4,7 +4,8 @@
 #      docker build -t 192.168.2.1:5000/ducklake:latest .
 #      docker push 192.168.2.1:5000/ducklake:latest
 #   2. Copy .env.example to .env and fill in values
-#   3. docker compose -f docker-compose.prod.yml up -d
+#   3. Ensure ~/ducklake/data exists with the DuckDB lake file
+#   4. docker compose -f docker-compose.prod.yml up -d
 
 services:
   stats:
@@ -14,10 +15,10 @@ services:
       - HOST=0.0.0.0
       - PORT=8008
     volumes:
-      - stats_data:/app/data
-      - stats_lake:/app/contentlake.ducklake
-      - stats_dashboard:/app/dashboard_data.json
-      - stats_reports:/app/reports
+      - /home/kev/ducklake/data:/app/data
+      - /home/kev/ducklake/contentlake.ducklake:/app/contentlake.ducklake
+      - /home/kev/ducklake/dashboard_data.json:/app/dashboard_data.json
+      - /home/kev/ducklake/reports:/app/reports
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://127.0.0.1:8008/api/health"]
@@ -36,9 +37,3 @@ services:
       stats:
         condition: service_healthy
     network_mode: "service:stats"
-
-volumes:
-  stats_data:
-  stats_lake:
-  stats_dashboard:
-  stats_reports:
