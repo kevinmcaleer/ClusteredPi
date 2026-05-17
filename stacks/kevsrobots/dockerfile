@@ -10,8 +10,13 @@ RUN apk add --no-cache git
 # Clone repository with minimal depth
 WORKDIR /src
 
-# Build arg to bust cache for git clone when content changes
-# Pass --build-arg CACHE_DATE=$(date) to force a fresh clone
+# Auto-bust the git-clone layer when main has new commits. The
+# response body changes on every push, so Docker invalidates this
+# layer (and everything after it) without needing --no-cache or a
+# manual --build-arg CACHE_DATE=...
+ADD https://api.github.com/repos/kevinmcaleer/kevsrobots.com/commits/main /tmp/main-sha.json
+
+# Manual override still available — `--build-arg CACHE_DATE=$(date)`
 ARG CACHE_DATE=1
 
 RUN git clone --depth=1 \
