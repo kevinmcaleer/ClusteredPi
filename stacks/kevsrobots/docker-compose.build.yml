@@ -1,0 +1,14 @@
+# Build and push the kevsrobots image to the local registry.
+# Usage: docker compose -f docker-compose.build.yml build --push
+
+services:
+  kevsrobots:
+    environment:
+      JEKYLL_UID: 1000
+      JEKYLL_GID: 1000
+      JEKYLL_ENV: production
+      DOCKER_BUILDKIT: 1
+    build:
+      context: .
+      dockerfile: dockerfile
+    image: 192.168.2.1:5000/kevsrobots:latest
