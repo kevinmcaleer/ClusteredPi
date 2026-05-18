@@ -14,7 +14,14 @@ WORKDIR /src
 # response body changes on every push, so Docker invalidates this
 # layer (and everything after it) without needing --no-cache or a
 # manual --build-arg CACHE_DATE=...
-ADD https://api.github.com/repos/kevinmcaleer/kevsrobots.com/commits/main /tmp/main-sha.json
+#
+# NOTE: do NOT switch this to api.github.com/repos/.../commits/main —
+# that endpoint is rate-limited to 60 anonymous req/hr per IP, and the
+# build Pi will exhaust that quickly, breaking every subsequent build
+# with "failed to load cache key: invalid response status 403".
+# github.com/.../commits/main.atom returns the same per-commit-changing
+# content but is regular site traffic and not subject to that limit.
+ADD https://github.com/kevinmcaleer/kevsrobots.com/commits/main.atom /tmp/main-sha.xml
 
 # Manual override still available — `--build-arg CACHE_DATE=$(date)`
 ARG CACHE_DATE=1
