@@ -22,7 +22,7 @@
 services:
   cloudflared:
     image: cloudflare/cloudflared:latest
-    command: tunnel --no-autoupdate run
+    command: tunnel --no-autoupdate --edge-ip-version 4 run
     network_mode: host
     environment:
       - TUNNEL_TOKEN=${TUNNEL_TOKEN}
