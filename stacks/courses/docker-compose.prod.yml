@@ -11,7 +11,9 @@ services:
     image: 192.168.2.1:5000/course_app:latest
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/courses')"]
+      # /health is a lightweight liveness probe (SELECT 1 FROM courses LIMIT 1
+      # + 200 "ok") vs /courses, which did a full DB read on every poll.
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
       interval: 30s
       timeout: 10s
       start_period: 10s
