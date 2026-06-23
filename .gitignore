@@ -6,3 +6,4 @@ web/_data/status.yml
 
 # Cloudflare tunnel credentials (sensitive!)
 stacks/nginx/*.json
+.env
