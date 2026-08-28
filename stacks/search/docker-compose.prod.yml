@@ -1,18 +1,40 @@
 # Search API for kevsrobots.com
+#
+# Hybrid search: SQLite FTS5 (keyword) + ChromaDB (semantic), plus an MCP
+# endpoint at /mcp for LLM clients.
+#
 # Deploy on any node:
-#   1. Build and push: (from kevsrobots.com/search_app)
+#   1. Build and push the SITE image first - it is the source of the content
+#      that gets indexed (ClusteredPi/stacks/kevsrobots)
+#   2. Build and push the search image: (from kevsrobots.com/stacks/search_app)
 #      docker build -t 192.168.2.1:5000/search:latest .
 #      docker push 192.168.2.1:5000/search:latest
-#   2. Copy .env.example to .env and fill in values
-#   3. docker compose -f docker-compose.prod.yml up -d
+#   3. Copy .env.example to .env and fill in values
+#   4. docker compose -f docker-compose.prod.yml pull
+#   5. docker compose -f docker-compose.prod.yml up -d
 #
-# The search.db SQLite index is baked into the image at build time.
-# Rebuild the image to update the search index.
+# Both indexes are baked into the image at build time, so each node serves from
+# its own local copy - no shared database. Rebuild the image to update search.
+#
+# The healthcheck returns 503 when either index is empty, so a bad build shows
+# up as an unhealthy container rather than a silently useless one.
 
 services:
   search:
     image: 192.168.2.1:5000/search:latest
     env_file: .env
+    # The cloudflared sidecar shares this container's network namespace, and a
+    # container in that mode CANNOT set its own hostname - Docker rejects it
+    # with "conflicting options: hostname and the network mode". So the name
+    # has to be set here, on the container that owns the namespace; cloudflared
+    # inherits it and reports it to Cloudflare, which is what appears in the
+    # tunnel's Connectors list instead of a random container ID.
+    #
+    # Set NODE_NAME=dev02 (etc.) in this node's .env. Note that ${HOSTNAME}
+    # does NOT work here: it is a shell builtin and is not exported, so Compose
+    # sees it as empty. To avoid editing .env, pass it on the command instead:
+    #   NODE_NAME=$(hostname -s) docker compose -f docker-compose.prod.yml up -d
+    hostname: ${NODE_NAME:-kevsrobots-search}
     environment:
       - PORT=8000
     restart: unless-stopped
@@ -20,7 +42,7 @@ services:
       test: ["CMD", "curl", "-f", "http://127.0.0.1:8000/health"]
       interval: 30s
       timeout: 10s
-      start_period: 10s
+      start_period: 45s
       retries: 3
 
   cloudflared:
