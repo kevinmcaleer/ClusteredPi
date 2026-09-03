@@ -3,21 +3,39 @@
 # Hybrid search: SQLite FTS5 (keyword) + ChromaDB (semantic), plus an MCP
 # endpoint at /mcp for LLM clients.
 #
-# Deploy on any node:
-#   1. Build and push the SITE image first - it is the source of the content
-#      that gets indexed (ClusteredPi/stacks/kevsrobots)
-#   2. Build and push the search image: (from kevsrobots.com/stacks/search_app)
-#      docker build -t 192.168.2.1:5000/search:latest .
-#      docker push 192.168.2.1:5000/search:latest
-#   3. Copy .env.example to .env and fill in values
-#   4. docker compose -f docker-compose.prod.yml pull
-#   5. docker compose -f docker-compose.prod.yml up -d
+# The indexes live in ./data on this node, NOT in the image. Each node still
+# serves from its own local copy - there is no shared database - but the index
+# now outlives the container, so a redeploy no longer throws it away and
+# re-embeds ~9,400 chunks from scratch.
 #
-# Both indexes are baked into the image at build time, so each node serves from
-# its own local copy - no shared database. Rebuild the image to update search.
+#   data/build/   the indexer's working copy, kept between runs
+#   data/live/    what the API serves; replaced only when a reindex succeeds
 #
-# The healthcheck returns 503 when either index is empty, so a bad build shows
-# up as an unhealthy container rather than a silently useless one.
+# ---------------------------------------------------------------------------
+# Deploying a code change (fast - the image no longer contains an index)
+# ---------------------------------------------------------------------------
+#   docker compose -f docker-compose.prod.yml pull
+#   docker compose -f docker-compose.prod.yml up -d
+#
+# ---------------------------------------------------------------------------
+# Deploying a content change (reindex; the API stays up throughout)
+# ---------------------------------------------------------------------------
+#   docker pull 192.168.2.1:5000/kevsrobots:latest    # the content being indexed
+#   docker compose -f docker-compose.prod.yml --profile index run --rm indexer
+#   docker compose -f docker-compose.prod.yml restart search
+#
+# The indexer writes to data/build and only swaps the result into data/live at
+# the very end, so search keeps answering from the previous index for the whole
+# run - 20+ minutes on a cold first index, seconds to a couple of minutes after
+# that, since only pages whose text actually changed get re-embedded.
+#
+# Do this one node at a time. The restart is the only interruption and it is a
+# few seconds, but staggering means the other nodes' connectors are always
+# serving, so no user sees a gap.
+#
+# A node that has never been indexed reports unhealthy and Cloudflare routes
+# around it. That is deliberate - better no connector than one that answers
+# every query with "no results".
 
 services:
   search:
@@ -35,8 +53,13 @@ services:
     # sees it as empty. To avoid editing .env, pass it on the command instead:
     #   NODE_NAME=$(hostname -s) docker compose -f docker-compose.prod.yml up -d
     hostname: ${NODE_NAME:-kevsrobots-search}
+    volumes:
+      # Read-write, not :ro - Chroma opens its SQLite store for writing even to
+      # answer a query, and will not open a read-only directory at all.
+      - ./data/live:/data/live
     environment:
       - PORT=8000
+      - INDEX_ROOT=/data/live
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://127.0.0.1:8000/health"]
@@ -44,6 +67,46 @@ services:
       timeout: 10s
       start_period: 45s
       retries: 3
+
+  # -------------------------------------------------------------------------
+  # One-shot indexing. Both services sit behind the "index" profile so a plain
+  # `up -d` never starts them.
+  # -------------------------------------------------------------------------
+
+  # The built Jekyll site is the content being indexed, and it only exists
+  # inside the site image. Copy it into a volume the indexer can read; nginx
+  # itself is never started.
+  site-export:
+    profiles: ["index"]
+    image: ${SITE_IMAGE:-192.168.2.1:5000/kevsrobots:latest}
+    volumes:
+      - site-content:/export
+    entrypoint: ["/bin/sh", "-c"]
+    # A single-element list, not a plain string: Compose shell-splits a string
+    # command into argv, and `sh -c` only ever runs its FIRST argument - so a
+    # string here silently runs `find` alone and exports nothing.
+    #
+    # find, not `rm -rf /export/*`, so dotfiles from a previous export go too -
+    # a stale one would be indexed as though it were still on the site.
+    command:
+      - "find /export -mindepth 1 -delete && cp -a /www/data/. /export/ && echo 'site exported'"
+    restart: "no"
+
+  indexer:
+    profiles: ["index"]
+    image: 192.168.2.1:5000/search:latest
+    depends_on:
+      site-export:
+        condition: service_completed_successfully
+    volumes:
+      - site-content:/site:ro
+      - ./data:/data
+    environment:
+      - SITE_ROOT=/site
+      - INDEX_ROOT=/data/build
+      - INDEX_LIVE=/data/live
+    command: ["./reindex.sh", "--quiet"]
+    restart: "no"
 
   cloudflared:
     image: cloudflare/cloudflared:latest
@@ -55,3 +118,6 @@ services:
       search:
         condition: service_healthy
     network_mode: "service:search"
+
+volumes:
+  site-content:
