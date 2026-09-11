@@ -91,6 +91,8 @@ services:
       - penpot-exporter
       - penpot-mcp
 
+    hostname: ${NODE_NAME:-kevsrobots-penpot}
+
     networks:
       - penpot
 
