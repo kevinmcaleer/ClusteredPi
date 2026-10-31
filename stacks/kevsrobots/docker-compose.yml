@@ -1,18 +1,26 @@
-# Production deployment with Cloudflare Tunnel sidecar.
+# kevsrobots.com website: nginx serving the Jekyll build, with a
+# Cloudflare Tunnel sidecar.
 #
-# Deploy on each node (dev02, dev03, dev04):
+# Build node (rebuild from kevsrobots.com main, then publish):
+#   docker compose up -d --build
+#   docker compose push kevsrobots
+#
+# Other nodes (dev02, dev03, dev04):
 #   1. Copy .env.example to .env and set TUNNEL_TOKEN and NODE_NAME
-#   2. docker compose up -d
+#   2. docker compose pull && docker compose up -d
 #
 # Each node registers as a connector for the same tunnel.
 # Cloudflare load-balances across all active connectors.
 # If a node goes down, traffic routes to the others automatically.
 #
-# To build and push the image, use:
-#   docker compose -f docker-compose.build.yml build --push
+# The dockerfile re-clones kevsrobots.com whenever main has new commits,
+# so a plain --build picks up the latest site without --no-cache.
 
 services:
   kevsrobots:
+    build:
+      context: .
+      dockerfile: dockerfile
     image: 192.168.2.1:5000/kevsrobots:latest
     restart: unless-stopped
     healthcheck:
