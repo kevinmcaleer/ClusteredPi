@@ -7,14 +7,14 @@ Production-ready Docker setup for kevsrobots.com on Raspberry Pi 5 cluster.
 ```bash
 cd /Users/kev/Web/ClusteredPi/stacks/kevsrobots
 
-# Build
-docker-compose build
+# Build from kevsrobots.com main and (re)start
+docker compose up -d --build
 
-# Run
-docker-compose up -d
+# Publish the image for the other nodes
+docker compose push kevsrobots
 
 # Check status
-docker-compose ps
+docker compose ps
 ```
 
 ## Overview
@@ -88,39 +88,25 @@ export DOCKER_BUILDKIT=1
 docker build -t kevsrobots:latest .
 ```
 
-### Build with docker-compose
+### Build, run and publish (one docker-compose.yml)
 
 ```bash
-docker-compose build
+# Build from kevsrobots.com main and (re)start the site + tunnel
+docker compose up -d --build
+
+# View logs / stop
+docker compose logs -f
+docker compose down
+
+# Publish the image to the local registry for the other nodes
+docker compose push kevsrobots
 ```
 
-### Run
+### Deploy to the other nodes
 
 ```bash
-# Start service
-docker-compose up -d
-
-# View logs
-docker-compose logs -f
-
-# Stop service
-docker-compose down
-```
-
-### Push to Registry
-
-```bash
-docker-compose push
-# Or manually:
-docker tag kevsrobots:latest 192.168.2.1:5000/kevsrobots:latest
-docker push 192.168.2.1:5000/kevsrobots:latest
-```
-
-### Deploy to Cluster
-
-```bash
-# On your Pi cluster
-docker stack deploy -c docker-compose.yml kevsrobots
+# Once per node: cp .env.example .env, then set TUNNEL_TOKEN and NODE_NAME
+docker compose pull && docker compose up -d
 ```
 
 ## Image Optimization Workflow
@@ -147,7 +133,7 @@ Images are pre-optimized and committed to git. **Do not optimize in Docker.**
 4. **Rebuild Docker image** (pulls optimized images from git):
    ```bash
    cd /Users/kev/Web/ClusteredPi/stacks/kevsrobots
-   docker-compose build
+   docker compose up -d --build
    ```
 
 ### Re-optimize All Images
