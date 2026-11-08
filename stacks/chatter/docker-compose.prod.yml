@@ -13,6 +13,9 @@ services:
     environment:
       - SECRET_KEY=${SECRET_KEY:-changeme}
       - PORT=8006
+      # Production sets the login cookie on .kevsrobots.com (Secure), so other kevsrobots sites such as
+      # bettercad.kevsrobots.com see you signed in. Without it the cookie stays on chatter.kevsrobots.com.
+      - ENVIRONMENT=production
     env_file:
       - .env
     healthcheck:
