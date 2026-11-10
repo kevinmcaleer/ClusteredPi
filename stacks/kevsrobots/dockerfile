@@ -41,13 +41,12 @@ RUN apk add --no-cache \
     libxml2-dev \
     libxslt-dev
 
-# Set working directory
-WORKDIR /src
-
-# Copy only the web directory (not entire repo)
-COPY --from=getfiles /src/kevsrobots.com/web /src
-
-# Install gems (combining commands reduces layers)
+# Install gems BEFORE copying the site. Nothing above this line depends on
+# the repository contents, so these layers stay cached across content
+# commits: a routine rebuild skips the ~1-2 minute native-extension compile
+# (nokogiri, sass-embedded, protobuf, ffi) and goes straight to the Jekyll
+# build. Previously the COPY came first, so every new commit on main
+# invalidated the gem layer and reinstalled all 42 gems from scratch.
 RUN gem install \
     jekyll:4.3.3 \
     jekyll-redirect-from \
@@ -61,6 +60,17 @@ RUN gem install \
     google-protobuf:3.25.2 \
     --no-document
 
+# Set working directory
+WORKDIR /src
+
+# Copy only the web directory (not entire repo)
+COPY --from=getfiles /src/kevsrobots.com/web /src
+
+# JEKYLL_ENV is read at build time, not at run time. docker-compose sets it
+# on the service, which never reaches `jekyll build`; set it here so
+# {% if jekyll.environment == "production" %} blocks render in the image.
+ENV JEKYLL_ENV=production
+
 # Build the Jekyll site
 RUN jekyll build --trace
 
@@ -70,12 +80,13 @@ FROM nginx:alpine
 # Copy optimized nginx configuration from build context
 COPY nginx-optimized.conf /etc/nginx/nginx.conf
 
-# Copy built site from Jekyll stage
-COPY --from=jekyll_build /src/_site /www/data
-
-# Set proper permissions
-RUN chown -R nginx:nginx /www/data && \
-    chmod -R 755 /www/data
+# Copy built site from Jekyll stage, owned by nginx at copy time.
+# A separate `RUN chown -R ... && chmod -R ...` rewrites every file into a
+# second ~1.1 GB layer (the image was ~2.5 GB for a 1.1 GB site) and takes
+# ~15 s on a Pi. COPY --chown sets ownership in the same layer for free.
+# Jekyll already writes files 644 and directories 755, which is all nginx
+# needs to read them.
+COPY --from=jekyll_build --chown=nginx:nginx /src/_site /www/data
 
 # Healthcheck (longer start-period for Raspberry Pi)
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
@@ -87,7 +98,7 @@ EXPOSE 3333
 # Labels for metadata
 LABEL maintainer="kevinmcaleer@gmail.com"
 LABEL description="KevsRobots website - optimized for Raspberry Pi 5 (ARM64)"
-LABEL version="2.0-optimized"
+LABEL version="2.1-cached-gems"
 
 # Start nginx in foreground
 CMD ["nginx", "-g", "daemon off;"]
